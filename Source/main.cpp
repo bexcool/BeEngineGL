@@ -12,7 +12,6 @@
 #include <stdio.h>
 
 #include "Application.h"
-#include "Graphics/Graphics.h"
 
 int main(void)
 {

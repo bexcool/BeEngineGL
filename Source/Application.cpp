@@ -4,7 +4,7 @@
 
 #include "Application.h"
 
-#include "Graphics/Graphics.h"
+#include "../Source/Core/Graphics/Renderer.h"
 
 static void error_callback(int error, const char *description) { fputs(description, stderr); }
 
@@ -47,6 +47,6 @@ void Application::Run()
 {
 	CreateWindow();
 
-	_graphics = new Graphics(this->GetWindow());
+	_graphics = new Renderer(this->GetWindow());
 	_graphics->StartLoop();
 }

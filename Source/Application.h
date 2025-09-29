@@ -10,7 +10,7 @@
 #include <stdio.h>
 #include <sstream>
 
-#include "Graphics/Graphics.h"
+#include "Core/Graphics/Renderer.h"
 
 class Application
 {
@@ -18,7 +18,7 @@ private:
 	int _width, _height;
 	std::string _title;
 	GLFWwindow *_window;
-	Graphics *_graphics;
+	Renderer *_graphics;
 
 	void CreateWindow();
 

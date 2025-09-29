@@ -7,19 +7,27 @@ add_executable(ZPG
         Source/main.cpp
         Source/Application.cpp
         Source/Application.h
-        Source/Graphics/Graphics.cpp
-        Source/Graphics/Graphics.h
-        Source/Graphics/ShaderProgram.cpp
-        Source/Graphics/ShaderProgram.h
-        Source/Graphics/Shader.cpp
-        Source/Graphics/Shader.h
-        Source/Models/bushes.h
-        Source/Models/gift.h
-        Source/Models/plain.h
-        Source/Models/sphere.h
-        Source/Models/suzi_flat.h
-        Source/Models/suzi_smooth.h
-        Source/Models/tree.h)
+        Source/Core/Graphics/Renderer.cpp
+        Source/Core/Graphics/Renderer.h
+        Source/Core/Graphics/ShaderProgram.cpp
+        Source/Core/Graphics/ShaderProgram.h
+        Source/Core/Graphics/Shader.cpp
+        Source/Core/Graphics/Shader.h
+        Source/Resources/Models/bushes.h
+        Source/Resources/Models/gift.h
+        Source/Resources/Models/plain.h
+        Source/Resources/Models/sphere.h
+        Source/Resources/Models/suzi_flat.h
+        Source/Resources/Models/suzi_smooth.h
+        Source/Resources/Models/tree.h
+        Source/Core/Graphics/Model.cpp
+        Source/Core/Graphics/Model.h
+        Source/Core/DrawableObject.cpp
+        Source/Core/DrawableObject.h
+        Source/Core/Graphics/Transform.cpp
+        Source/Core/Graphics/Transform.h
+        Source/Core/Scene.cpp
+        Source/Core/Scene.h)
 
 find_package(glm CONFIG REQUIRED)
 find_package(GLEW REQUIRED)
