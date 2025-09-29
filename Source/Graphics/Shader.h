@@ -18,6 +18,8 @@ private:
 public:
     Shader(int shaderType, std::string shaderSource) : _shaderType(shaderType), _shaderSource(shaderSource) {}
 
+    static std::string ShaderTypeToString(int shaderType);
+
     void Compile();
 
     GLuint GetShaderID() { return _shaderID; }

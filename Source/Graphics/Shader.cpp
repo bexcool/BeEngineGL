@@ -4,6 +4,17 @@
 
 #include "Shader.h"
 
+std::string Shader::ShaderTypeToString(int shaderType)
+{
+    switch (shaderType)
+    {
+        case GL_VERTEX_SHADER:
+            return "Vertex Shader";
+        case GL_FRAGMENT_SHADER:
+            return "Fragment Shader";
+    }
+}
+
 void Shader::Compile()
 {
     _shaderID = glCreateShader(_shaderType);
@@ -19,7 +30,9 @@ void Shader::Compile()
         glGetShaderiv(_shaderID, GL_INFO_LOG_LENGTH, &infoLogLength);
         auto *strInfoLog = new GLchar[infoLogLength + 1];
         glGetShaderInfoLog(_shaderID, infoLogLength, NULL, strInfoLog);
-        fprintf(stderr, "%s Shader compilation failed: %s\n", _shaderType, strInfoLog);
+        fprintf(stderr, "%s Shader compilation failed: %s\n",
+                ShaderTypeToString(_shaderType).c_str(),
+                strInfoLog);
         delete[] strInfoLog;
     }
 }

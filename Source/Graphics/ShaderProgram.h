@@ -5,15 +5,18 @@
 #pragma once
 
 #include <GL/glew.h>
+#include <glm/ext/matrix_float4x4.hpp>
 
 #include "Shader.h"
 
 class ShaderProgram
 {
 private:
-	GLuint _shaderProgram{};
+	GLuint _shaderProgram;
 	Shader *_vertexShader;
 	Shader *_fragmentShader;
+	GLuint _modelTransformId;
+	glm::mat4 _tmpMatrix;
 
 public:
 	ShaderProgram(Shader *vertexShader, Shader *fragmentShader);

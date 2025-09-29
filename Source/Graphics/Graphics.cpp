@@ -4,6 +4,9 @@
 
 #include "Graphics.h"
 
+#include <glm/ext/matrix_float4x4.hpp>
+#include <glm/ext/matrix_transform.hpp>
+
 #include "Shader.h"
 #include "ShaderProgram.h"
 #include "../Models/suzi_flat.h"
@@ -28,19 +31,14 @@ Graphics::Graphics(GLFWwindow *window)
 
 void Graphics::StartLoop() const
 {
-	float points[] = {
-		0.0f, 0.5f, 0.0f,
-		0.5f, -0.5f, 0.0f,
-		-0.5f, -0.5f, 0.0f
-	};
-
 	const char *vertex_shader =
 			"#version 330 core\n"
 			"layout(location=0) in vec3 vp;"
 			"layout(location=1) in vec3 vn;"
+			"uniform mat4 modelMatrix;"
 			"out vec3 normal;"
 			"void main () {"
-			"     gl_Position = vec4 (vp, 1.0);"
+			"     gl_Position = modelMatrix * vec4 (vp, 1.0);"
 			"     normal = vn;"
 			"}";
 
