@@ -1,0 +1,101 @@
+//
+// Created by Petr Pavlík on 22.09.2025.
+//
+
+#include "Graphics.h"
+
+#include "Shader.h"
+#include "ShaderProgram.h"
+#include "../Models/suzi_flat.h"
+
+Graphics::Graphics(GLFWwindow *window)
+{
+	this->_window = window;
+
+	glewExperimental = GL_TRUE;
+	glewInit();
+
+	// get version info
+	printf("OpenGL Version: %s\n", glGetString(GL_VERSION));
+	printf("Using GLEW %s\n", glewGetString(GLEW_VERSION));
+	printf("Vendor %s\n", glGetString(GL_VENDOR));
+	printf("Renderer %s\n", glGetString(GL_RENDERER));
+	printf("GLSL %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
+	int major, minor, revision;
+	glfwGetVersion(&major, &minor, &revision);
+	printf("Using GLFW %i.%i.%i\n", major, minor, revision);
+}
+
+void Graphics::StartLoop() const
+{
+	float points[] = {
+		0.0f, 0.5f, 0.0f,
+		0.5f, -0.5f, 0.0f,
+		-0.5f, -0.5f, 0.0f
+	};
+
+	const char *vertex_shader =
+			"#version 330 core\n"
+			"layout(location=0) in vec3 vp;"
+			"layout(location=1) in vec3 vn;"
+			"out vec3 normal;"
+			"void main () {"
+			"     gl_Position = vec4 (vp, 1.0);"
+			"     normal = vn;"
+			"}";
+
+
+	const char *fragment_shader =
+			"#version 330 core\n"
+			"in vec3 normal;"
+			"out vec4 fragColor;"
+			"void main () {"
+			"     fragColor = vec4 (normal, 1.0);"
+			"}";
+
+	//vertex buffer object (VBO)
+	GLuint VBO = 0;
+	glGenBuffers(1, &VBO); // generate the VBO
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof (suziFlat), suziFlat, GL_STATIC_DRAW);
+
+	//Vertex Array Object (VAO)
+	GLuint VAO = 0;
+	glGenVertexArrays(1, &VAO); //generate the VAO
+	glBindVertexArray(VAO); //bind the VAO
+	glEnableVertexAttribArray(0); //enable vertex attributes
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (GLvoid *) 0);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (GLvoid *) (3 * sizeof(float)));
+
+	auto *verShader = new Shader(GL_VERTEX_SHADER, vertex_shader);
+	verShader->Compile();
+
+	auto *fraShader = new Shader(GL_FRAGMENT_SHADER, fragment_shader);
+	fraShader->Compile();
+
+	auto *shaderProgram = new ShaderProgram(verShader, fraShader);
+	shaderProgram->LinkShaders();
+
+	glEnable(GL_DEPTH_TEST);
+	while (!glfwWindowShouldClose(this->_window))
+	{
+		// clear color and depth buffer
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		shaderProgram->Use();
+		glBindVertexArray(VAO);
+		// draw triangles
+		glDrawArrays(GL_TRIANGLES, 0, sizeof(suziFlat)); //mode,first,count
+		// update other events like input handling
+		glfwPollEvents();
+		// put the stuff we’ve been drawing onto the display
+		glfwSwapBuffers(this->_window);
+	}
+
+	glfwDestroyWindow(this->_window);
+
+	glfwTerminate();
+	exit(EXIT_SUCCESS);
+}
