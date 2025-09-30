@@ -3,9 +3,19 @@
 //
 
 #pragma once
+#include "Shader.h"
+#include "ShaderProgram.h"
 
 
+class Model
+{
+private:
+    Shader *_fragmentShader, *_vertexShader;
+    ShaderProgram *_shaderProgram;
+    float *vertices;
 
-class Model {
+public:
+    Model(float vertices[]);
 
+    Model(Shader *fragmentShader, Shader *vertexShader, float *vertices);
 };

@@ -24,7 +24,7 @@ void Shader::Compile()
     _shaderID = glCreateShader(_shaderType);
     string shader;
 
-    fstream file("filename.txt");
+    fstream file(_shaderPath);
 
     std::ostringstream ss;
     ss << file.rdbuf(); // read entire buffer into stream

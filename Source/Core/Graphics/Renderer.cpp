@@ -35,40 +35,6 @@ Renderer::Renderer(GLFWwindow *window)
 
 void Renderer::StartLoop() const
 {
-	const char *fragment_shader =
-			"#version 330 core\n"
-			"in vec3 normal;"
-			"out vec4 fragColor;"
-			"void main () {"
-			"     fragColor = vec4 (normal, 1.0);"
-			"}";
-
-	//vertex buffer object (VBO)
-	GLuint VBO = 0;
-	glGenBuffers(1, &VBO); // generate the VBO
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof (suziFlat), suziFlat, GL_STATIC_DRAW);
-
-	//Vertex Array Object (VAO)
-	GLuint VAO = 0;
-	glGenVertexArrays(1, &VAO); //generate the VAO
-	glBindVertexArray(VAO); //bind the VAO
-	glEnableVertexAttribArray(0); //enable vertex attributes
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glEnableVertexAttribArray(0);
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (GLvoid *) 0);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (GLvoid *) (3 * sizeof(float)));
-
-	auto *verShader = new Shader(GL_VERTEX_SHADER, "../Source/Resources/Shaders/defaultVertexShader.glsl");
-	verShader->Compile();
-
-	auto *fraShader = new Shader(GL_FRAGMENT_SHADER, fragment_shader);
-	fraShader->Compile();
-
-	auto *shaderProgram = new ShaderProgram(verShader, fraShader);
-	shaderProgram->LinkShaders();
-
 	glEnable(GL_DEPTH_TEST);
 	while (!glfwWindowShouldClose(this->_window))
 	{
