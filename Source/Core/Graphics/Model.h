@@ -6,16 +6,22 @@
 #include "Shader.h"
 #include "ShaderProgram.h"
 
+#include <vector>
+
+using namespace std;
 
 class Model
 {
 private:
     Shader *_fragmentShader, *_vertexShader;
     ShaderProgram *_shaderProgram;
-    float *vertices;
+    vector<float> *_vertices;
+    GLuint _VAO, _VBO;
 
 public:
-    Model(float vertices[]);
+    Model(vector<float> *vertices);
 
-    Model(Shader *fragmentShader, Shader *vertexShader, float *vertices);
+    Model(Shader *fragmentShader, Shader *vertexShader, vector<float> *vertices);
+
+    void Draw() const;
 };

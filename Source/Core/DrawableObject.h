@@ -12,11 +12,12 @@ class DrawableObject
 {
 private:
     Model *_model;
-    ShaderProgram *_shaderProgram;
     Transform *_transform;
 
 public:
-    DrawableObject(Model *model, ShaderProgram *shaderProgram);
+    DrawableObject(Model *model);
 
-    DrawableObject(Model *model, ShaderProgram *shaderProgram, Transform *transform);
+    DrawableObject(Model *model, Transform *transform);
+
+    void Draw() const;
 };

@@ -4,9 +4,14 @@
 
 #include "DrawableObject.h"
 
-DrawableObject::DrawableObject(Model *model, ShaderProgram *shaderProgram)
+DrawableObject::DrawableObject(Model *model)
 {
     this->_model = model;
-    this->_shaderProgram = shaderProgram;
     this->_transform = new Transform();
 }
+
+void DrawableObject::Draw() const
+{
+    _model->Draw();
+}
+
