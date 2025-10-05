@@ -15,13 +15,14 @@ class Model
 private:
     Shader *_fragmentShader, *_vertexShader;
     ShaderProgram *_shaderProgram;
-    vector<float> *_vertices;
+    unsigned int _amountOfVertices;
     GLuint _VAO, _VBO;
+    Transform *_transform; // error: unknown type name 'DrawableObject' - Nesnáším tohle!!!!!
 
 public:
-    Model(vector<float> *vertices);
+    Model(const float *vertices, const unsigned int amount, Transform *transform);
 
-    Model(Shader *fragmentShader, Shader *vertexShader, vector<float> *vertices);
+    //Model(Shader *fragmentShader, Shader *vertexShader, vector<float> *vertices);
 
     void Draw() const;
 };

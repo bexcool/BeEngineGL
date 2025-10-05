@@ -5,8 +5,7 @@
 #pragma once
 #include "Graphics/Model.h"
 #include "Graphics/ShaderProgram.h"
-#include "Graphics/Transform.h"
-
+#include "Math/Transform.h"
 
 class DrawableObject
 {
@@ -20,4 +19,6 @@ public:
     DrawableObject(Model *model, Transform *transform);
 
     void Draw() const;
+
+    Transform *GetTransform() { return _transform; }
 };

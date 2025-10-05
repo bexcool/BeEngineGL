@@ -8,6 +8,7 @@
 #include <glm/ext/matrix_float4x4.hpp>
 
 #include "Shader.h"
+#include "../Math/Transform.h"
 
 class ShaderProgram
 {
@@ -16,10 +17,12 @@ private:
 	Shader *_vertexShader;
 	Shader *_fragmentShader;
 	GLuint _modelTransformId;
-	glm::mat4 _tmpMatrix;
+	Transform *_transform;
 
 public:
 	ShaderProgram(Shader *vertexShader, Shader *fragmentShader);
+
+	ShaderProgram(Shader *vertexShader, Shader *fragmentShader, Transform *transform);
 
 	~ShaderProgram();
 

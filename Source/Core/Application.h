@@ -10,7 +10,8 @@
 #include <stdio.h>
 #include <sstream>
 
-#include "Core/Graphics/Renderer.h"
+#include "Level.h"
+#include "Graphics/Renderer.h"
 
 class Application
 {
@@ -19,13 +20,21 @@ private:
 	std::string _title;
 	GLFWwindow *_window;
 	Renderer *_graphics;
+	Level *_currentLevel;
+	static Application *_currentApp;
 
 	void CreateWindow();
 
 public:
 	Application(int width, int height, std::string title);
 
+	static Application *GetInstance() { return _currentApp; }
+
 	GLFWwindow *GetWindow() { return _window; }
 
 	void Run();
+
+	void LoadLevel(Level *level);
+
+	Level *GetLevel() { return _currentLevel; }
 };

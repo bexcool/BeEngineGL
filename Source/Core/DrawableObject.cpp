@@ -10,6 +10,12 @@ DrawableObject::DrawableObject(Model *model)
     this->_transform = new Transform();
 }
 
+DrawableObject::DrawableObject(Model *model, Transform *transform)
+{
+    this->_model = model;
+    this->_transform = transform;
+}
+
 void DrawableObject::Draw() const
 {
     _model->Draw();

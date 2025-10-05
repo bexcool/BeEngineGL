@@ -7,10 +7,19 @@
 #include <glm/ext/matrix_float4x4.hpp>
 #include <glm/ext/matrix_transform.hpp>
 
+
 ShaderProgram::ShaderProgram(Shader *vertexShader, Shader *fragmentShader)
 {
     this->_vertexShader = vertexShader;
     this->_fragmentShader = fragmentShader;
+    this->_transform = new Transform();
+}
+
+ShaderProgram::ShaderProgram(Shader *vertexShader, Shader *fragmentShader, Transform *transform)
+{
+    this->_vertexShader = vertexShader;
+    this->_fragmentShader = fragmentShader;
+    this->_transform = transform;
 }
 
 void ShaderProgram::LinkShaders()
@@ -21,9 +30,6 @@ void ShaderProgram::LinkShaders()
     glLinkProgram(_shaderProgram);
 
     _modelTransformId = glGetUniformLocation(_shaderProgram, "modelMatrix");
-
-    _tmpMatrix = glm::mat4(1.0f); // construct identity matrix
-    _tmpMatrix = glm::rotate<float>(glm::mat4(1.0f), (int) 45.0f, glm::vec3(0.0f, 1.0f, 0.0f));
 
     GLint status;
     glGetProgramiv(_shaderProgram, GL_LINK_STATUS, &status);
@@ -41,5 +47,5 @@ void ShaderProgram::LinkShaders()
 void ShaderProgram::Use()
 {
     glUseProgram(_shaderProgram);
-    glUniformMatrix4fv(_modelTransformId, 1, GL_FALSE, &_tmpMatrix[0][0]);
+    glUniformMatrix4fv(_modelTransformId, 1, GL_FALSE, &(*_transform->GetMatrix())[0][0]);
 }

@@ -5,8 +5,8 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_executable(ZPG
         Source/main.cpp
-        Source/Application.cpp
-        Source/Application.h
+        Source/Core/Application.cpp
+        Source/Core/Application.h
         Source/Core/Graphics/Renderer.cpp
         Source/Core/Graphics/Renderer.h
         Source/Core/Graphics/ShaderProgram.cpp
@@ -24,10 +24,16 @@ add_executable(ZPG
         Source/Core/Graphics/Model.h
         Source/Core/DrawableObject.cpp
         Source/Core/DrawableObject.h
-        Source/Core/Graphics/Transform.cpp
-        Source/Core/Graphics/Transform.h
-        Source/Core/Scene.cpp
-        Source/Core/Scene.h)
+        Source/Core/Math/Transform.cpp
+        Source/Core/Math/Transform.h
+        Source/Core/Math/Translation.cpp
+        Source/Core/Math/Translation.h
+        Source/Core/Math/Rotation.cpp
+        Source/Core/Math/Rotation.h
+        Source/Core/Math/Scale.cpp
+        Source/Core/Math/Scale.h
+        Source/Core/Level.cpp
+        Source/Core/Level.h)
 
 find_package(glm CONFIG REQUIRED)
 find_package(GLEW REQUIRED)

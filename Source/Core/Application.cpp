@@ -4,12 +4,16 @@
 
 #include "Application.h"
 
-#include "../Source/Core/Graphics/Renderer.h"
+#include "../Resources/Models/suzi_flat.h"
+#include "Graphics/Renderer.h"
+
+Application *Application::_currentApp = nullptr;
 
 static void error_callback(int error, const char *description) { fputs(description, stderr); }
 
 Application::Application(int width, int height, std::string title)
 {
+	this->_currentApp = this;
 	this->_width = width;
 	this->_height = height;
 	this->_title = title;
@@ -48,5 +52,25 @@ void Application::Run()
 	CreateWindow();
 
 	_graphics = new Renderer(this->GetWindow());
+
+	// Tests
+	Level *level1 = new Level("level1");
+	auto suziModel = new Model(suziFlat,
+	                           17424,
+	                           new Transform(
+		                           Translation(),
+		                           Rotation(),
+		                           Scale(0.5f)
+	                           ));
+	auto suziObject = new DrawableObject(suziModel);
+	level1->AddObject(suziObject);
+
+	LoadLevel(level1);
+
 	_graphics->StartLoop();
+}
+
+void Application::LoadLevel(Level *level)
+{
+	_currentLevel = level;
 }

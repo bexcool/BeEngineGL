@@ -12,6 +12,7 @@
 #include "Model.h"
 #include "Shader.h"
 #include "ShaderProgram.h"
+#include "../Application.h"
 #include "../DrawableObject.h"
 #include "../../Resources/Models/suzi_flat.h"
 
@@ -37,17 +38,20 @@ Renderer::Renderer(GLFWwindow *window)
 
 void Renderer::StartLoop() const
 {
-	auto suziFlatVertices = new vector<float>(suziFlat, suziFlat + 17424);
-	auto suziModel = new Model(suziFlatVertices);
-	auto suziObject = new DrawableObject(suziModel);
-
 	glEnable(GL_DEPTH_TEST);
 	while (!glfwWindowShouldClose(this->_window))
 	{
 		// clear color and depth buffer
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		// draw triangles
-		suziObject->Draw();
+		auto app = Application::GetInstance();
+		if (app->GetLevel() != nullptr)
+		{
+			for (auto object: (*app->GetLevel()->GetDrawableObjects()))
+			{
+				object->Draw();
+			}
+		}
 		// update other events like input handling
 		glfwPollEvents();
 		// put the stuff we’ve been drawing onto the display
