@@ -4,37 +4,35 @@
 
 #pragma once
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-#include <stdlib.h>
-#include <stdio.h>
 #include <sstream>
 
-#include "Level.h"
-#include "Graphics/Renderer.h"
+#include "Core/GameLoop.h"
+#include "Core/Level.h"
+#include "Core/Graphics/Renderer.h"
+#include "Core/Graphics/Window.h"
 
 class Application
 {
-private:
-	int _width, _height;
-	std::string _title;
-	GLFWwindow *_window;
-	Renderer *_graphics;
-	Level *_currentLevel;
 	static Application *_currentApp;
 
-	void CreateWindow();
+	int _width, _height;
+	Window *_window;
+	std::string _title;
+
+	Renderer *_renderer;
+	GameLoop *_gameLoop;
+	Level *_currentLevel;
 
 public:
 	Application(int width, int height, std::string title);
-
 	static Application *GetInstance() { return _currentApp; }
-
-	GLFWwindow *GetWindow() { return _window; }
 
 	void Run();
 
 	void LoadLevel(Level *level);
-
 	Level *GetLevel() { return _currentLevel; }
+
+	Window *GetWindow() { return _window; }
+
+	void OnKeyEvent(KeyEventArgs e);
 };

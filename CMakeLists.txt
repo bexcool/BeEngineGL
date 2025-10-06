@@ -5,8 +5,8 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_executable(ZPG
         Source/main.cpp
-        Source/Core/Application.cpp
-        Source/Core/Application.h
+        Source/Application.cpp
+        Source/Application.h
         Source/Core/Graphics/Renderer.cpp
         Source/Core/Graphics/Renderer.h
         Source/Core/Graphics/ShaderProgram.cpp
@@ -33,7 +33,24 @@ add_executable(ZPG
         Source/Core/Math/Scale.cpp
         Source/Core/Math/Scale.h
         Source/Core/Level.cpp
-        Source/Core/Level.h)
+        Source/Core/Level.h
+        Source/Core/Graphics/Window.cpp
+        Source/Core/Graphics/Window.h
+        Source/Core/Controller.cpp
+        Source/Core/Controller.h
+        Source/Core/Events/InputManager.cpp
+        Source/Core/Events/InputManager.h
+        Source/Core/Events/EventArgs.cpp
+        Source/Core/Events/EventArgs.h
+        Source/Core/Events/KeyEventArgs.cpp
+        Source/Core/Events/KeyEventArgs.h
+        Source/Game/TestLevel.cpp
+        Source/Game/TestLevel.h
+        Source/Core/GameLoop.cpp
+        Source/Core/GameLoop.h
+        Source/Core/logger.c
+        Source/Core/logger.h
+)
 
 find_package(glm CONFIG REQUIRED)
 find_package(GLEW REQUIRED)

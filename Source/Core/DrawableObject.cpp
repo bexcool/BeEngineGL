@@ -4,20 +4,20 @@
 
 #include "DrawableObject.h"
 
-DrawableObject::DrawableObject(Model *model)
+DrawableObject::DrawableObject(Transform *transform)
 {
-    this->_model = model;
-    this->_transform = new Transform();
-}
-
-DrawableObject::DrawableObject(Model *model, Transform *transform)
-{
-    this->_model = model;
     this->_transform = transform;
 }
 
+void DrawableObject::SetModel(Model *model)
+{
+    this->_model = model;
+    this->_model->Initialize(this);
+}
+
+
 void DrawableObject::Draw() const
 {
-    _model->Draw();
+    if (_model != nullptr) _model->Draw();
 }
 

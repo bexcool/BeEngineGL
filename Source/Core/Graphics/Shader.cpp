@@ -17,6 +17,8 @@ std::string Shader::ShaderTypeToString(int shaderType)
         case GL_FRAGMENT_SHADER:
             return "Fragment Shader";
     }
+
+    return "Unknown Shader Type";
 }
 
 void Shader::Compile()

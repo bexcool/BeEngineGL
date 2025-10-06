@@ -11,7 +11,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "Core/Application.h"
+#include "Application.h"
 
 int main(void)
 {

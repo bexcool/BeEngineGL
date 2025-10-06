@@ -8,6 +8,7 @@
 
 #include <vector>
 
+class DrawableObject;
 using namespace std;
 
 class Model
@@ -17,12 +18,16 @@ private:
     ShaderProgram *_shaderProgram;
     unsigned int _amountOfVertices;
     GLuint _VAO, _VBO;
-    Transform *_transform; // error: unknown type name 'DrawableObject' - Nesnáším tohle!!!!!
+    DrawableObject *_parent; // error: unknown type name 'DrawableObject' - Nesnáším tohle!!!!!
 
 public:
-    Model(const float *vertices, const unsigned int amount, Transform *transform);
+    Model(const float *vertices, const unsigned int amount);
 
     //Model(Shader *fragmentShader, Shader *vertexShader, vector<float> *vertices);
+
+    void Initialize(DrawableObject *parent);
+
+    void SetParent(DrawableObject *parent);
 
     void Draw() const;
 };

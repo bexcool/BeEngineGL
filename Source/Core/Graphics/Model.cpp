@@ -13,16 +13,15 @@
 
 using namespace std;
 
-Model::Model(const float *vertices, const unsigned int amount, Transform *transform)
+Model::Model(const float *vertices, const unsigned int amount)
 {
     _amountOfVertices = amount;
-    _transform = transform;
 
     //vertex buffer object (VBO)
     _VBO = 0;
     glGenBuffers(1, &_VBO); // generate the VBO
     glBindBuffer(GL_ARRAY_BUFFER, _VBO);
-    glBufferData(GL_ARRAY_BUFFER, _amountOfVertices * sizeof(float), vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, _amountOfVertices * sizeof(float) * 6, vertices, GL_STATIC_DRAW);
 
     //Vertex Array Object (VAO)
     _VAO = 0;
@@ -34,6 +33,11 @@ Model::Model(const float *vertices, const unsigned int amount, Transform *transf
     glEnableVertexAttribArray(1);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (GLvoid *) 0);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (GLvoid *) (3 * sizeof(float)));
+}
+
+void Model::Initialize(DrawableObject *parent)
+{
+    SetParent(parent);
 
     _vertexShader = new Shader(GL_VERTEX_SHADER, "../Source/Resources/Shaders/default.vert");
     _vertexShader->Compile();
@@ -41,10 +45,15 @@ Model::Model(const float *vertices, const unsigned int amount, Transform *transf
     _fragmentShader = new Shader(GL_FRAGMENT_SHADER, "../Source/Resources/Shaders/default.frag");
     _fragmentShader->Compile();
 
-    if (_transform == nullptr) _transform = new Transform();
-    _shaderProgram = new ShaderProgram(_vertexShader, _fragmentShader, _transform);
+    _shaderProgram = new ShaderProgram(_vertexShader, _fragmentShader, _parent->GetTransform());
     _shaderProgram->LinkShaders();
 }
+
+void Model::SetParent(DrawableObject *parent)
+{
+    _parent = parent;
+}
+
 
 /*
 Model::Model(Shader *fragmentShader, Shader *vertexShader, vector<float> *vertices)

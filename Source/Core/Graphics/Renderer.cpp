@@ -12,7 +12,7 @@
 #include "Model.h"
 #include "Shader.h"
 #include "ShaderProgram.h"
-#include "../Application.h"
+#include "../../Application.h"
 #include "../DrawableObject.h"
 #include "../../Resources/Models/suzi_flat.h"
 
@@ -36,30 +36,20 @@ Renderer::Renderer(GLFWwindow *window)
 	printf("Using GLFW %i.%i.%i\n", major, minor, revision);
 }
 
-void Renderer::StartLoop() const
+void Renderer::Render() const
 {
-	glEnable(GL_DEPTH_TEST);
-	while (!glfwWindowShouldClose(this->_window))
+	// clear color and depth buffer
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	// draw triangles
+	auto app = Application::GetInstance();
+	if (app->GetLevel() != nullptr)
 	{
-		// clear color and depth buffer
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		// draw triangles
-		auto app = Application::GetInstance();
-		if (app->GetLevel() != nullptr)
+		for (auto object: (*app->GetLevel()->GetDrawableObjects()))
 		{
-			for (auto object: (*app->GetLevel()->GetDrawableObjects()))
-			{
-				object->Draw();
-			}
+			object->Draw();
 		}
-		// update other events like input handling
-		glfwPollEvents();
-		// put the stuff we’ve been drawing onto the display
-		glfwSwapBuffers(this->_window);
 	}
-
-	glfwDestroyWindow(this->_window);
-
-	glfwTerminate();
-	exit(EXIT_SUCCESS);
+	// put the stuff we’ve been drawing onto the display
+	glfwSwapBuffers(this->_window);
+	app->GetLevel()->OnDraw();
 }

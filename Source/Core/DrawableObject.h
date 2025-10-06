@@ -14,9 +14,11 @@ private:
     Transform *_transform;
 
 public:
-    DrawableObject(Model *model);
+    DrawableObject();
 
-    DrawableObject(Model *model, Transform *transform);
+    DrawableObject(Transform *transform);
+
+    void SetModel(Model *model);
 
     void Draw() const;
 

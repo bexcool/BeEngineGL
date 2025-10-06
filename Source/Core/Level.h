@@ -4,24 +4,48 @@
 
 #pragma once
 #include "DrawableObject.h"
+#include "Events/KeyEventArgs.h"
 
 
 class Level
 {
-private:
     vector<DrawableObject *> _drawableObjects;
     std::string _name;
 
 public:
     Level(std::string name) : _name(name) {};
 
-    ~Level();
-
     std::string GetName() { return _name; }
 
     void AddObject(DrawableObject *drawableObject);
-
     void RemoveObject(DrawableObject *drawableObject);
 
     vector<DrawableObject *> *GetDrawableObjects() { return &_drawableObjects; }
+
+
+    /**
+     * Called when level was loaded.
+     */
+    virtual void OnLoaded();
+
+    /**
+     * Called when level was unloaded.
+     */
+    virtual void OnUnloaded();
+
+    /**
+     * Called everytime renderer request a draw.
+     */
+    virtual void OnDraw();
+
+    /**
+     * Called every loop iteration before rendering.
+     */
+    virtual void OnTick();
+
+    /**
+     * Called when a key press occured.
+     * @param e Key event arguments.
+     */
+    virtual void OnKeyEvent(KeyEventArgs e);
 };

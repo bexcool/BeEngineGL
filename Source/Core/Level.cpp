@@ -8,3 +8,9 @@ void Level::AddObject(DrawableObject *drawableObject)
 {
     _drawableObjects.push_back(drawableObject);
 }
+
+void Level::OnKeyEvent(KeyEventArgs e) {}
+void Level::OnLoaded() {}
+void Level::OnUnloaded() {}
+void Level::OnDraw() {}
+void Level::OnTick() {}
