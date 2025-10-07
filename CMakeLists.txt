@@ -5,8 +5,8 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_executable(ZPG
         Source/main.cpp
-        Source/Application.cpp
-        Source/Application.h
+        Source/Core/Application.cpp
+        Source/Core/Application.h
         Source/Core/Graphics/Renderer.cpp
         Source/Core/Graphics/Renderer.h
         Source/Core/Graphics/ShaderProgram.cpp
@@ -26,8 +26,8 @@ add_executable(ZPG
         Source/Core/DrawableObject.h
         Source/Core/Math/Transform.cpp
         Source/Core/Math/Transform.h
-        Source/Core/Math/Translation.cpp
-        Source/Core/Math/Translation.h
+        Source/Core/Math/Location.cpp
+        Source/Core/Math/Location.h
         Source/Core/Math/Rotation.cpp
         Source/Core/Math/Rotation.h
         Source/Core/Math/Scale.cpp
@@ -50,7 +50,14 @@ add_executable(ZPG
         Source/Core/GameLoop.h
         Source/Core/logger.c
         Source/Core/logger.h
+        Source/Core/Camera.cpp
+        Source/Core/Camera.h
+        Source/Core/GameObject.cpp
+        Source/Core/GameObject.h
+        Source/App.cpp
+        Source/App.h
 )
+
 
 find_package(glm CONFIG REQUIRED)
 find_package(GLEW REQUIRED)
@@ -68,5 +75,8 @@ if (APPLE)
             "-framework IOKit"
             "-framework CoreVideo"
             "-lGLEW"
+    )
+    set_source_files_properties(Source/Core/UI/imgui_impl_metal.cpp PROPERTIES
+            LANGUAGE CXX
     )
 endif ()

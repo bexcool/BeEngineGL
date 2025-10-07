@@ -17,6 +17,8 @@ private:
 	Shader *_vertexShader;
 	Shader *_fragmentShader;
 	GLuint _modelTransformId;
+	GLuint _projectionTransformId;
+	GLuint _viewTransformId;
 	Transform *_transform;
 
 public:

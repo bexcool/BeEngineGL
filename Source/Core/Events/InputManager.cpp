@@ -7,7 +7,7 @@
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
-#include "../../Application.h"
+#include "../Application.h"
 
 void KeyPressCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
 {

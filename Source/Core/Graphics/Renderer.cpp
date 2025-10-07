@@ -12,7 +12,7 @@
 #include "Model.h"
 #include "Shader.h"
 #include "ShaderProgram.h"
-#include "../../Application.h"
+#include "../Application.h"
 #include "../DrawableObject.h"
 #include "../../Resources/Models/suzi_flat.h"
 
@@ -51,5 +51,6 @@ void Renderer::Render() const
 	}
 	// put the stuff we’ve been drawing onto the display
 	glfwSwapBuffers(this->_window);
+
 	app->GetLevel()->OnDraw();
 }

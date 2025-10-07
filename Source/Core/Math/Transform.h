@@ -8,23 +8,27 @@
 
 #include "Rotation.h"
 #include "Scale.h"
-#include "Translation.h"
+#include "Location.h"
 
 
 class Transform
 {
 private:
     glm::mat4 _transformMatrix;
-    Translation _translation;
+    Location _translation;
     Rotation _rotation;
     Scale _scale;
 
 public:
     Transform();
 
-    Transform(Translation translation, Rotation rotation, Scale scale);
+    Transform(Location translation, Rotation rotation, Scale scale);
 
     Transform(glm::mat4 *transformMatrix);
 
-    glm::mat4 *GetMatrix();
+    glm::mat4 *AsMatrix();
+
+    Location GetLocation();
+    Rotation GetRotation();
+    Scale GetScale();
 };

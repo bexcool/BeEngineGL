@@ -7,6 +7,8 @@
 #include <glm/ext/matrix_float4x4.hpp>
 #include <glm/ext/matrix_transform.hpp>
 
+#include "../Application.h"
+
 
 ShaderProgram::ShaderProgram(Shader *vertexShader, Shader *fragmentShader)
 {
@@ -30,6 +32,8 @@ void ShaderProgram::LinkShaders()
     glLinkProgram(_shaderProgram);
 
     _modelTransformId = glGetUniformLocation(_shaderProgram, "modelMatrix");
+    _projectionTransformId = glGetUniformLocation(_shaderProgram, "projectionMatrix");
+    _viewTransformId = glGetUniformLocation(_shaderProgram, "viewMatrix");
 
     GLint status;
     glGetProgramiv(_shaderProgram, GL_LINK_STATUS, &status);
@@ -46,6 +50,12 @@ void ShaderProgram::LinkShaders()
 
 void ShaderProgram::Use()
 {
+    auto camera = Application::GetInstance()->GetLevel()->GetActiveCamera();
+
+    if (camera == nullptr) return;
+
     glUseProgram(_shaderProgram);
-    glUniformMatrix4fv(_modelTransformId, 1, GL_FALSE, &(*_transform->GetMatrix())[0][0]);
+    glUniformMatrix4fv(_modelTransformId, 1, GL_FALSE, &(*_transform->AsMatrix())[0][0]);
+    glUniformMatrix4fv(_viewTransformId, 1, GL_FALSE, &(camera->GetCameraViewMatrix())[0][0]);
+    glUniformMatrix4fv(_projectionTransformId, 1, GL_FALSE, &(camera->GetCameraProjectionMatrix())[0][0]);
 }

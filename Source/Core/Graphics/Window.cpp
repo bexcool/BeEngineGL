@@ -10,6 +10,9 @@ static void error_callback(int error, const char *description) { fputs(descripti
 
 Window::Window(int width, int height, std::string title)
 {
+    _width = width;
+    _height = height;
+
     glfwSetErrorCallback(error_callback);
     if (!glfwInit())
     {
@@ -41,3 +44,17 @@ GLFWwindow *Window::AsGLFWWindow()
     return _glfwWindow;
 }
 
+int Window::GetWidth()
+{
+    return _width;
+}
+
+int Window::GetHeight()
+{
+    return _height;
+}
+
+float Window::GetAspectRatio()
+{
+    return static_cast<float>(_width) / static_cast<float>(_height);
+}

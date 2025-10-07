@@ -11,9 +11,14 @@
 class Window
 {
     GLFWwindow *_glfwWindow;
+    int _width, _height;
 
 public:
     Window(int width, int height, std::string title);
 
     GLFWwindow *AsGLFWWindow();
+
+    int GetWidth();
+    int GetHeight();
+    float GetAspectRatio();
 };

@@ -6,14 +6,18 @@
 
 #include <string>
 #include <glm/ext/matrix_transform.hpp>
+#include <glm/ext/quaternion_float.hpp>
 
 Transform::Transform()
 {
+    _translation = Location();
+    _rotation = Rotation();
+    _scale = Scale();
     _transformMatrix = glm::mat4(1.0f);
 }
 
 
-Transform::Transform(Translation translation, Rotation rotation, Scale scale)
+Transform::Transform(Location translation, Rotation rotation, Scale scale)
 {
     _translation = translation;
     _rotation = rotation;
@@ -33,7 +37,22 @@ Transform::Transform(glm::mat4 *transformMatrix)
     this->_transformMatrix = (*transformMatrix);
 }
 
-glm::mat4 *Transform::GetMatrix()
+glm::mat4 *Transform::AsMatrix()
 {
     return &_transformMatrix;
+}
+
+Location Transform::GetLocation()
+{
+    return _translation;
+}
+
+Rotation Transform::GetRotation()
+{
+    return _rotation;
+}
+
+Scale Transform::GetScale()
+{
+    return _scale;
 }

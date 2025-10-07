@@ -9,6 +9,17 @@ void Level::AddObject(DrawableObject *drawableObject)
     _drawableObjects.push_back(drawableObject);
 }
 
+// Camera
+void Level::SetActiveCamera(Camera *camera)
+{
+    _camera = camera;
+}
+
+Camera *Level::GetActiveCamera()
+{
+    return _camera;
+}
+
 void Level::OnKeyEvent(KeyEventArgs e) {}
 void Level::OnLoaded() {}
 void Level::OnUnloaded() {}

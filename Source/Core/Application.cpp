@@ -4,13 +4,13 @@
 
 #include "Application.h"
 
-#include "Resources/Models/suzi_flat.h"
-#include "Resources/Models/gift.h"
-#include "Core/Graphics/Renderer.h"
-#include "Game/TestLevel.h"
-#include "Resources/Models/suzi_smooth.h"
-#include "Core/logger.h"
-#include "Core/Events/InputManager.h"
+#include "../Resources/Models/suzi_flat.h"
+#include "../Resources/Models/gift.h"
+#include "Graphics/Renderer.h"
+#include "../Game/TestLevel.h"
+#include "../Resources/Models/suzi_smooth.h"
+#include "logger.h"
+#include "Events/InputManager.h"
 
 Application *Application::_currentApp = nullptr;
 
@@ -38,7 +38,7 @@ void Application::Run()
 	// Tests
 	TestLevel *level1 = new TestLevel("level1");
 	auto suziObject = new DrawableObject(new Transform(
-		Translation(),
+		Location(),
 		Rotation(),
 		Scale(0.5f)
 	));
@@ -49,6 +49,11 @@ void Application::Run()
 	level1->AddObject(suziObject);
 
 	LoadLevel(level1);
+
+	auto trans = Transform();
+	Camera *camera = new Camera(trans);
+
+	level1->SetActiveCamera(camera);
 
 	_gameLoop->Start();
 }
@@ -70,7 +75,7 @@ void Application::OnKeyEvent(KeyEventArgs e)
 		{
 			TestLevel *level2 = new TestLevel("level2");
 			auto suziObject = new DrawableObject(new Transform(
-				Translation(),
+				Location(),
 				Rotation(),
 				Scale(0.2f)
 			));
@@ -79,7 +84,7 @@ void Application::OnKeyEvent(KeyEventArgs e)
 			level2->AddObject(suziObject);
 
 			auto suziObject2 = new DrawableObject(new Transform(
-				Translation(.5f, 0.0f, 0.0f),
+				Location(.5f, 0.0f, 0.0f),
 				Rotation(),
 				Scale(0.7f)
 			));

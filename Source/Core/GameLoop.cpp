@@ -5,7 +5,7 @@
 #include "GameLoop.h"
 
 #include "logger.h"
-#include "../Application.h"
+#include "Application.h"
 
 GameLoop::GameLoop(Renderer *renderer)
 {

@@ -6,10 +6,10 @@
 
 #include <sstream>
 
-#include "Core/GameLoop.h"
-#include "Core/Level.h"
-#include "Core/Graphics/Renderer.h"
-#include "Core/Graphics/Window.h"
+#include "GameLoop.h"
+#include "Level.h"
+#include "Graphics/Renderer.h"
+#include "Graphics/Window.h"
 
 class Application
 {

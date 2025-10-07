@@ -3,12 +3,14 @@
 //
 
 #pragma once
+#include "Camera.h"
 #include "DrawableObject.h"
 #include "Events/KeyEventArgs.h"
 
 
 class Level
 {
+    Camera *_camera;
     vector<DrawableObject *> _drawableObjects;
     std::string _name;
 
@@ -22,6 +24,9 @@ public:
 
     vector<DrawableObject *> *GetDrawableObjects() { return &_drawableObjects; }
 
+    // Camera
+    void SetActiveCamera(Camera *camera);
+    Camera *GetActiveCamera();
 
     /**
      * Called when level was loaded.
