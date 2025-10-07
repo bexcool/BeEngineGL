@@ -10,7 +10,7 @@
 
 Transform::Transform()
 {
-    _translation = Location();
+    _location = Location();
     _rotation = Rotation();
     _scale = Scale();
     _transformMatrix = glm::mat4(1.0f);
@@ -19,13 +19,13 @@ Transform::Transform()
 
 Transform::Transform(Location translation, Rotation rotation, Scale scale)
 {
-    _translation = translation;
+    _location = translation;
     _rotation = rotation;
     _scale = scale;
 
     _transformMatrix = glm::mat4(1.0f);
     _transformMatrix = glm::translate<float>(_transformMatrix,
-                                             glm::vec3(_translation.GetX(), _translation.GetY(), _translation.GetZ()));
+                                             glm::vec3(_location.GetX(), _location.GetY(), _location.GetZ()));
     _transformMatrix = glm::rotate<float>(_transformMatrix, _rotation.GetRoll(), glm::vec3(1, 0, 0));
     _transformMatrix = glm::rotate<float>(_transformMatrix, _rotation.GetPitch(), glm::vec3(0, 1, 0));
     _transformMatrix = glm::rotate<float>(_transformMatrix, _rotation.GetYaw(), glm::vec3(0, 0, 1));
@@ -42,17 +42,33 @@ glm::mat4 *Transform::AsMatrix()
     return &_transformMatrix;
 }
 
-Location Transform::GetLocation()
+Location Transform::GetLocation() const
 {
-    return _translation;
+    return _location;
 }
 
-Rotation Transform::GetRotation()
+void Transform::SetLocation(Location location)
+{
+    _location = location;
+}
+
+
+Rotation Transform::GetRotation() const
 {
     return _rotation;
 }
 
-Scale Transform::GetScale()
+void Transform::SetRotation(Rotation rotation)
+{
+    _rotation = rotation;
+}
+
+Scale Transform::GetScale() const
 {
     return _scale;
+}
+
+void Transform::SetScale(Scale scale)
+{
+    _scale = scale;
 }

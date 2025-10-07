@@ -22,6 +22,10 @@ void GameLoop::Start()
 
     while (!glfwWindowShouldClose(win))
     {
+        float currentFrame = glfwGetTime();
+        _deltaTime = currentFrame - _lastFrameTime;
+        _lastFrameTime = currentFrame;
+
         Application::GetInstance()->GetLevel()->OnTick();
 
         _renderer->Render();
@@ -33,4 +37,9 @@ void GameLoop::Start()
 
     glfwTerminate();
     exit(EXIT_SUCCESS);
+}
+
+float GameLoop::GetDeltaTime()
+{
+    return _deltaTime;
 }

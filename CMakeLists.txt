@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.30)
 project(ZPG)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 
 add_executable(ZPG
         Source/main.cpp
@@ -42,8 +42,8 @@ add_executable(ZPG
         Source/Core/Events/InputManager.h
         Source/Core/Events/EventArgs.cpp
         Source/Core/Events/EventArgs.h
-        Source/Core/Events/KeyEventArgs.cpp
-        Source/Core/Events/KeyEventArgs.h
+        Source/Core/Events/KeyboardKeyEventArgs.cpp
+        Source/Core/Events/KeyboardKeyEventArgs.h
         Source/Game/TestLevel.cpp
         Source/Game/TestLevel.h
         Source/Core/GameLoop.cpp
@@ -56,6 +56,8 @@ add_executable(ZPG
         Source/Core/GameObject.h
         Source/App.cpp
         Source/App.h
+        Source/Core/Events/MouseKeyEventArgs.cpp
+        Source/Core/Events/MouseKeyEventArgs.h
 )
 
 

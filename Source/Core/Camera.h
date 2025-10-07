@@ -12,7 +12,7 @@
 
 class Camera : public GameObject
 {
-    Location _lookTargetLocation;
+    Location _lookTargetLocation = Location(1, 0, 0);
 
 public:
     Camera(Transform &transform);

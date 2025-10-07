@@ -6,12 +6,12 @@
 #include "EventArgs.h"
 
 
-class KeyEventArgs : public EventArgs
+class KeyboardKeyEventArgs : public EventArgs
 {
 public:
     int Key, Scancode, Action, Mods;
 
-    KeyEventArgs(int key, int scancode, int action, int mods) : Key(key),
+    KeyboardKeyEventArgs(int key, int scancode, int action, int mods) : Key(key),
                                                                 Scancode(scancode),
                                                                 Action(action),
                                                                 Mods(mods) {}

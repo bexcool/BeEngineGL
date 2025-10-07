@@ -19,14 +19,14 @@ glm::mat4 Camera::GetCameraViewMatrix()
 {
     return glm::lookAt(GetWorldTransform().GetLocation(),
                        GetWorldTransform().GetLocation() + _lookTargetLocation,
-                       Location());
+                       glm::vec3(0.0f, 1.0f, 0.0f));
 }
 
 glm::mat4 Camera::GetCameraProjectionMatrix()
 {
     float aspectRatio = Application::GetInstance()->GetWindow()->GetAspectRatio();
 
-    return glm::perspective(45.0f, aspectRatio, 0.1f, 100.0f);
+    return glm::perspective(70.0f, aspectRatio, 0.1f, 100.0f);
 }
 
 void Camera::SetLookTargetLocation(const Location &target)

@@ -31,8 +31,10 @@ public:
 
 	void LoadLevel(Level *level);
 	Level *GetLevel() { return _currentLevel; }
-
 	Window *GetWindow() { return _window; }
 
-	void OnKeyEvent(KeyEventArgs e);
+	float GetDeltaTime();
+
+	void OnKeyboardKeyEvent(KeyboardKeyEventArgs e);
+	void OnMouseKeyEvent(MouseKeyEventArgs e);
 };

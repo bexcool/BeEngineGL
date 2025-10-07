@@ -5,7 +5,8 @@
 #pragma once
 #include "Camera.h"
 #include "DrawableObject.h"
-#include "Events/KeyEventArgs.h"
+#include "Events/KeyboardKeyEventArgs.h"
+#include "Events/MouseKeyEventArgs.h"
 
 
 class Level
@@ -52,5 +53,11 @@ public:
      * Called when a key press occured.
      * @param e Key event arguments.
      */
-    virtual void OnKeyEvent(KeyEventArgs e);
+    virtual void OnKeyboardKeyEvent(KeyboardKeyEventArgs e);
+
+    /**
+     * Called when a key press occured.
+     * @param e Key event arguments.
+     */
+    virtual void OnMouseKeyEvent(MouseKeyEventArgs e);
 };

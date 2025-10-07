@@ -20,7 +20,8 @@ Camera *Level::GetActiveCamera()
     return _camera;
 }
 
-void Level::OnKeyEvent(KeyEventArgs e) {}
+void Level::OnKeyboardKeyEvent(KeyboardKeyEventArgs e) {}
+void Level::OnMouseKeyEvent(MouseKeyEventArgs e) {}
 void Level::OnLoaded() {}
 void Level::OnUnloaded() {}
 void Level::OnDraw() {}

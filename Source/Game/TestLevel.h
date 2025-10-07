@@ -8,11 +8,14 @@
 class TestLevel : public Level
 {
 public:
-    TestLevel(std::string title) : Level(title) {};
+    TestLevel(std::string title) : Level(title) {}
+
+    void CheckMovementInput();
 
     void OnLoaded() override;
     void OnUnloaded() override;
     void OnDraw() override;
     void OnTick() override;
-    void OnKeyEvent(KeyEventArgs event) override;
+    void OnKeyboardKeyEvent(KeyboardKeyEventArgs e) override;
+    void OnMouseKeyEvent(MouseKeyEventArgs e) override;
 };

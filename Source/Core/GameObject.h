@@ -13,4 +13,10 @@ class GameObject
 public:
     Transform GetWorldTransform() const;
     void SetWorldTransform(const Transform &worldTransform);
+
+    Location GetWorldLocation() const;
+    void SetWorldLocation(const Location &worldLocation);
+
+    Rotation GetWorldRotation() const;
+    void SetWorldRotation(const Rotation &worldRotation);
 };

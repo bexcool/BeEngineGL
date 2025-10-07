@@ -15,7 +15,7 @@ class Transform
 {
 private:
     glm::mat4 _transformMatrix;
-    Location _translation;
+    Location _location;
     Rotation _rotation;
     Scale _scale;
 
@@ -28,7 +28,10 @@ public:
 
     glm::mat4 *AsMatrix();
 
-    Location GetLocation();
-    Rotation GetRotation();
-    Scale GetScale();
+    [[nodiscard]] Location GetLocation() const;
+    void SetLocation(Location location);
+    [[nodiscard]] Rotation GetRotation() const;
+    void SetRotation(Rotation rotation);
+    [[nodiscard]] Scale GetScale() const;
+    void SetScale(Scale scale);
 };
