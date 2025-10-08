@@ -10,4 +10,6 @@ class PlayerController : public Controller
 {
 public:
     void OnTick() override;
+    void OnKeyboardKeyEvent(KeyboardKeyEventArgs e) override;
+    void OnMouseKeyEvent(MouseKeyEventArgs e) override;
 };

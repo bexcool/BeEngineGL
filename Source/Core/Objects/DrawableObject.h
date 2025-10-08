@@ -3,24 +3,20 @@
 //
 
 #pragma once
+#include "GameObject.h"
 #include "../Graphics/Model.h"
 #include "../Graphics/ShaderProgram.h"
 #include "../Math/Transform.h"
 
-class DrawableObject
+class DrawableObject : public GameObject
 {
 private:
     Model *_model;
-    Transform *_transform;
 
 public:
-    DrawableObject();
-
-    DrawableObject(Transform *transform);
+    DrawableObject() = default;
 
     void SetModel(Model *model);
 
-    void Draw() const;
-
-    Transform *GetTransform() { return _transform; }
+    void OnRender() override;
 };

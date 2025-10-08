@@ -4,7 +4,6 @@
 
 #pragma once
 
-
 class Scale
 {
 private:
@@ -20,4 +19,6 @@ public:
     float GetX() const { return _x; }
     float GetY() const { return _y; }
     float GetZ() const { return _z; }
+
+    Scale operator+(const Scale &scale) const;
 };

@@ -14,14 +14,13 @@ ShaderProgram::ShaderProgram(Shader *vertexShader, Shader *fragmentShader)
 {
     this->_vertexShader = vertexShader;
     this->_fragmentShader = fragmentShader;
-    this->_transform = new Transform();
 }
 
-ShaderProgram::ShaderProgram(Shader *vertexShader, Shader *fragmentShader, Transform *transform)
+ShaderProgram::ShaderProgram(Shader *vertexShader, Shader *fragmentShader, Model *model)
 {
     this->_vertexShader = vertexShader;
     this->_fragmentShader = fragmentShader;
-    this->_transform = transform;
+    this->_model = model;
 }
 
 void ShaderProgram::LinkShaders()
@@ -55,7 +54,7 @@ void ShaderProgram::Use()
     if (camera == nullptr) return;
 
     glUseProgram(_shaderProgram);
-    glUniformMatrix4fv(_modelTransformId, 1, GL_FALSE, &(*_transform->AsMatrix())[0][0]);
+    glUniformMatrix4fv(_modelTransformId, 1, GL_FALSE, &(*_model->GetParent()->GetWorldTransform().AsMatrix())[0][0]);
     glUniformMatrix4fv(_viewTransformId, 1, GL_FALSE, &(camera->GetCameraViewMatrix())[0][0]);
     glUniformMatrix4fv(_projectionTransformId, 1, GL_FALSE, &(camera->GetCameraProjectionMatrix())[0][0]);
 }

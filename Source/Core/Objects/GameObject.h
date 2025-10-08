@@ -13,24 +13,26 @@
 class GameObjectComponent;
 class Controller;
 
-class GameObject
+class GameObject : public CoreEvents
 {
-    Transform _worldTransform;
-
+    Transform _worldTransform = Transform();
     std::vector<GameObjectComponent *> _components;
+
+protected:
     std::unique_ptr<Controller> _controller = std::make_unique<Controller>();
 
-    void Controller_KeyboardKeyPressed(KeyboardKeyEventArgs e);
-
 public:
+    GameObject() = default;
+
     // Controller
     void SetController(std::unique_ptr<Controller> controller);
     Controller *GetController() const;
 
     // Components
     void AddComponent(GameObjectComponent *component);
+    void AddComponent(GameObjectComponent *component, const Transform transform);
     void RemoveComponent(GameObjectComponent *component);
-    std::vector<GameObjectComponent *> *GetComponents();
+    std::vector<GameObjectComponent *> &GetComponents();
 
     // Transform
     Transform GetWorldTransform() const;
@@ -41,4 +43,11 @@ public:
 
     Rotation GetWorldRotation() const;
     void SetWorldRotation(const Rotation &worldRotation);
+
+    // Virtual
+    virtual void OnSpawned() {}
+
+    // Overrides
+    void OnRender() override;
+    void OnTick() override;
 };

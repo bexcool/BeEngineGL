@@ -50,8 +50,8 @@ add_executable(ZPG
         Source/Core/GameLoop.h
         Source/Core/logger.c
         Source/Core/logger.h
-        Source/Core/Camera.cpp
-        Source/Core/Camera.h
+        Source/Core/ObjectComponents/CameraComponent.cpp
+        Source/Core/ObjectComponents/CameraComponent.h
         Source/Core/Objects/GameObject.cpp
         Source/Core/Objects/GameObject.h
         Source/App.cpp
@@ -60,15 +60,18 @@ add_executable(ZPG
         Source/Core/Events/MouseKeyEventArgs.h
         Source/Core/ObjectComponents/GameObjectComponent.cpp
         Source/Core/ObjectComponents/GameObjectComponent.h
-        Source/Core/ObjectComponents/CameraComponent.cpp
-        Source/Core/ObjectComponents/CameraComponent.h
         Source/Core/Controllers/PlayerController.cpp
         Source/Core/Controllers/PlayerController.h
-        Source/Core/Events/CoreEvents.h
-        Source/Core/ObjectComponents/MovementComponent.cpp
-        Source/Core/ObjectComponents/MovementComponent.h
         Source/Core/Events/EventDispatcher.cpp
         Source/Core/Events/EventDispatcher.h
+        Source/Core/Objects/Character/Character.cpp
+        Source/Core/Objects/Character/Character.h
+        Source/Core/Objects/Character/PlayerCharacter.cpp
+        Source/Core/Objects/Character/PlayerCharacter.h
+        Source/Core/Events/CoreEvents.cpp
+        Source/Core/Events/CoreEvents.h
+        Source/Core/Events/KeyEvents.cpp
+        Source/Core/Events/KeyEvents.h
 )
 
 
@@ -77,6 +80,7 @@ find_package(GLEW REQUIRED)
 target_include_directories(ZPG PRIVATE
         /opt/homebrew/include
         ${CMAKE_SOURCE_DIR}/vendor
+        ${CMAKE_SOURCE_DIR}/Source
 )
 if (APPLE)
     target_link_directories(ZPG PRIVATE /opt/homebrew/lib)

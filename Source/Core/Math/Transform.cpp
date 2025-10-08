@@ -4,6 +4,10 @@
 
 #include "Transform.h"
 
+#include "Location.h"
+#include "Rotation.h"
+#include "Scale.h"
+
 #include <string>
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/ext/quaternion_float.hpp>
@@ -71,4 +75,11 @@ Scale Transform::GetScale() const
 void Transform::SetScale(Scale scale)
 {
     _scale = scale;
+}
+
+Transform Transform::operator+(const Transform &transform) const
+{
+    return Transform(GetLocation() + transform.GetLocation(),
+                     GetRotation() + transform.GetRotation(),
+                     GetScale() + transform.GetScale());
 }

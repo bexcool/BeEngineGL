@@ -23,11 +23,10 @@ private:
 public:
     Model(const float *vertices, const unsigned int amount);
 
-    //Model(Shader *fragmentShader, Shader *vertexShader, vector<float> *vertices);
-
     void Initialize(DrawableObject *parent);
 
     void SetParent(DrawableObject *parent);
+    DrawableObject *GetParent();
 
     void Draw() const;
 };

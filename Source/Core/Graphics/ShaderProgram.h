@@ -10,6 +10,8 @@
 #include "Shader.h"
 #include "../Math/Transform.h"
 
+class Model;
+
 class ShaderProgram
 {
 private:
@@ -19,16 +21,14 @@ private:
 	GLuint _modelTransformId;
 	GLuint _projectionTransformId;
 	GLuint _viewTransformId;
-	Transform *_transform;
+	Model *_model;
 
 public:
 	ShaderProgram(Shader *vertexShader, Shader *fragmentShader);
-
-	ShaderProgram(Shader *vertexShader, Shader *fragmentShader, Transform *transform);
+	ShaderProgram(Shader *vertexShader, Shader *fragmentShader, Model *model);
 
 	~ShaderProgram();
 
 	void LinkShaders();
-
 	void Use();
 };

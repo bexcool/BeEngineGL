@@ -44,9 +44,9 @@ void Renderer::Render() const
 	auto app = Application::GetInstance();
 	if (app->GetLevel() != nullptr)
 	{
-		for (auto object: (*app->GetLevel()->GetDrawableObjects()))
+		for (auto object: (*app->GetLevel()->GetGameObjects()))
 		{
-			object->Draw();
+			object->OnRender();
 		}
 	}
 	// put the stuff we’ve been drawing onto the display

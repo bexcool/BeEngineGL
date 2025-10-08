@@ -1,17 +1,88 @@
 //
-// Created by Petr Pavlík on 08.10.2025.
+// Created by Petr Pavlík on 07.10.2025.
 //
 
 #include "CameraComponent.h"
 
-#include "../Application.h"
+#include <glm/ext/matrix_clip_space.hpp>
+#include <glm/ext/matrix_transform.hpp>
 
-void CameraComponent::ActivateCamera()
+#include "Core/Application.h"
+#include "Core/Events/InputManager.h"
+
+
+glm::mat4 CameraComponent::GetCameraViewMatrix()
 {
-    Application *app = Application::GetInstance();
+    return glm::lookAt(GetWorldTransform().GetLocation(),
+                       GetWorldTransform().GetLocation() + _lookTargetLocation,
+                       glm::vec3(0.0f, 1.0f, 0.0f));
+}
 
-    if (app->GetLevel() != nullptr)
+glm::mat4 CameraComponent::GetCameraProjectionMatrix()
+{
+    float aspectRatio = Application::GetInstance()->GetWindow()->GetAspectRatio();
+
+    return glm::perspective(70.0f, aspectRatio, 0.1f, 100.0f);
+}
+
+void CameraComponent::SetSensitivity(float sensitivity)
+{
+    _sensitivity = sensitivity;
+}
+
+float CameraComponent::GetSensitivity()
+{
+    return _sensitivity;
+}
+
+void CameraComponent::SetLookTargetLocation(const Location &target)
+{
+    _lookTargetLocation = target;
+}
+
+Location CameraComponent::GetLookTargetLocation()
+{
+    return _lookTargetLocation;
+}
+
+void CameraComponent::OnTick()
+{
+    GameObjectComponent::OnTick();
+
+    auto camerRot = GetWorldRotation();
+
+    float yaw = camerRot.GetYaw(),
+            pitch = camerRot.GetPitch();
+
+    if (InputManager::IsMouseKeyPressed(GLFW_MOUSE_BUTTON_LEFT))
     {
-        app->GetLevel()->SetActiveCamera(_camera);
+        auto controller = GetParent()->GetController();
+
+        float xOffset = controller->GetMousePosition().x - controller->GetLastMousePosition().x;
+        float yOffset = controller->GetLastMousePosition().y - controller->GetMousePosition().y;
+
+        xOffset *= _sensitivity;
+        yOffset *= _sensitivity;
+
+        yaw += xOffset;
+        pitch += yOffset;
+
+        if (pitch > 89.0f) pitch = 89.0f;
+        if (pitch < -89.0f) pitch = -89.0f;
+
+        glm::vec3 front = GetLookTargetLocation();
+        front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+        front.y = sin(glm::radians(pitch));
+        front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+
+        front = glm::normalize(front);
+
+        SetLookTargetLocation(Location(
+            front.x,
+            front.y,
+            front.z
+        ));
+
+        SetWorldRotation(Rotation(0, pitch, yaw));
     }
 }

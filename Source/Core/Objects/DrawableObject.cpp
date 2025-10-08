@@ -4,20 +4,16 @@
 
 #include "DrawableObject.h"
 
-DrawableObject::DrawableObject(Transform *transform)
-{
-    this->_transform = transform;
-}
-
 void DrawableObject::SetModel(Model *model)
 {
     this->_model = model;
     this->_model->Initialize(this);
 }
 
-
-void DrawableObject::Draw() const
+void DrawableObject::OnRender()
 {
+    GameObject::OnRender();
+
     if (_model != nullptr) _model->Draw();
 }
 

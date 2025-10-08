@@ -36,24 +36,9 @@ void Application::Run()
 	InputManager::Initialize();
 
 	// Tests
-	TestLevel *level1 = new TestLevel("level1");
-	auto suziObject = new DrawableObject(new Transform(
-		Location(10, 0, 0),
-		Rotation(),
-		Scale(0.5f)
-	));
-
-	auto suziModel = new Model(suziFlat, sizeof(suziFlat) / (sizeof(float) * 6));
-	suziObject->SetModel(suziModel);
-
-	level1->AddObject(suziObject);
+	auto *level1 = new TestLevel("level1");
 
 	LoadLevel(level1);
-
-	auto trans = Transform();
-	Camera *camera = new Camera(trans);
-
-	level1->SetActiveCamera(camera);
 
 	_gameLoop->Start();
 }
@@ -81,23 +66,23 @@ void Application::OnKeyboardKeyEvent(KeyboardKeyEventArgs e)
 			case GLFW_KEY_Y:
 			{
 				TestLevel *level2 = new TestLevel("level2");
-				auto suziObject = new DrawableObject(new Transform(
-					Location(),
-					Rotation(),
-					Scale(0.2f)
-				));
+				auto suziObject = new DrawableObject();
 				auto suziModel = new Model(suziSmooth, sizeof(suziSmooth) / (sizeof(float) * 6));
 				suziObject->SetModel(suziModel);
-				level2->AddObject(suziObject);
+				level2->SpawnGameObject(suziObject, Transform(
+					                        Location(),
+					                        Rotation(),
+					                        Scale(0.2f)
+				                        ));
 
-				auto suziObject2 = new DrawableObject(new Transform(
-					Location(.5f, 0.0f, 0.0f),
-					Rotation(),
-					Scale(0.7f)
-				));
+				auto suziObject2 = new DrawableObject();
 				auto suziModel2 = new Model(gift, sizeof(gift) / (sizeof(float) * 6));
 				suziObject2->SetModel(suziModel2);
-				level2->AddObject(suziObject2);
+				level2->SpawnGameObject(suziObject2, Transform(
+					                        Location(.5f, 0.0f, 0.0f),
+					                        Rotation(),
+					                        Scale(0.7f)
+				                        ));
 
 				LoadLevel(level2);
 

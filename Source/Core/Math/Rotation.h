@@ -4,7 +4,6 @@
 
 #pragma once
 
-
 class Rotation
 {
 private:
@@ -18,4 +17,6 @@ public:
     float GetRoll() const { return _x; }
     float GetPitch() const { return _y; }
     float GetYaw() const { return _z; }
+
+    Rotation operator+(const Rotation &rotation) const;
 };

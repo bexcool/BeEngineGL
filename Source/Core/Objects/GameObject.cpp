@@ -4,18 +4,22 @@
 
 #include "GameObject.h"
 
-void GameObject::Controller_KeyboardKeyPressed(KeyboardKeyEventArgs e)
+void GameObject::OnTick()
 {
-    for (auto comp: _components)
+    for (auto comp: GetComponents())
     {
-        //comp->On
+        comp->OnTick();
     }
+
+    _controller->OnTick();
 }
+
+void GameObject::OnRender() {}
 
 void GameObject::SetController(std::unique_ptr<Controller> controller)
 {
     _controller = std::move(controller);
-    _controller.get()->OnPossessed(this);
+    _controller->OnPossessed(this);
 }
 
 Controller *GameObject::GetController() const
@@ -29,15 +33,21 @@ void GameObject::AddComponent(GameObjectComponent *component)
     component->OnAttached(this);
 }
 
+void GameObject::AddComponent(GameObjectComponent *component, const Transform transform)
+{
+    component->SetWorldTransform(transform);
+    AddComponent(component);
+}
+
 void GameObject::RemoveComponent(GameObjectComponent *component)
 {
     _components.erase(std::find(_components.begin(), _components.end(), component));
     component->OnRemovedFromParent();
 }
 
-std::vector<GameObjectComponent *> *GameObject::GetComponents()
+std::vector<GameObjectComponent *> &GameObject::GetComponents()
 {
-    return &_components;
+    return _components;
 }
 
 Transform GameObject::GetWorldTransform() const

@@ -6,10 +6,9 @@
 #include <glm/common.hpp>
 #include <glm/ext/matrix_float4x4.hpp>
 
-#include "Rotation.h"
 #include "Scale.h"
 #include "Location.h"
-
+#include "Rotation.h"
 
 class Transform
 {
@@ -34,4 +33,6 @@ public:
     void SetRotation(Rotation rotation);
     [[nodiscard]] Scale GetScale() const;
     void SetScale(Scale scale);
+
+    Transform operator+(const Transform &transform) const;
 };

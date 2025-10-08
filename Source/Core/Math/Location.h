@@ -15,4 +15,6 @@ public:
     float GetX() const { return x; }
     float GetY() const { return y; }
     float GetZ() const { return z; }
+
+    Location operator+(const Location &location) const;
 };

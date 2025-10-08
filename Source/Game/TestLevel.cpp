@@ -8,6 +8,8 @@
 
 #include "../Core/Application.h"
 #include "../Core/Events/InputManager.h"
+#include "../Resources/Models/suzi_flat.h"
+#include "Core/Objects/Character/PlayerCharacter.h"
 
 double lastX = 400, lastY = 300;
 float speed = 1;
@@ -29,99 +31,37 @@ void TestLevel::OnMouseKeyEvent(MouseKeyEventArgs e)
     Level::OnMouseKeyEvent(e);
 }
 
-void TestLevel::OnLoaded() {}
+void TestLevel::OnLoaded()
+{
+    auto suziTrans = Transform(
+        Location(10, 0, 0),
+        Rotation(),
+        Scale(0.5f)
+    );
+    auto suziObject = new DrawableObject();
+
+    auto suziModel = new Model(suziFlat, sizeof(suziFlat) / (sizeof(float) * 6));
+    suziObject->SetModel(suziModel);
+
+    this->SpawnGameObject(suziObject, suziTrans);
+
+    auto *player = new PlayerCharacter();
+    auto *camera = new CameraComponent();
+    player->AddComponent(camera);
+
+    this->SpawnGameObject(player);
+
+    this->SetActiveCamera(camera);
+}
+
 void TestLevel::OnUnloaded() {}
 void TestLevel::OnRendered() {}
 
-void TestLevel::CheckMovementInput()
-{
-    auto camera = Application::GetInstance()->GetLevel()->GetActiveCamera();
-    auto camerLoc = camera->GetWorldLocation();
-    auto camerRot = camera->GetWorldRotation();
-
-    float yaw = camerRot.GetYaw(),
-            pitch = camerRot.GetPitch();
-
-    Location camLocation = camera->GetWorldLocation();
-
-    float deltaTime = Application::GetInstance()->GetDeltaTime();
-
-    double xpos, ypos;
-    glfwGetCursorPos(Application::GetInstance()->GetWindow()->AsGLFWWindow(), &xpos, &ypos);
-
-    glm::vec3 front = camera->GetLookTargetLocation();
-
-    if (InputManager::IsMouseKeyPressed(GLFW_MOUSE_BUTTON_LEFT))
-    {
-        float sensitivity = 0.1f;
-
-        float xoffset = xpos - lastX;
-        float yoffset = lastY - ypos; // reversed: y-coordinates go from bottom to top
-
-        xoffset *= sensitivity;
-        yoffset *= sensitivity;
-
-        yaw += xoffset;
-        pitch += yoffset;
-
-        // constrain pitch
-        if (pitch > 89.0f) pitch = 89.0f;
-        if (pitch < -89.0f) pitch = -89.0f;
-        front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-        front.y = sin(glm::radians(pitch));
-        front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-
-        front = glm::normalize(front);
-
-        camera->SetLookTargetLocation(Location(
-            front.x,
-            front.y,
-            front.z
-        ));
-
-        camera->SetWorldRotation(Rotation(0, pitch, yaw));
-    }
-
-    glm::vec3 right = glm::normalize(glm::cross(front, glm::vec3(0.0f, 1.0f, 0.0f)));
-
-    if (InputManager::IsKeyboardKeyPressed(GLFW_KEY_W))
-    {
-        camLocation += speed * deltaTime * front;
-    }
-
-    if (InputManager::IsKeyboardKeyPressed(GLFW_KEY_S))
-    {
-        camLocation -= speed * deltaTime * front;
-    }
-
-    if (InputManager::IsKeyboardKeyPressed(GLFW_KEY_A))
-    {
-        camLocation -= speed * deltaTime * right;
-    }
-
-    if (InputManager::IsKeyboardKeyPressed(GLFW_KEY_D))
-    {
-        camLocation += speed * deltaTime * right;
-    }
-
-    if (InputManager::IsKeyboardKeyPressed(GLFW_KEY_SPACE))
-    {
-        camLocation.y += speed * deltaTime;
-    }
-
-    if (InputManager::IsKeyboardKeyPressed(GLFW_KEY_LEFT_SUPER))
-    {
-        camLocation.y -= speed * deltaTime;
-    }
-
-
-    lastX = xpos;
-    lastY = ypos;
-
-    camera->SetWorldLocation(camLocation);
-}
+void TestLevel::CheckMovementInput() {}
 
 void TestLevel::OnTick()
 {
+    Level::OnTick();
+
     CheckMovementInput();
 }
