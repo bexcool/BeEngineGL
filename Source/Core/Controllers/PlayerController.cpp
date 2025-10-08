@@ -10,10 +10,8 @@
 
 #include "Core/Objects/Character/Character.h"
 
-void PlayerController::OnTick()
+void PlayerController::MovePlayer() const
 {
-    Controller::OnTick();
-
     auto app = Application::GetInstance();
     auto ownerLocation = GetOwner()->GetWorldLocation();
     auto front = app->GetLevel()->GetActiveCamera()->GetLookTargetLocation();
@@ -56,6 +54,13 @@ void PlayerController::OnTick()
 
         GetOwner()->SetWorldLocation(ownerLocation);
     }
+}
+
+void PlayerController::OnTick()
+{
+    Controller::OnTick();
+
+    MovePlayer();
 }
 
 void PlayerController::OnKeyboardKeyEvent(KeyboardKeyEventArgs e)
