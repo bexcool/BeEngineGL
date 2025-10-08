@@ -57,8 +57,6 @@ void TestLevel::OnLoaded()
 void TestLevel::OnUnloaded() {}
 void TestLevel::OnRendered() {}
 
-void TestLevel::CheckMovementInput() {}
-
 void TestLevel::OnTick()
 {
     Level::OnTick();
