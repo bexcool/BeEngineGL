@@ -8,7 +8,7 @@ void GameObject::Controller_KeyboardKeyPressed(KeyboardKeyEventArgs e)
 {
     for (auto comp: _components)
     {
-        comp->On
+        //comp->On
     }
 }
 
