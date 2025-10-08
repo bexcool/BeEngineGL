@@ -10,6 +10,11 @@
 
 #include "Core/Objects/Character/Character.h"
 
+void PlayerController::SetRun(bool isRunning)
+{
+    _isRunnig = isRunning;
+}
+
 void PlayerController::MovePlayer() const
 {
     auto app = Application::GetInstance();
@@ -19,7 +24,7 @@ void PlayerController::MovePlayer() const
 
     if (auto *character = dynamic_cast<Character *>(GetOwner()))
     {
-        float speed = character->GetWalkSpeed();
+        float speed = _isRunnig ? character->GetRunSpeed() : character->GetWalkSpeed();
         glm::vec3 right = glm::normalize(glm::cross(front, glm::vec3(0.0f, 1.0f, 0.0f)));
 
         if (InputManager::IsKeyboardKeyPressed(GLFW_KEY_W))
@@ -66,6 +71,11 @@ void PlayerController::OnTick()
 void PlayerController::OnKeyboardKeyEvent(KeyboardKeyEventArgs e)
 {
     Controller::OnKeyboardKeyEvent(e);
+
+    if (e.Key == GLFW_KEY_LEFT_SHIFT)
+    {
+        SetRun(e.Action == GLFW_PRESS);
+    }
 }
 
 void PlayerController::OnMouseKeyEvent(MouseKeyEventArgs e)

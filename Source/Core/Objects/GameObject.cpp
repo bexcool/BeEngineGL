@@ -14,7 +14,28 @@ void GameObject::OnTick()
     _controller->OnTick();
 }
 
-void GameObject::OnRender() {}
+void GameObject::OnRender()
+{
+    for (auto comp: GetComponents())
+    {
+        comp->OnRender();
+    }
+}
+
+GameObject::~GameObject()
+{
+    _controller.reset();
+
+    for (auto comp: GetComponents())
+    {
+        comp->Destroy();
+    }
+}
+
+void GameObject::Destroy()
+{
+    delete this;
+}
 
 void GameObject::SetController(std::unique_ptr<Controller> controller)
 {
@@ -35,7 +56,7 @@ void GameObject::AddComponent(GameObjectComponent *component)
 
 void GameObject::AddComponent(GameObjectComponent *component, const Transform transform)
 {
-    component->SetWorldTransform(transform);
+    component->SetLocalTransform(transform);
     AddComponent(component);
 }
 

@@ -4,8 +4,6 @@
 
 #pragma once
 
-#include <sstream>
-
 #include "GameLoop.h"
 #include "Level.h"
 #include "Graphics/Renderer.h"

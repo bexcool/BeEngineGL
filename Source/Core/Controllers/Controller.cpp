@@ -37,15 +37,10 @@ glm::vec2 Controller::GetLastMousePosition()
     return _lastMousePosition;
 }
 
-void Controller::OnRender()
-{
-    CoreEvents::OnRender();
-}
+void Controller::OnRender() {}
 
 void Controller::OnTick()
 {
-    CoreEvents::OnTick();
-
     _lastMousePosition = GetMousePosition();
 }
 

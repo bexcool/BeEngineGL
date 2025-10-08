@@ -5,40 +5,41 @@
 #pragma once
 #include "../Objects/GameObject.h"
 #include "../Math/Transform.h"
-#include "../Events/CoreEvents.h"
-#include "../Events/KeyEvents.h"
+#include "Core/Interfaces/ICoreEvents.h"
 
 class GameObject;
 
-class GameObjectComponent : public CoreEvents, KeyEvents
+class GameObjectComponent : public ICoreEvents
 {
     Transform _localTransform = Transform();
-    GameObject *_parent;
+    GameObject *_parent = nullptr;
 
 public:
     GameObjectComponent() = default;
+    ~GameObjectComponent() override;
 
     GameObject *GetParent() const;
 
+    void Destroy();
+
     // World
     Transform GetWorldTransform() const;
-    void SetWorldTransform(const Transform transform);
     Location GetWorldLocation() const;
-    void SetWorldLocation(const Location location);
     Rotation GetWorldRotation() const;
-    void SetWorldRotation(const Rotation rotation);
     Scale GetWorldScale() const;
-    void SetWorldScale(const Scale scale);
 
     // Local
     Transform GetLocalTransform() const;
-    void SetLocalTransform(const Transform transform);
+    void SetLocalTransform(Transform transform);
     Location GetLocalLocation() const;
-    void SetLocalLocation(const Location location);
+    void SetLocalLocation(Location location);
     Rotation GetLocalRotation() const;
-    void SetLocalRotation(const Rotation rotation);
+    void SetLocalRotation(Rotation rotation);
     Scale GetLocalScale() const;
-    void SetLocalScale(const Scale scale);
+    void SetLocalScale(Scale scale);
+
+    void OnTick() override {}
+    void OnRender() override {}
 
     virtual void OnAttached(GameObject *parent);
     virtual void OnRemovedFromParent() {}

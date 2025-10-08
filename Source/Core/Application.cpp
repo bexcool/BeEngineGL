@@ -11,6 +11,7 @@
 #include "../Resources/Models/suzi_smooth.h"
 #include "logger.h"
 #include "Events/InputManager.h"
+#include "ObjectComponents/ModelComponent.h"
 
 Application *Application::_currentApp = nullptr;
 
@@ -66,18 +67,21 @@ void Application::OnKeyboardKeyEvent(KeyboardKeyEventArgs e)
 			case GLFW_KEY_Y:
 			{
 				TestLevel *level2 = new TestLevel("level2");
-				auto suziObject = new DrawableObject();
-				auto suziModel = new Model(suziSmooth, sizeof(suziSmooth) / (sizeof(float) * 6));
-				suziObject->SetModel(suziModel);
+				auto suziObject = new GameObject();
+				auto suziModel = new ModelComponent();
+				suziModel->SetModel(suziSmooth, sizeof(suziSmooth) / (sizeof(float) * 6));
+				suziObject->AddComponent(suziModel);
+
 				level2->SpawnGameObject(suziObject, Transform(
 					                        Location(),
 					                        Rotation(),
 					                        Scale(0.2f)
 				                        ));
 
-				auto suziObject2 = new DrawableObject();
-				auto suziModel2 = new Model(gift, sizeof(gift) / (sizeof(float) * 6));
-				suziObject2->SetModel(suziModel2);
+				auto suziObject2 = new GameObject();
+				auto suziModel2 = new ModelComponent();
+				suziModel2->SetModel(gift, sizeof(gift) / (sizeof(float) * 6));
+				suziObject2->AddComponent(suziModel2);
 				level2->SpawnGameObject(suziObject2, Transform(
 					                        Location(.5f, 0.0f, 0.0f),
 					                        Rotation(),

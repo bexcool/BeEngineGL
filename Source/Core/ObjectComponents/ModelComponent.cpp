@@ -2,18 +2,26 @@
 // Created by Petr Pavlík on 29.09.2025.
 //
 
-#include "Model.h"
+#include "ModelComponent.h"
 
-#include "ShaderProgram.h"
+#include "../Graphics/ShaderProgram.h"
 #include <iostream>
-#include <vector>
-
-#include "../Objects/DrawableObject.h"
-#include "../../Resources/Models/suzi_flat.h"
 
 using namespace std;
 
-Model::Model(const float *vertices, const unsigned int amount)
+void ModelComponent::LinkShaderProgram()
+{
+    _vertexShader = new Shader(GL_VERTEX_SHADER, "../Source/Resources/Shaders/default.vert");
+    _vertexShader->Compile();
+
+    _fragmentShader = new Shader(GL_FRAGMENT_SHADER, "../Source/Resources/Shaders/default.frag");
+    _fragmentShader->Compile();
+
+    _shaderProgram = new ShaderProgram(_vertexShader, _fragmentShader, this);
+    _shaderProgram->LinkShaders();
+}
+
+void ModelComponent::SetModel(const float *vertices, unsigned int amount)
 {
     _amountOfVertices = amount;
 
@@ -33,34 +41,19 @@ Model::Model(const float *vertices, const unsigned int amount)
     glEnableVertexAttribArray(1);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (GLvoid *) 0);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (GLvoid *) (3 * sizeof(float)));
+
+    LinkShaderProgram();
 }
 
-void Model::Initialize(DrawableObject *parent)
+void ModelComponent::OnAttached(GameObject *parent)
 {
-    SetParent(parent);
-
-    _vertexShader = new Shader(GL_VERTEX_SHADER, "../Source/Resources/Shaders/default.vert");
-    _vertexShader->Compile();
-
-    _fragmentShader = new Shader(GL_FRAGMENT_SHADER, "../Source/Resources/Shaders/default.frag");
-    _fragmentShader->Compile();
-
-    _shaderProgram = new ShaderProgram(_vertexShader, _fragmentShader, this);
-    _shaderProgram->LinkShaders();
+    GameObjectComponent::OnAttached(parent);
 }
 
-void Model::SetParent(DrawableObject *parent)
+void ModelComponent::OnRender()
 {
-    _parent = parent;
-}
+    GameObjectComponent::OnRender();
 
-DrawableObject *Model::GetParent()
-{
-    return _parent;
-}
-
-void Model::Draw() const
-{
     _shaderProgram->Use();
     glBindVertexArray(_VAO);
     glDrawArrays(GL_TRIANGLES, 0, _amountOfVertices);

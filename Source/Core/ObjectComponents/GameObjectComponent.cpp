@@ -4,34 +4,24 @@
 
 #include "GameObjectComponent.h"
 
+GameObjectComponent::~GameObjectComponent()
+{
+    GameObjectComponent::OnRemovedFromParent();
+}
+
 GameObject *GameObjectComponent::GetParent() const
 {
     return _parent;
 }
 
+void GameObjectComponent::Destroy()
+{
+    delete this;
+}
+
 Transform GameObjectComponent::GetWorldTransform() const
 {
     return _parent->GetWorldTransform() + _localTransform;
-}
-
-void GameObjectComponent::SetWorldTransform(const Transform transform)
-{
-    _localTransform = transform;
-}
-
-void GameObjectComponent::SetWorldLocation(const Location location)
-{
-    _localTransform.SetLocation(location);
-}
-
-void GameObjectComponent::SetWorldRotation(const Rotation rotation)
-{
-    _localTransform.SetRotation(rotation);
-}
-
-void GameObjectComponent::SetWorldScale(const Scale scale)
-{
-    _localTransform.SetScale(scale);
 }
 
 Transform GameObjectComponent::GetLocalTransform() const

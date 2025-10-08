@@ -9,7 +9,10 @@ void Level::AddObject(GameObject *gameObject)
     _gameObjects.push_back(gameObject);
 }
 
-void Level::RemoveObject(GameObject *gameObject) {}
+void Level::RemoveObject(GameObject *gameObject)
+{
+    _gameObjects.erase(std::find(_gameObjects.begin(), _gameObjects.end(), gameObject));
+}
 
 void Level::SpawnGameObject(GameObject *gameObject)
 {
@@ -34,10 +37,25 @@ CameraComponent *Level::GetActiveCamera()
     return _activeCamera;
 }
 
-void Level::OnKeyboardKeyEvent(KeyboardKeyEventArgs e) {}
+void Level::OnKeyboardKeyEvent(KeyboardKeyEventArgs e)
+{
+    for (auto go: _gameObjects)
+    {
+        go->GetController()->OnKeyboardKeyEvent(e);
+    }
+}
+
 void Level::OnMouseKeyEvent(MouseKeyEventArgs e) {}
 void Level::OnLoaded() {}
-void Level::OnUnloaded() {}
+
+void Level::OnUnloaded()
+{
+    for (auto go: _gameObjects)
+    {
+        go->Destroy();
+    }
+}
+
 void Level::OnRendered() {}
 
 void Level::OnTick()

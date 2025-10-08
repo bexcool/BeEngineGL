@@ -10,7 +10,7 @@ private:
     float _x, _y, _z;
 
 public:
-    Scale() : _x(0), _y(0), _z(0) {}
+    Scale() : _x(1), _y(1), _z(1) {}
 
     Scale(float scale) : _x(scale), _y(scale), _z(scale) {}
 

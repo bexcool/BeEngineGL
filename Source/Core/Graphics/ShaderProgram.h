@@ -9,10 +9,11 @@
 
 #include "Shader.h"
 #include "../Math/Transform.h"
+#include "Core/Interfaces/IDisposable.h"
 
-class Model;
+class ModelComponent;
 
-class ShaderProgram
+class ShaderProgram : public IDisposable
 {
 private:
 	GLuint _shaderProgram;
@@ -21,14 +22,16 @@ private:
 	GLuint _modelTransformId;
 	GLuint _projectionTransformId;
 	GLuint _viewTransformId;
-	Model *_model;
+	ModelComponent *_modelComponent;
 
 public:
 	ShaderProgram(Shader *vertexShader, Shader *fragmentShader);
-	ShaderProgram(Shader *vertexShader, Shader *fragmentShader, Model *model);
+	ShaderProgram(Shader *vertexShader, Shader *fragmentShader, ModelComponent *model);
 
 	~ShaderProgram();
 
 	void LinkShaders();
 	void Use();
+
+	void Dispose() override;
 };

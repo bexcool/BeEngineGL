@@ -3,7 +3,7 @@
 //
 
 #pragma once
-#include "EventArgs.h"
+#include "Core/Events/EventArgs.h"
 
 
 class KeyboardKeyEventArgs : public EventArgs
@@ -12,7 +12,7 @@ public:
     int Key, Scancode, Action, Mods;
 
     KeyboardKeyEventArgs(int key, int scancode, int action, int mods) : Key(key),
-                                                                Scancode(scancode),
-                                                                Action(action),
-                                                                Mods(mods) {}
+                                                                        Scancode(scancode),
+                                                                        Action(action),
+                                                                        Mods(mods) {}
 };

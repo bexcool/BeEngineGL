@@ -13,7 +13,7 @@
 class GameObjectComponent;
 class Controller;
 
-class GameObject : public CoreEvents
+class GameObject : public ICoreEvents
 {
     Transform _worldTransform = Transform();
     std::vector<GameObjectComponent *> _components;
@@ -23,6 +23,9 @@ protected:
 
 public:
     GameObject() = default;
+    ~GameObject() override;
+
+    void Destroy();
 
     // Controller
     void SetController(std::unique_ptr<Controller> controller);

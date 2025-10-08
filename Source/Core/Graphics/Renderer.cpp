@@ -9,12 +9,10 @@
 #include <fstream>
 #include <iostream>
 
-#include "Model.h"
+#include "../ObjectComponents/ModelComponent.h"
 #include "Shader.h"
 #include "ShaderProgram.h"
 #include "../Application.h"
-#include "../Objects/DrawableObject.h"
-#include "../../Resources/Models/suzi_flat.h"
 
 using namespace std;
 

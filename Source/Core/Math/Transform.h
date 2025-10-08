@@ -13,16 +13,14 @@
 class Transform
 {
 private:
-    glm::mat4 _transformMatrix;
+    glm::mat4 _transformMatrix = glm::mat4(1.0f);
     Location _location;
     Rotation _rotation;
     Scale _scale;
 
 public:
     Transform();
-
     Transform(Location translation, Rotation rotation, Scale scale);
-
     Transform(glm::mat4 *transformMatrix);
 
     glm::mat4 *AsMatrix();

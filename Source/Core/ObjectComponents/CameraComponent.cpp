@@ -83,6 +83,7 @@ void CameraComponent::OnTick()
             front.z
         ));
 
-        SetWorldRotation(Rotation(0, pitch, yaw));
+        // TODO: Apply the yaw to the player character
+        SetLocalRotation(Rotation(0, pitch, yaw));
     }
 }

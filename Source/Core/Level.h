@@ -4,7 +4,6 @@
 
 #pragma once
 #include "ObjectComponents/CameraComponent.h"
-#include "Objects/DrawableObject.h"
 #include "Events/KeyboardKeyEventArgs.h"
 #include "Events/MouseKeyEventArgs.h"
 
@@ -14,20 +13,20 @@ class Level
     CameraComponent *_activeCamera;
     std::string _name;
 
-    vector<GameObject *> _gameObjects;
-
-    void AddObject(GameObject *gameObject);
-    void RemoveObject(GameObject *gameObject);
+    std::vector<GameObject *> _gameObjects;
 
 public:
     Level(std::string name) : _name(name) {};
 
     std::string GetName() { return _name; }
 
+    void AddObject(GameObject *gameObject);
+    void RemoveObject(GameObject *gameObject);
+
     void SpawnGameObject(GameObject *gameObject);
     void SpawnGameObject(GameObject *gameObject, const Transform transform);
 
-    vector<GameObject *> *GetGameObjects() { return &_gameObjects; }
+    std::vector<GameObject *> *GetGameObjects() { return &_gameObjects; }
 
     // Camera
     void SetActiveCamera(CameraComponent *camera);

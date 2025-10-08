@@ -3,13 +3,13 @@
 //
 
 #pragma once
-#include "../Events/CoreEvents.h"
-#include "../Events/KeyEvents.h"
-#include "../Objects/GameObject.h"
+#include "Core/Interfaces/ICoreEvents.h"
+#include "Core/Interfaces/IKeyEvents.h"
+#include "Core/Objects/GameObject.h"
 
 class GameObject;
 
-class Controller : public CoreEvents, KeyEvents
+class Controller : public ICoreEvents, IKeyEvents
 {
     GameObject *_owner = nullptr;
     glm::vec2 _lastMousePosition = glm::vec2(0.0f);

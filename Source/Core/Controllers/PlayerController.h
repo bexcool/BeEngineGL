@@ -8,7 +8,11 @@
 
 class PlayerController : public Controller
 {
+    bool _isRunnig = false;
+
 public:
+    void SetRun(bool isRunning);
+
     void MovePlayer() const;
     void OnTick() override;
     void OnKeyboardKeyEvent(KeyboardKeyEventArgs e) override;

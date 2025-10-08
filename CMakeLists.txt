@@ -20,10 +20,8 @@ add_executable(ZPG
         Source/Resources/Models/suzi_flat.h
         Source/Resources/Models/suzi_smooth.h
         Source/Resources/Models/tree.h
-        Source/Core/Graphics/Model.cpp
-        Source/Core/Graphics/Model.h
-        Source/Core/Objects/DrawableObject.cpp
-        Source/Core/Objects/DrawableObject.h
+        Source/Core/ObjectComponents/ModelComponent.cpp
+        Source/Core/ObjectComponents/ModelComponent.h
         Source/Core/Math/Transform.cpp
         Source/Core/Math/Transform.h
         Source/Core/Math/Location.cpp
@@ -68,10 +66,13 @@ add_executable(ZPG
         Source/Core/Objects/Character/Character.h
         Source/Core/Objects/Character/PlayerCharacter.cpp
         Source/Core/Objects/Character/PlayerCharacter.h
-        Source/Core/Events/CoreEvents.cpp
-        Source/Core/Events/CoreEvents.h
-        Source/Core/Events/KeyEvents.cpp
-        Source/Core/Events/KeyEvents.h
+        Source/Core/Interfaces/ICoreEvents.cpp
+        Source/Core/Interfaces/ICoreEvents.h
+        Source/Core/Interfaces/IKeyEvents.cpp
+        Source/Core/Interfaces/IKeyEvents.h
+        Source/Core/MovementMode.h
+        Source/Core/Interfaces/IDisposable.cpp
+        Source/Core/Interfaces/IDisposable.h
 )
 
 

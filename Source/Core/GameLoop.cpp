@@ -4,6 +4,8 @@
 
 #include "GameLoop.h"
 
+#include <GL/glew.h>
+
 #include "logger.h"
 #include "Application.h"
 

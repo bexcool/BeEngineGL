@@ -10,8 +10,6 @@ class TestLevel : public Level
 public:
     TestLevel(std::string title) : Level(title) {}
 
-    void CheckMovementInput();
-
     void OnLoaded() override;
     void OnUnloaded() override;
     void OnRendered() override;
