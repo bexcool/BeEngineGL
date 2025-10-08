@@ -4,14 +4,14 @@
 
 #pragma once
 #include "Camera.h"
-#include "DrawableObject.h"
+#include "Objects/DrawableObject.h"
 #include "Events/KeyboardKeyEventArgs.h"
 #include "Events/MouseKeyEventArgs.h"
 
 
 class Level
 {
-    Camera *_camera;
+    Camera *_activeCamera;
     vector<DrawableObject *> _drawableObjects;
     std::string _name;
 
@@ -42,7 +42,7 @@ public:
     /**
      * Called everytime renderer request a draw.
      */
-    virtual void OnDraw();
+    virtual void OnRendered();
 
     /**
      * Called every loop iteration before rendering.

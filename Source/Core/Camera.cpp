@@ -33,3 +33,8 @@ void Camera::SetLookTargetLocation(const Location &target)
 {
     _lookTargetLocation = target;
 }
+
+Location Camera::GetLookTargetLocation()
+{
+    return _lookTargetLocation;
+}

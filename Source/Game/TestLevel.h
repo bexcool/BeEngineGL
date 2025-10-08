@@ -14,7 +14,7 @@ public:
 
     void OnLoaded() override;
     void OnUnloaded() override;
-    void OnDraw() override;
+    void OnRendered() override;
     void OnTick() override;
     void OnKeyboardKeyEvent(KeyboardKeyEventArgs e) override;
     void OnMouseKeyEvent(MouseKeyEventArgs e) override;

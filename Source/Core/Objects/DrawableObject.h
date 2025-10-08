@@ -3,9 +3,9 @@
 //
 
 #pragma once
-#include "Graphics/Model.h"
-#include "Graphics/ShaderProgram.h"
-#include "Math/Transform.h"
+#include "../Graphics/Model.h"
+#include "../Graphics/ShaderProgram.h"
+#include "../Math/Transform.h"
 
 class DrawableObject
 {

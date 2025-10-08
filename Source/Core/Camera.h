@@ -6,7 +6,7 @@
 #include <glm/vec3.hpp>
 #include <glm/ext/matrix_float4x4.hpp>
 
-#include "GameObject.h"
+#include "Objects/GameObject.h"
 #include "Math/Transform.h"
 
 
@@ -21,4 +21,7 @@ public:
     glm::mat4 GetCameraProjectionMatrix();
 
     void SetLookTargetLocation(const Location &target);
+    Location GetLookTargetLocation();
+
+    virtual void OnActivated() {};
 };

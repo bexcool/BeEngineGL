@@ -12,17 +12,18 @@ void Level::AddObject(DrawableObject *drawableObject)
 // Camera
 void Level::SetActiveCamera(Camera *camera)
 {
-    _camera = camera;
+    _activeCamera = camera;
+    _activeCamera->OnActivated();
 }
 
 Camera *Level::GetActiveCamera()
 {
-    return _camera;
+    return _activeCamera;
 }
 
 void Level::OnKeyboardKeyEvent(KeyboardKeyEventArgs e) {}
 void Level::OnMouseKeyEvent(MouseKeyEventArgs e) {}
 void Level::OnLoaded() {}
 void Level::OnUnloaded() {}
-void Level::OnDraw() {}
+void Level::OnRendered() {}
 void Level::OnTick() {}

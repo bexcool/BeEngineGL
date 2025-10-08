@@ -8,7 +8,7 @@
 #include <iostream>
 #include <vector>
 
-#include "../DrawableObject.h"
+#include "../Objects/DrawableObject.h"
 #include "../../Resources/Models/suzi_flat.h"
 
 using namespace std;

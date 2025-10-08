@@ -22,8 +22,8 @@ add_executable(ZPG
         Source/Resources/Models/tree.h
         Source/Core/Graphics/Model.cpp
         Source/Core/Graphics/Model.h
-        Source/Core/DrawableObject.cpp
-        Source/Core/DrawableObject.h
+        Source/Core/Objects/DrawableObject.cpp
+        Source/Core/Objects/DrawableObject.h
         Source/Core/Math/Transform.cpp
         Source/Core/Math/Transform.h
         Source/Core/Math/Location.cpp
@@ -36,8 +36,8 @@ add_executable(ZPG
         Source/Core/Level.h
         Source/Core/Graphics/Window.cpp
         Source/Core/Graphics/Window.h
-        Source/Core/Controller.cpp
-        Source/Core/Controller.h
+        Source/Core/Controllers/Controller.cpp
+        Source/Core/Controllers/Controller.h
         Source/Core/Events/InputManager.cpp
         Source/Core/Events/InputManager.h
         Source/Core/Events/EventArgs.cpp
@@ -52,12 +52,23 @@ add_executable(ZPG
         Source/Core/logger.h
         Source/Core/Camera.cpp
         Source/Core/Camera.h
-        Source/Core/GameObject.cpp
-        Source/Core/GameObject.h
+        Source/Core/Objects/GameObject.cpp
+        Source/Core/Objects/GameObject.h
         Source/App.cpp
         Source/App.h
         Source/Core/Events/MouseKeyEventArgs.cpp
         Source/Core/Events/MouseKeyEventArgs.h
+        Source/Core/ObjectComponents/GameObjectComponent.cpp
+        Source/Core/ObjectComponents/GameObjectComponent.h
+        Source/Core/ObjectComponents/CameraComponent.cpp
+        Source/Core/ObjectComponents/CameraComponent.h
+        Source/Core/Controllers/PlayerController.cpp
+        Source/Core/Controllers/PlayerController.h
+        Source/Core/Events/CoreEvents.h
+        Source/Core/ObjectComponents/MovementComponent.cpp
+        Source/Core/ObjectComponents/MovementComponent.h
+        Source/Core/Events/EventDispatcher.cpp
+        Source/Core/Events/EventDispatcher.h
 )
 
 
