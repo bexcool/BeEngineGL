@@ -9,7 +9,7 @@
 #include "Graphics/Renderer.h"
 #include "Graphics/Window.h"
 
-class Application
+class Application : public ICoreEvents, IKeyEvents
 {
 	static Application *_currentApp;
 
@@ -19,7 +19,9 @@ class Application
 
 	Renderer *_renderer;
 	GameLoop *_gameLoop;
+
 	Level *_currentLevel;
+	Level *_requestedLevel;
 
 public:
 	Application(int width, int height, std::string title);
@@ -33,6 +35,8 @@ public:
 
 	float GetDeltaTime();
 
-	void OnKeyboardKeyEvent(KeyboardKeyEventArgs e);
-	void OnMouseKeyEvent(MouseKeyEventArgs e);
+	void OnKeyboardKeyEvent(KeyboardKeyEventArgs e) override;
+	void OnMouseKeyEvent(MouseKeyEventArgs e) override;
+	void OnRender() override;
+	void OnTick() override;
 };

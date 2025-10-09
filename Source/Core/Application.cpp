@@ -11,7 +11,9 @@
 #include "../Resources/Models/suzi_smooth.h"
 #include "logger.h"
 #include "Events/InputManager.h"
+#include "Game/MonkeyLevel.h"
 #include "ObjectComponents/ModelComponent.h"
+#include "Objects/Character/PlayerCharacter.h"
 
 Application *Application::_currentApp = nullptr;
 
@@ -46,11 +48,7 @@ void Application::Run()
 
 void Application::LoadLevel(Level *level)
 {
-	// Call on OnUnloaded
-	if (_currentLevel != nullptr) _currentLevel->OnUnloaded();
-	// Switch to new level
-	_currentLevel = level;
-	_currentLevel->OnLoaded();
+	_requestedLevel = level;
 }
 
 float Application::GetDeltaTime()
@@ -66,27 +64,7 @@ void Application::OnKeyboardKeyEvent(KeyboardKeyEventArgs e)
 		{
 			case GLFW_KEY_Y:
 			{
-				TestLevel *level2 = new TestLevel("level2");
-				auto suziObject = new GameObject();
-				auto suziModel = new ModelComponent();
-				suziModel->SetModel(suziSmooth, sizeof(suziSmooth) / (sizeof(float) * 6));
-				suziObject->AddComponent(suziModel);
-
-				level2->SpawnGameObject(suziObject, Transform(
-					                        Location(),
-					                        Rotation(),
-					                        Scale(0.2f)
-				                        ));
-
-				auto suziObject2 = new GameObject();
-				auto suziModel2 = new ModelComponent();
-				suziModel2->SetModel(gift, sizeof(gift) / (sizeof(float) * 6));
-				suziObject2->AddComponent(suziModel2);
-				level2->SpawnGameObject(suziObject2, Transform(
-					                        Location(.5f, 0.0f, 0.0f),
-					                        Rotation(),
-					                        Scale(0.7f)
-				                        ));
+				auto *level2 = new MonkeyLevel();
 
 				LoadLevel(level2);
 
@@ -101,4 +79,22 @@ void Application::OnKeyboardKeyEvent(KeyboardKeyEventArgs e)
 void Application::OnMouseKeyEvent(MouseKeyEventArgs e)
 {
 	GetLevel()->OnMouseKeyEvent(e);
+}
+
+void Application::OnRender() {}
+
+void Application::OnTick()
+{
+	if (_requestedLevel != nullptr)
+	{
+		// Call on OnUnloaded
+		if (_currentLevel != nullptr) _currentLevel->OnUnloaded();
+		// Switch to new level
+		_currentLevel = _requestedLevel;
+		_requestedLevel = nullptr;
+
+		_currentLevel->OnLoaded();
+	}
+
+	if (_currentLevel != nullptr) _currentLevel->OnTick();
 }

@@ -3,17 +3,25 @@
 //
 
 #pragma once
+#include "Controllers/PlayerController.h"
 #include "ObjectComponents/CameraComponent.h"
 #include "Events/KeyboardKeyEventArgs.h"
 #include "Events/MouseKeyEventArgs.h"
+#include "Objects/Character/PlayerCharacter.h"
 
 
 class Level
 {
+    PlayerController *_playerController;
     CameraComponent *_activeCamera;
     std::string _name;
 
     std::vector<GameObject *> _gameObjects;
+
+protected:
+    ~Level() = default;
+
+    void RemoveAndDeleteObject(GameObject *gameObject);
 
 public:
     Level(std::string name) : _name(name) {};
@@ -27,6 +35,10 @@ public:
     void SpawnGameObject(GameObject *gameObject, const Transform transform);
 
     std::vector<GameObject *> *GetGameObjects() { return &_gameObjects; }
+
+    // Player
+    void SetPlayerController(PlayerController *controller);
+    PlayerController *GetPlayerController();
 
     // Camera
     void SetActiveCamera(CameraComponent *camera);

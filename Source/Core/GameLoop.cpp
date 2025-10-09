@@ -32,7 +32,7 @@ void GameLoop::Start()
         glfwPollEvents();
 
         // Call tick on level
-        Application::GetInstance()->GetLevel()->OnTick();
+        Application::GetInstance()->OnTick();
 
         // Render level
         _renderer->Render();

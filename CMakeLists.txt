@@ -73,6 +73,8 @@ add_executable(ZPG
         Source/Core/MovementMode.h
         Source/Core/Interfaces/IDisposable.cpp
         Source/Core/Interfaces/IDisposable.h
+        Source/Game/MonkeyLevel.cpp
+        Source/Game/MonkeyLevel.h
 )
 
 

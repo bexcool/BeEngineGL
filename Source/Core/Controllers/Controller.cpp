@@ -32,7 +32,7 @@ glm::vec2 Controller::GetMousePosition()
     return {x, y};
 }
 
-glm::vec2 Controller::GetLastMousePosition()
+glm::vec2 Controller::GetLastMousePosition() const
 {
     return _lastMousePosition;
 }

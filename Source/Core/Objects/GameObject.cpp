@@ -4,6 +4,8 @@
 
 #include "GameObject.h"
 
+#include "Core/Application.h"
+
 void GameObject::OnTick()
 {
     for (auto comp: GetComponents())
@@ -34,7 +36,22 @@ GameObject::~GameObject()
 
 void GameObject::Destroy()
 {
-    delete this;
+    _destroyRequested = true;
+}
+
+bool GameObject::GetDestroyRequested() const
+{
+    return _destroyRequested;
+}
+
+void GameObject::SetName(const std::string &name)
+{
+    _name = name;
+}
+
+std::string GameObject::GetName()
+{
+    return _name;
 }
 
 void GameObject::SetController(std::unique_ptr<Controller> controller)

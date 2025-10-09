@@ -61,13 +61,14 @@ void TestLevel::OnLoaded()
     {
         for (int j = 0; j < 10; j++)
         {
-            auto treeDO = new GameObject();
+            auto treeGO = new GameObject();
+            treeGO->SetName("treeGO");
 
             auto treeModel = new ModelComponent();
             treeModel->SetModel(tree, sizeof(tree) / (sizeof(float) * 6));
-            treeDO->AddComponent(treeModel);
+            treeGO->AddComponent(treeModel);
 
-            this->SpawnGameObject(treeDO, Transform(
+            this->SpawnGameObject(treeGO, Transform(
                                       Location(static_cast<float>(i) * 5 + 10, 0, static_cast<float>(j) * 5 + 10),
                                       Rotation(),
                                       Scale()
@@ -94,8 +95,15 @@ void TestLevel::OnLoaded()
     }
 }
 
-void TestLevel::OnUnloaded() {}
-void TestLevel::OnRendered() {}
+void TestLevel::OnUnloaded()
+{
+    Level::OnUnloaded();
+}
+
+void TestLevel::OnRendered()
+{
+    Level::OnRendered();
+}
 
 void TestLevel::OnTick()
 {

@@ -15,8 +15,12 @@ class Controller;
 
 class GameObject : public ICoreEvents
 {
+    bool _destroyRequested = false;
+
     Transform _worldTransform = Transform();
     std::vector<GameObjectComponent *> _components;
+
+    std::string _name;
 
 protected:
     std::unique_ptr<Controller> _controller = std::make_unique<Controller>();
@@ -26,6 +30,11 @@ public:
     ~GameObject() override;
 
     void Destroy();
+    bool GetDestroyRequested() const;
+
+    // Name
+    void SetName(const std::string &name);
+    std::string GetName();
 
     // Controller
     void SetController(std::unique_ptr<Controller> controller);

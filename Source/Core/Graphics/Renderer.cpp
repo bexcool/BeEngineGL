@@ -13,6 +13,7 @@
 #include "Shader.h"
 #include "ShaderProgram.h"
 #include "../Application.h"
+#include "Core/logger.h"
 
 using namespace std;
 

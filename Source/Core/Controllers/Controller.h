@@ -22,7 +22,7 @@ public:
     virtual void OnPossessed(GameObject *owner);
 
     glm::vec2 GetMousePosition();
-    glm::vec2 GetLastMousePosition();
+    glm::vec2 GetLastMousePosition() const;
 
     void OnRender() override;
     void OnTick() override;
