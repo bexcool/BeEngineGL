@@ -11,8 +11,8 @@ class GameLoop
 private:
     Renderer *_renderer;
 
-    float _deltaTime = 0.0f;
-    float _lastFrameTime = 0.0f;
+    double _deltaTime = 0.0f;
+    double _lastFrameTime = 0.0f;
 
 public:
     GameLoop(Renderer *renderer);

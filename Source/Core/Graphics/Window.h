@@ -21,4 +21,6 @@ public:
     int GetWidth();
     int GetHeight();
     float GetAspectRatio();
+
+    virtual void OnResize(int width, int height);
 };

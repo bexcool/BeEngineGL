@@ -24,15 +24,18 @@ void GameLoop::Start()
 
     while (!glfwWindowShouldClose(win))
     {
-        float currentFrame = glfwGetTime();
+        double currentFrame = glfwGetTime();
         _deltaTime = currentFrame - _lastFrameTime;
         _lastFrameTime = currentFrame;
 
+        // Poll GLFW events
+        glfwPollEvents();
+
+        // Call tick on level
         Application::GetInstance()->GetLevel()->OnTick();
 
+        // Render level
         _renderer->Render();
-        // update other events like input handling
-        glfwPollEvents();
     }
 
     glfwDestroyWindow(win);

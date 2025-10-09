@@ -6,7 +6,9 @@
 
 #include <GL/glew.h>
 
-static void error_callback(int error, const char *description) { fputs(description, stderr); }
+#include "Core/Application.h"
+
+void error_callback(int error, const char *description) { fputs(description, stderr); }
 
 Window::Window(int width, int height, std::string title)
 {
@@ -35,8 +37,12 @@ Window::Window(int width, int height, std::string title)
     glfwSwapInterval(1);
 
     glfwGetFramebufferSize(this->_glfwWindow, &width, &height);
-    float ratio = width / (float) height;
     glViewport(0, 0, width, height);
+
+    glfwSetWindowSizeCallback(_glfwWindow, [](GLFWwindow *glfwWindow, int width, int height) {
+        auto w = Application::GetInstance()->GetWindow();
+        w->OnResize(width, height);
+    });
 }
 
 GLFWwindow *Window::AsGLFWWindow()
@@ -57,4 +63,13 @@ int Window::GetHeight()
 float Window::GetAspectRatio()
 {
     return static_cast<float>(_width) / static_cast<float>(_height);
+}
+
+void Window::OnResize(int width, int height)
+{
+    glfwGetFramebufferSize(this->_glfwWindow, &width, &height);
+    glViewport(0, 0, width, height);
+
+    _width = width;
+    _height = height;
 }
