@@ -75,8 +75,16 @@ add_executable(ZPG
         Source/Core/Interfaces/IDisposable.h
         Source/Game/MonkeyLevel.cpp
         Source/Game/MonkeyLevel.h
+        Source/Game/BallsLevel.cpp
+        Source/Game/BallsLevel.h
+        Source/Core/Graphics/ShaderInfo.cpp
+        Source/Core/Graphics/ShaderInfo.h
 )
 
+add_custom_target(copyResources
+        COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_LIST_DIR}/copyResources.cmake
+)
+add_dependencies(ZPG copyResources)
 
 find_package(glm CONFIG REQUIRED)
 find_package(GLEW REQUIRED)

@@ -44,7 +44,8 @@ void TestLevel::OnLoaded()
     auto suziObject = new GameObject();
 
     auto suziModel = new ModelComponent();
-    suziModel->SetModel(suziFlat, sizeof(suziFlat) / (sizeof(float) * 6));
+    suziModel->SetModel(suziFlat, sizeof(suziFlat) / (sizeof(float) * 6),
+                        ShaderInfo("Resources/Shaders/phong.frag", GL_FRAGMENT_SHADER));
     suziObject->AddComponent(suziModel);
 
     this->SpawnGameObject(suziObject, suziTrans);

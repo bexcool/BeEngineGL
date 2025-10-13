@@ -11,6 +11,7 @@
 #include "../Resources/Models/suzi_smooth.h"
 #include "logger.h"
 #include "Events/InputManager.h"
+#include "Game/BallsLevel.h"
 #include "Game/MonkeyLevel.h"
 #include "ObjectComponents/ModelComponent.h"
 #include "Objects/Character/PlayerCharacter.h"
@@ -64,7 +65,7 @@ void Application::OnKeyboardKeyEvent(KeyboardKeyEventArgs e)
 		{
 			case GLFW_KEY_Y:
 			{
-				auto *level2 = new MonkeyLevel();
+				auto *level2 = new BallsLevel();
 
 				LoadLevel(level2);
 

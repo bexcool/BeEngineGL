@@ -22,6 +22,7 @@ private:
 	GLuint _modelTransformId;
 	GLuint _projectionTransformId;
 	GLuint _viewTransformId;
+	GLuint _cameraLocationId;
 	ModelComponent *_modelComponent;
 
 public:

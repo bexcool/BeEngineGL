@@ -36,6 +36,7 @@ void ShaderProgram::LinkShaders()
     _modelTransformId = glGetUniformLocation(_shaderProgram, "modelMatrix");
     _projectionTransformId = glGetUniformLocation(_shaderProgram, "projectionMatrix");
     _viewTransformId = glGetUniformLocation(_shaderProgram, "viewMatrix");
+    _cameraLocationId = glGetUniformLocation(_shaderProgram, "cameraWorldLocation");
 
     GLint status;
     glGetProgramiv(_shaderProgram, GL_LINK_STATUS, &status);
@@ -61,6 +62,11 @@ void ShaderProgram::Use()
                        &(*_modelComponent->GetParent()->GetWorldTransform().AsMatrix())[0][0]);
     glUniformMatrix4fv(_viewTransformId, 1, GL_FALSE, &(camera->GetCameraViewMatrix())[0][0]);
     glUniformMatrix4fv(_projectionTransformId, 1, GL_FALSE, &(camera->GetCameraProjectionMatrix())[0][0]);
+    glUniform3fv(_cameraLocationId, 1, new float[3]{
+                     (camera->GetWorldLocation()).GetX(),
+                     (camera->GetWorldLocation()).GetY(),
+                     (camera->GetWorldLocation()).GetZ()
+                 });
 }
 
 void ShaderProgram::Dispose()

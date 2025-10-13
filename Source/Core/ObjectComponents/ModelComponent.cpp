@@ -11,15 +11,17 @@ using namespace std;
 
 void ModelComponent::LinkShaderProgram()
 {
-    _vertexShader = new Shader(GL_VERTEX_SHADER, "../Source/Resources/Shaders/default.vert");
+    _vertexShader = new Shader(GL_VERTEX_SHADER, _shaderInfo.GetVertexShaderPath());
     _vertexShader->Compile();
 
-    _fragmentShader = new Shader(GL_FRAGMENT_SHADER, "../Source/Resources/Shaders/default.frag");
+    _fragmentShader = new Shader(GL_FRAGMENT_SHADER, _shaderInfo.GetFragmentShaderPath());
     _fragmentShader->Compile();
 
     _shaderProgram = new ShaderProgram(_vertexShader, _fragmentShader, this);
     _shaderProgram->LinkShaders();
 }
+
+ModelComponent::ModelComponent() {}
 
 void ModelComponent::SetModel(const float *vertices, unsigned int amount)
 {
@@ -43,6 +45,13 @@ void ModelComponent::SetModel(const float *vertices, unsigned int amount)
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (GLvoid *) (3 * sizeof(float)));
 
     LinkShaderProgram();
+}
+
+void ModelComponent::SetModel(const float *vertices, unsigned int amount, const ShaderInfo &shaderInfo)
+{
+    _shaderInfo = shaderInfo;
+
+    SetModel(vertices, amount);
 }
 
 void ModelComponent::OnAttached(GameObject *parent)
