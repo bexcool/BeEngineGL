@@ -18,8 +18,8 @@ void main(void)
     float normalLightDirDotProduct = max(dot(normalize(lightDirection), normalize(worldNormal)), 0.0);
     vec4 diffuse = normalLightDirDotProduct * modelColor;
 
-    vec3 reflectDirection = reflect(-lightDirection, normalize(worldNormal));
-    float specular = pow(max(dot(viewDirection, reflectDirection), 0.0), 2);
+    vec3 halfDir = normalize(lightDirection + viewDirection);
+    float specular = pow(max(dot(worldNormal, halfDir), 0.0), 2);
 
     fragColor = ambient + diffuse + (specular * vec4(0.7, 0.7, 0.7, 1.0));
 }

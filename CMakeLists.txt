@@ -13,13 +13,13 @@ add_executable(ZPG
         Source/Core/Graphics/ShaderProgram.h
         Source/Core/Graphics/Shader.cpp
         Source/Core/Graphics/Shader.h
-        Source/Resources/Models/bushes.h
-        Source/Resources/Models/gift.h
-        Source/Resources/Models/plain.h
-        Source/Resources/Models/sphere.h
-        Source/Resources/Models/suzi_flat.h
-        Source/Resources/Models/suzi_smooth.h
-        Source/Resources/Models/tree.h
+        Source/Resources/Models/ModelDatas/bushes.h
+        Source/Resources/Models/ModelDatas/gift.h
+        Source/Resources/Models/ModelDatas/plain.h
+        Source/Resources/Models/ModelDatas/sphere.h
+        Source/Resources/Models/ModelDatas/suzi_flat.h
+        Source/Resources/Models/ModelDatas/suzi_smooth.h
+        Source/Resources/Models/ModelDatas/tree.h
         Source/Core/ObjectComponents/ModelComponent.cpp
         Source/Core/ObjectComponents/ModelComponent.h
         Source/Core/Math/Transform.cpp
@@ -79,6 +79,12 @@ add_executable(ZPG
         Source/Game/BallsLevel.h
         Source/Core/Graphics/ShaderInfo.cpp
         Source/Core/Graphics/ShaderInfo.h
+        Source/Core/ObjectComponents/LightComponent.cpp
+        Source/Core/ObjectComponents/LightComponent.h
+        Source/Core/Graphics/Model.cpp
+        Source/Core/Graphics/Model.h
+        Source/Resources/Models/MOD_DefaultSphere.h
+        Source/Resources/Models/MOD_Bush.h
 )
 
 add_custom_target(copyResources

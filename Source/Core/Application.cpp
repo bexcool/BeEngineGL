@@ -4,17 +4,12 @@
 
 #include "Application.h"
 
-#include "../Resources/Models/suzi_flat.h"
-#include "../Resources/Models/gift.h"
 #include "Graphics/Renderer.h"
 #include "../Game/TestLevel.h"
-#include "../Resources/Models/suzi_smooth.h"
 #include "logger.h"
 #include "Events/InputManager.h"
 #include "Game/BallsLevel.h"
-#include "Game/MonkeyLevel.h"
 #include "ObjectComponents/ModelComponent.h"
-#include "Objects/Character/PlayerCharacter.h"
 
 Application *Application::_currentApp = nullptr;
 

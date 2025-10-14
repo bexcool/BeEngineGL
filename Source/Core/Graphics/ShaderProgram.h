@@ -23,11 +23,11 @@ private:
 	GLuint _projectionTransformId;
 	GLuint _viewTransformId;
 	GLuint _cameraLocationId;
-	ModelComponent *_modelComponent;
+	Transform *_modelTransform;
 
 public:
 	ShaderProgram(Shader *vertexShader, Shader *fragmentShader);
-	ShaderProgram(Shader *vertexShader, Shader *fragmentShader, ModelComponent *model);
+	ShaderProgram(Shader *vertexShader, Shader *fragmentShader, Transform *modelTransform);
 
 	~ShaderProgram();
 

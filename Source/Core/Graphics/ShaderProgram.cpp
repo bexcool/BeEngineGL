@@ -17,11 +17,11 @@ ShaderProgram::ShaderProgram(Shader *vertexShader, Shader *fragmentShader)
     this->_fragmentShader = fragmentShader;
 }
 
-ShaderProgram::ShaderProgram(Shader *vertexShader, Shader *fragmentShader, ModelComponent *model)
+ShaderProgram::ShaderProgram(Shader *vertexShader, Shader *fragmentShader, Transform *modelTransfrom)
 {
     this->_vertexShader = vertexShader;
     this->_fragmentShader = fragmentShader;
-    this->_modelComponent = model;
+    this->_modelTransform = modelTransfrom;
 }
 
 ShaderProgram::~ShaderProgram() {}
@@ -59,7 +59,7 @@ void ShaderProgram::Use()
 
     glUseProgram(_shaderProgram);
     glUniformMatrix4fv(_modelTransformId, 1, GL_FALSE,
-                       &(*_modelComponent->GetParent()->GetWorldTransform().AsMatrix())[0][0]);
+                       &(*_modelTransform->AsMatrix())[0][0]);
     glUniformMatrix4fv(_viewTransformId, 1, GL_FALSE, &(camera->GetCameraViewMatrix())[0][0]);
     glUniformMatrix4fv(_projectionTransformId, 1, GL_FALSE, &(camera->GetCameraProjectionMatrix())[0][0]);
     glUniform3fv(_cameraLocationId, 1, new float[3]{

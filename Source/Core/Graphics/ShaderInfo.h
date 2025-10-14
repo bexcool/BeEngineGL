@@ -13,6 +13,7 @@ class ShaderInfo
 
 public:
     ShaderInfo() = default;
+    explicit ShaderInfo(std::string fragmentShaderPath);
     ShaderInfo(std::string shaderPath, int shaderType);
     ShaderInfo(std::string vertexShaderPath, std::string fragmentShaderPath);
     ~ShaderInfo() = default;

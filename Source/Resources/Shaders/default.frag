@@ -4,5 +4,8 @@ in vec3 normal;
 out vec4 fragColor;
 
 void main() {
-    fragColor = vec4(normal.x + 0.8, normal.x + 0.8, normal.x + 0.8, 1.0);
+    vec4 modelColor = vec4(0.385, 0.647, 0.812, 1.0);
+    
+    fragColor = modelColor;
+    //fragColor = vec4(normal.x + 0.8, normal.x + 0.8, normal.x + 0.8, 1.0);
 }

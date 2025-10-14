@@ -9,10 +9,10 @@
 #include "Core/Application.h"
 #include "Core/Events/InputManager.h"
 #include "Core/ObjectComponents/ModelComponent.h"
-#include "Resources/Models/suzi_flat.h"
-#include "Resources/Models/tree.h"
-#include "Resources/Models/bushes.h"
 #include "Core/Objects/Character/PlayerCharacter.h"
+#include "Resources/Models/MOD_Bush.h"
+#include "Resources/Models/MOD_Tree.h"
+#include "Resources/Models/MOD_SuziFlat.h"
 
 double lastX = 400, lastY = 300;
 float speed = 1;
@@ -44,11 +44,19 @@ void TestLevel::OnLoaded()
     auto suziObject = new GameObject();
 
     auto suziModel = new ModelComponent();
-    suziModel->SetModel(suziFlat, sizeof(suziFlat) / (sizeof(float) * 6),
-                        ShaderInfo("Resources/Shaders/phong.frag", GL_FRAGMENT_SHADER));
+    suziModel->SetModel(MOD_SuziFlat());
     suziObject->AddComponent(suziModel);
 
     this->SpawnGameObject(suziObject, suziTrans);
+
+    // Default sphere
+    auto defSphereComp = new ModelComponent();
+    defSphereComp->SetModel(MOD_DefaultSphere());
+
+    auto defSphereGO = new GameObject();
+    defSphereGO->AddComponent(defSphereComp);
+    this->SpawnGameObject(defSphereGO, Transform(Location(10, 0, 0), Rotation(), Scale(0.5f)));
+
 
     auto *player = new PlayerCharacter();
     auto *camera = new CameraComponent();
@@ -65,9 +73,9 @@ void TestLevel::OnLoaded()
             auto treeGO = new GameObject();
             treeGO->SetName("treeGO");
 
-            auto treeModel = new ModelComponent();
-            treeModel->SetModel(tree, sizeof(tree) / (sizeof(float) * 6));
-            treeGO->AddComponent(treeModel);
+            auto treeModelComp = new ModelComponent();
+            treeModelComp->SetModel(MOD_Tree());
+            treeGO->AddComponent(treeModelComp);
 
             this->SpawnGameObject(treeGO, Transform(
                                       Location(static_cast<float>(i) * 5 + 10, 0, static_cast<float>(j) * 5 + 10),
@@ -81,13 +89,13 @@ void TestLevel::OnLoaded()
     {
         for (int j = 0; j < 10; j++)
         {
-            auto bushDO = new GameObject();
+            auto bushModelComp = new ModelComponent();
+            bushModelComp->SetModel(MOD_Bush());
 
-            auto bushModel = new ModelComponent();
-            bushModel->SetModel(bushes, sizeof(bushes) / (sizeof(float) * 6));
-            bushDO->AddComponent(bushModel);
+            auto bushGO = new GameObject();
+            bushGO->AddComponent(bushModelComp);
 
-            this->SpawnGameObject(bushDO, Transform(
+            this->SpawnGameObject(bushGO, Transform(
                                       Location(static_cast<float>(i) * 5 + 12.5, 0, static_cast<float>(j) * 5 + 12.5),
                                       Rotation(),
                                       Scale()

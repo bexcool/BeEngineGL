@@ -7,6 +7,11 @@
 #include <utility>
 #include <GL/glew.h>
 
+ShaderInfo::ShaderInfo(std::string fragmentShaderPath)
+{
+    _fragmentShaderPath = std::move(fragmentShaderPath);
+}
+
 ShaderInfo::ShaderInfo(std::string shaderPath, int shaderType)
 {
     switch (shaderType)

@@ -5,23 +5,36 @@
 #include "BallsLevel.h"
 
 #include "Core/ObjectComponents/ModelComponent.h"
-#include "Resources/Models/sphere.h"
+#include "Resources/Models/MOD_DefaultSphere.h"
 
 void BallsLevel::OnLoaded()
 {
     Level::OnLoaded();
 
 
+    auto ballDefaultModel = new ModelComponent();
+    ballDefaultModel->SetModel(MOD_DefaultSphere());
+
+    auto ballDefault = new GameObject();
+    ballDefault->AddComponent(ballDefaultModel);
+    SpawnGameObject(ballDefault, Transform(Location(0, 2, 0), Rotation(), Scale()));
+
+    auto ballBlinnPhongModel = new ModelComponent();
+    ballBlinnPhongModel->SetModel(MOD_DefaultSphere());
+
+    auto ballBlinnPhongDefault = new GameObject();
+    ballBlinnPhongDefault->AddComponent(ballBlinnPhongModel);
+    SpawnGameObject(ballBlinnPhongDefault, Transform(Location(0, -2, 0), Rotation(), Scale()));
+
     auto ball1Model = new ModelComponent();
-    ball1Model->SetModel(sphere, sizeof(sphere) / (sizeof(float) * 6),
-                         ShaderInfo("Resources/Shaders/phong.frag", GL_FRAGMENT_SHADER));
+    ball1Model->SetModel(MOD_DefaultSphere());
 
     auto ball1 = new GameObject();
     ball1->AddComponent(ball1Model);
     SpawnGameObject(ball1, Transform(Location(0, 0, 2), Rotation(), Scale()));
 
     auto ball2Model = new ModelComponent();
-    ball2Model->SetModel(sphere, sizeof(sphere) / (sizeof(float) * 6));
+    ball2Model->SetModel(MOD_DefaultSphere());
 
     auto ball2 = new GameObject();
     ball2->AddComponent(ball2Model);
