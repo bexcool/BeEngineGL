@@ -19,27 +19,27 @@ void PlayerController::MovePlayer() const
 {
     auto app = Application::GetInstance();
     auto ownerLocation = GetOwner()->GetWorldLocation();
-    auto front = app->GetLevel()->GetActiveCamera()->GetLookTargetLocation();
+    auto front = static_cast<Vector3>(app->GetLevel()->GetActiveCamera()->GetLookTargetLocation());
     float deltaTime = app->GetDeltaTime();
 
     if (auto *character = dynamic_cast<Character *>(GetOwner()))
     {
         float speed = _isRunnig ? character->GetRunSpeed() : character->GetWalkSpeed();
-        glm::vec3 right = glm::normalize(glm::cross(front, glm::vec3(0.0f, 1.0f, 0.0f)));
+        Vector3 right(glm::normalize(glm::cross(front.AsVec3(), glm::vec3(0.0f, 1.0f, 0.0f))));
 
         if (InputManager::IsKeyboardKeyPressed(GLFW_KEY_W))
         {
-            ownerLocation += speed * deltaTime * front;
+            ownerLocation += front * speed * deltaTime;
         }
 
         if (InputManager::IsKeyboardKeyPressed(GLFW_KEY_S))
         {
-            ownerLocation -= speed * deltaTime * front;
+            ownerLocation -= front * speed * deltaTime;
         }
 
         if (InputManager::IsKeyboardKeyPressed(GLFW_KEY_A))
         {
-            ownerLocation -= speed * deltaTime * right;
+            ownerLocation -= right * speed * deltaTime;
         }
 
         if (InputManager::IsKeyboardKeyPressed(GLFW_KEY_D))
@@ -49,12 +49,12 @@ void PlayerController::MovePlayer() const
 
         if (InputManager::IsKeyboardKeyPressed(GLFW_KEY_SPACE))
         {
-            ownerLocation.y += speed * deltaTime;
+            ownerLocation.SetY(ownerLocation.GetY() + speed * deltaTime);
         }
 
         if (InputManager::IsKeyboardKeyPressed(GLFW_KEY_LEFT_SUPER))
         {
-            ownerLocation.y -= speed * deltaTime;
+            ownerLocation.SetY(ownerLocation.GetY() - speed * deltaTime);
         }
 
         GetOwner()->SetWorldLocation(ownerLocation);

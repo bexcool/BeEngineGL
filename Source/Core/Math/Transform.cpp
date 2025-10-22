@@ -12,14 +12,16 @@
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/ext/quaternion_float.hpp>
 
-Transform::Transform()
+void Transform::RecreateTransformMatrix()
 {
-    _location = Location();
-    _rotation = Rotation();
-    _scale = Scale();
     _transformMatrix = glm::mat4(1.0f);
+    _transformMatrix = glm::rotate<float>(_transformMatrix, _rotation.GetRoll(), glm::vec3(1, 0, 0));
+    _transformMatrix = glm::rotate<float>(_transformMatrix, _rotation.GetPitch(), glm::vec3(0, 1, 0));
+    _transformMatrix = glm::rotate<float>(_transformMatrix, _rotation.GetYaw(), glm::vec3(0, 0, 1));
+    _transformMatrix = glm::translate<float>(_transformMatrix,
+                                             glm::vec3(_location.GetX(), _location.GetY(), _location.GetZ()));
+    _transformMatrix = glm::scale<float>(_transformMatrix, glm::vec3(_scale.GetX(), _scale.GetY(), _scale.GetZ()));
 }
-
 
 Transform::Transform(Location translation, Rotation rotation, Scale scale)
 {
@@ -27,13 +29,7 @@ Transform::Transform(Location translation, Rotation rotation, Scale scale)
     _rotation = rotation;
     _scale = scale;
 
-    _transformMatrix = glm::mat4(1.0f);
-    _transformMatrix = glm::translate<float>(_transformMatrix,
-                                             glm::vec3(_location.GetX(), _location.GetY(), _location.GetZ()));
-    _transformMatrix = glm::rotate<float>(_transformMatrix, _rotation.GetRoll(), glm::vec3(1, 0, 0));
-    _transformMatrix = glm::rotate<float>(_transformMatrix, _rotation.GetPitch(), glm::vec3(0, 1, 0));
-    _transformMatrix = glm::rotate<float>(_transformMatrix, _rotation.GetYaw(), glm::vec3(0, 0, 1));
-    _transformMatrix = glm::scale<float>(_transformMatrix, glm::vec3(_scale.GetX(), _scale.GetY(), _scale.GetZ()));
+    RecreateTransformMatrix();
 }
 
 Transform::Transform(glm::mat4 *transformMatrix)
@@ -41,9 +37,10 @@ Transform::Transform(glm::mat4 *transformMatrix)
     this->_transformMatrix = (*transformMatrix);
 }
 
-glm::mat4 *Transform::AsMatrix()
+glm::mat4 Transform::AsMatrix()
 {
-    return &_transformMatrix;
+    RecreateTransformMatrix();
+    return _transformMatrix;
 }
 
 Location Transform::GetLocation() const
@@ -79,7 +76,9 @@ void Transform::SetScale(Scale scale)
 
 Transform Transform::operator+(const Transform &transform) const
 {
-    return Transform(GetLocation() + transform.GetLocation(),
-                     GetRotation() + transform.GetRotation(),
-                     GetScale() + transform.GetScale());
+    return {
+        static_cast<Location>(GetLocation() + transform.GetLocation()),
+        GetRotation() + transform.GetRotation(),
+        GetScale()
+    };
 }

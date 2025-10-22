@@ -29,10 +29,13 @@ public:
 	ShaderProgram(Shader *vertexShader, Shader *fragmentShader);
 	ShaderProgram(Shader *vertexShader, Shader *fragmentShader, Transform *modelTransform);
 
-	~ShaderProgram();
+	~ShaderProgram() override;
 
 	void LinkShaders();
 	void Use();
+
+	void SendVec4(const std::string &destination, const glm::vec4 &value) const;
+	void SendInt(const std::string &destination, const int value) const;
 
 	void Dispose() override;
 };

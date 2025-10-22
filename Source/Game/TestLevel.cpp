@@ -37,17 +37,18 @@ void TestLevel::OnMouseKeyEvent(MouseKeyEventArgs e)
 void TestLevel::OnLoaded()
 {
     auto suziTrans = Transform(
-        Location(10, 0, 0),
+        Location(10, 10, 0),
         Rotation(),
         Scale(0.5f)
     );
     auto suziObject = new GameObject();
 
     auto suziModel = new ModelComponent();
-    suziModel->SetModel(MOD_SuziFlat());
+    suziModel->SetModel(MOD_SuziFlat(ShaderInfo("./Resources/Shaders/default.frag")));
     suziObject->AddComponent(suziModel);
 
     this->SpawnGameObject(suziObject, suziTrans);
+
 
     // Default sphere
     auto defSphereComp = new ModelComponent();
@@ -55,7 +56,8 @@ void TestLevel::OnLoaded()
 
     auto defSphereGO = new GameObject();
     defSphereGO->AddComponent(defSphereComp);
-    this->SpawnGameObject(defSphereGO, Transform(Location(10, 0, 0), Rotation(), Scale(0.5f)));
+    auto trans = Transform(Location(15, 10, 0), Rotation(), Scale());
+    this->SpawnGameObject(defSphereGO, trans);
 
 
     auto *player = new PlayerCharacter();

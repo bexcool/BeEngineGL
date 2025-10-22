@@ -7,16 +7,16 @@ uniform mat4 modelMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 projectionMatrix;
 uniform vec3 cameraWorldLocation;
-out vec3 normal;
-out vec4 worldPosition;
-out vec3 worldNormal;
-out vec3 worldCameraLocation;
+out vec3 vert_normal;
+out vec4 vert_worldPosition;
+out vec3 vert_worldNormal;
+out vec3 vert_cameraWorldLocation;
 
 void main() {
-    worldCameraLocation = cameraWorldLocation;
-    worldPosition = vec4(vp, 1.0) * modelMatrix;
-    worldNormal = vn;
+    vert_cameraWorldLocation = cameraWorldLocation;
+    vert_worldPosition = modelMatrix * vec4(vp, 1.0);
+    vert_worldNormal = normalize(transpose(inverse(mat3(modelMatrix))) * vn);
+    vert_normal = vn;
 
     gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(vp, 1.0);
-    normal = vn;
 }

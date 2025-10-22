@@ -18,24 +18,24 @@ public:
     GameObjectComponent() = default;
     ~GameObjectComponent() override;
 
-    GameObject *GetParent() const;
+    [[nodiscard]] GameObject *GetParent() const;
 
     void Destroy();
 
     // World
-    Transform GetWorldTransform() const;
-    Location GetWorldLocation() const;
-    Rotation GetWorldRotation() const;
-    Scale GetWorldScale() const;
+    [[nodiscard]] Transform GetWorldTransform() const;
+    [[nodiscard]] Location GetWorldLocation() const;
+    [[nodiscard]] Rotation GetWorldRotation() const;
+    [[nodiscard]] Scale GetWorldScale() const;
 
     // Local
-    Transform GetLocalTransform() const;
+    [[nodiscard]] Transform GetLocalTransform() const;
     void SetLocalTransform(Transform transform);
-    Location GetLocalLocation() const;
+    [[nodiscard]] Location GetLocalLocation() const;
     void SetLocalLocation(Location location);
-    Rotation GetLocalRotation() const;
+    [[nodiscard]] Rotation GetLocalRotation() const;
     void SetLocalRotation(Rotation rotation);
-    Scale GetLocalScale() const;
+    [[nodiscard]] Scale GetLocalScale() const;
     void SetLocalScale(Scale scale);
 
     void OnTick() override {}

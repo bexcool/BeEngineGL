@@ -12,29 +12,32 @@ void BallsLevel::OnLoaded()
     Level::OnLoaded();
 
 
+    // Default
     auto ballDefaultModel = new ModelComponent();
-    ballDefaultModel->SetModel(MOD_DefaultSphere());
+    ballDefaultModel->SetModel(MOD_DefaultSphere(ShaderInfo("Resources/Shaders/default.frag")));
 
     auto ballDefault = new GameObject();
     ballDefault->AddComponent(ballDefaultModel);
     SpawnGameObject(ballDefault, Transform(Location(0, 2, 0), Rotation(), Scale()));
 
+    // Blinn-Phong
     auto ballBlinnPhongModel = new ModelComponent();
-    ballBlinnPhongModel->SetModel(MOD_DefaultSphere());
+    ballBlinnPhongModel->SetModel(MOD_DefaultSphere(ShaderInfo("Resources/Shaders/blinn_phong.frag")));
 
-    auto ballBlinnPhongDefault = new GameObject();
-    ballBlinnPhongDefault->AddComponent(ballBlinnPhongModel);
-    SpawnGameObject(ballBlinnPhongDefault, Transform(Location(0, -2, 0), Rotation(), Scale()));
+    auto ballBlinnPhong = new GameObject();
+    ballBlinnPhong->AddComponent(ballBlinnPhongModel);
+    SpawnGameObject(ballBlinnPhong, Transform(Location(0, -2, 0), Rotation(), Scale()));
 
-    auto ball1Model = new ModelComponent();
-    ball1Model->SetModel(MOD_DefaultSphere());
+    // Phong
+    auto ballPhongModel = new ModelComponent();
+    ballPhongModel->SetModel(MOD_DefaultSphere(ShaderInfo("Resources/Shaders/phong.frag")));
 
-    auto ball1 = new GameObject();
-    ball1->AddComponent(ball1Model);
-    SpawnGameObject(ball1, Transform(Location(0, 0, 2), Rotation(), Scale()));
+    auto ballPhong = new GameObject();
+    ballPhong->AddComponent(ballPhongModel);
+    SpawnGameObject(ballPhong, Transform(Location(0, 0, 2), Rotation(), Scale()));
 
     auto ball2Model = new ModelComponent();
-    ball2Model->SetModel(MOD_DefaultSphere());
+    ball2Model->SetModel(MOD_DefaultSphere(ShaderInfo("Resources/Shaders/lambert.frag")));
 
     auto ball2 = new GameObject();
     ball2->AddComponent(ball2Model);

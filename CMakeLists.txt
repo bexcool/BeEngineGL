@@ -85,6 +85,10 @@ add_executable(ZPG
         Source/Core/Graphics/Model.h
         Source/Resources/Models/MOD_DefaultSphere.h
         Source/Resources/Models/MOD_Bush.h
+        Source/Resources/Models/MOD_SuziFlat.h
+        Source/Resources/Models/MOD_Tree.h
+        Source/Core/Math/Vector3.cpp
+        Source/Core/Math/Vector3.h
 )
 
 add_custom_target(copyResources

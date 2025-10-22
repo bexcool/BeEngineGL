@@ -4,6 +4,8 @@
 
 #include "Model.h"
 
+#include "Core/logger.h"
+
 void Model::LinkShaderProgram()
 {
     _vertexShader = new Shader(GL_VERTEX_SHADER, _shaderInfo.GetVertexShaderPath());
@@ -12,7 +14,7 @@ void Model::LinkShaderProgram()
     _fragmentShader = new Shader(GL_FRAGMENT_SHADER, _shaderInfo.GetFragmentShaderPath());
     _fragmentShader->Compile();
 
-    _shaderProgram = new ShaderProgram(_vertexShader, _fragmentShader, &_transform);
+    _shaderProgram = new ShaderProgram(_vertexShader, _fragmentShader, _transform.get());
     _shaderProgram->LinkShaders();
 }
 
@@ -47,9 +49,9 @@ void Model::SetModel(const float *vertices, unsigned int amount, const ShaderInf
     SetModel(vertices, amount);
 }
 
-void Model::Render(Transform transform)
+void Model::Render(const Transform &transform)
 {
-    _transform = transform;
+    *_transform = transform;
 
     _shaderProgram->Use();
     glBindVertexArray(_VAO);

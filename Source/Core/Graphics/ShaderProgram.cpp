@@ -8,6 +8,7 @@
 #include <glm/ext/matrix_transform.hpp>
 
 #include "../Application.h"
+#include "Core/logger.h"
 #include "Core/ObjectComponents/ModelComponent.h"
 
 
@@ -57,16 +58,48 @@ void ShaderProgram::Use()
 
     if (camera == nullptr) return;
 
+    SendInt("lightCount", 1);
+    SendVec4("lights[0].position", glm::vec4(0, 3, 0, 1));
+
     glUseProgram(_shaderProgram);
-    glUniformMatrix4fv(_modelTransformId, 1, GL_FALSE,
-                       &(*_modelTransform->AsMatrix())[0][0]);
-    glUniformMatrix4fv(_viewTransformId, 1, GL_FALSE, &(camera->GetCameraViewMatrix())[0][0]);
+
+    glUniformMatrix4fv(_modelTransformId, 1, GL_FALSE, &_modelTransform->AsMatrix()[0][0]);
+    glUniformMatrix4fv(_viewTransformId, 1, GL_FALSE, &camera->GetCameraViewMatrix()[0][0]);
     glUniformMatrix4fv(_projectionTransformId, 1, GL_FALSE, &(camera->GetCameraProjectionMatrix())[0][0]);
-    glUniform3fv(_cameraLocationId, 1, new float[3]{
-                     (camera->GetWorldLocation()).GetX(),
-                     (camera->GetWorldLocation()).GetY(),
-                     (camera->GetWorldLocation()).GetZ()
-                 });
+
+    float cameraPos[3] = {
+        camera->GetWorldLocation().GetX(),
+        camera->GetWorldLocation().GetY(),
+        camera->GetWorldLocation().GetZ()
+    };
+    glUniform3fv(_cameraLocationId, 1, cameraPos);
+}
+
+void ShaderProgram::SendVec4(const std::string &destination, const glm::vec4 &value) const
+{
+    GLint variableDestination = glGetUniformLocation(this->_shaderProgram, destination.c_str());
+    if (variableDestination < 0)
+    {
+        LOG_W("The variable %s does not exist.", destination.c_str());
+    } else
+    {
+        glUseProgram(this->_shaderProgram);
+        glUniform4f(variableDestination, value.x, value.y, value.z, value.w);
+    }
+}
+
+void ShaderProgram::SendInt(const std::string &destination, const int value) const
+{
+    GLint variableDestination = glGetUniformLocation(this->_shaderProgram, destination.c_str());
+    if (variableDestination < 0)
+    {
+        LOG_W("The variable %s does not exist.", destination.c_str());
+    } else
+    {
+        glUseProgram(this->_shaderProgram);
+        glUniform1i(variableDestination, value);
+        //glUseProgram(0);
+    }
 }
 
 void ShaderProgram::Dispose()

@@ -43,7 +43,7 @@ class Model
     unsigned int _amountOfVertices;
     GLuint _VAO = 0, _VBO = 0;
 
-    Transform _transform = Transform();
+    std::shared_ptr<Transform> _transform = std::make_shared<Transform>();
 
     void LinkShaderProgram();
 
@@ -52,5 +52,5 @@ public:
     void SetModel(const float *vertices, unsigned int amount);
     void SetModel(const float *vertices, unsigned int amount, const ShaderInfo &shaderInfo);
 
-    void Render(Transform transform);
+    void Render(const Transform &transform);
 };

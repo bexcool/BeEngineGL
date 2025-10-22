@@ -8,10 +8,10 @@
 #include <GLFW/glfw3.h>
 #include <GL/glew.h>
 #include <sstream>
+#include <glm/vec4.hpp>
 
 class Shader
 {
-private:
     GLuint _shaderID;
     int _shaderType;
     std::string _shaderPath;
@@ -22,6 +22,5 @@ public:
     static std::string ShaderTypeToString(int shaderType);
 
     void Compile();
-
     GLuint GetShaderID() { return _shaderID; }
 };

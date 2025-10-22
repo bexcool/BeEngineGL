@@ -3,18 +3,13 @@
 //
 
 #pragma once
-#include <glm/vec3.hpp>
 
+#include "Vector3.h"
 
-class Location : public glm::vec3
+class Location : public Vector3
 {
 public:
-    Location() : glm::vec3(0.0f, 0.0f, 0.0f) {}
-    Location(float x, float y, float z) : glm::vec3(x, y, z) {}
-
-    float GetX() const { return x; }
-    float GetY() const { return y; }
-    float GetZ() const { return z; }
-
-    Location operator+(const Location &location) const;
+    Location() : Vector3() {};
+    explicit Location(const Vector3 &v) : Vector3(v) {}
+    Location(float x, float y, float z) : Vector3(x, y, z) {}
 };

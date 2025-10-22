@@ -35,7 +35,7 @@ void Application::Run()
 	InputManager::Initialize();
 
 	// Tests
-	auto *level1 = new TestLevel("level1");
+	auto *level1 = new BallsLevel();
 
 	LoadLevel(level1);
 

@@ -6,6 +6,8 @@
 
 #include <utility>
 
+#include "Core/logger.h"
+
 ModelComponent::ModelComponent() {}
 
 void ModelComponent::SetModel(Model model)
@@ -21,11 +23,11 @@ void ModelComponent::OnAttached(GameObject *parent)
 void ModelComponent::OnRender()
 {
     GameObjectComponent::OnRender();
+
+    _model.Render(GetWorldTransform());
 }
 
 void ModelComponent::OnTick()
 {
     GameObjectComponent::OnTick();
-
-    _model.Render(GetWorldTransform());
 }

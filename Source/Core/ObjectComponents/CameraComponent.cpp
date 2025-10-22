@@ -13,8 +13,8 @@
 
 glm::mat4 CameraComponent::GetCameraViewMatrix()
 {
-    return glm::lookAt(GetWorldTransform().GetLocation(),
-                       GetWorldTransform().GetLocation() + _lookTargetLocation,
+    return glm::lookAt(GetWorldTransform().GetLocation().AsVec3(),
+                       GetWorldTransform().GetLocation().AsVec3() + _lookTargetLocation.AsVec3(),
                        glm::vec3(0.0f, 1.0f, 0.0f));
 }
 
@@ -70,7 +70,7 @@ void CameraComponent::OnTick()
         if (pitch > 89.0f) pitch = 89.0f;
         if (pitch < -89.0f) pitch = -89.0f;
 
-        glm::vec3 front = GetLookTargetLocation();
+        glm::vec3 front = GetLookTargetLocation().AsVec3();
         front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
         front.y = sin(glm::radians(pitch));
         front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
