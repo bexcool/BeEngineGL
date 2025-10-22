@@ -22,7 +22,7 @@ glm::mat4 CameraComponent::GetCameraProjectionMatrix()
 {
     float aspectRatio = Application::GetInstance()->GetWindow()->GetAspectRatio();
 
-    return glm::perspective(70.0f, aspectRatio, 0.1f, 100.0f);
+    return glm::perspective(glm::radians(GetFOV()), aspectRatio, 0.1f, 100.0f);
 }
 
 void CameraComponent::SetSensitivity(float sensitivity)
@@ -33,6 +33,16 @@ void CameraComponent::SetSensitivity(float sensitivity)
 float CameraComponent::GetSensitivity()
 {
     return _sensitivity;
+}
+
+float CameraComponent::GetFOV()
+{
+    return _fov;
+}
+
+void CameraComponent::SetFOV(float fov)
+{
+    _fov = fov;
 }
 
 void CameraComponent::SetLookTargetLocation(const Location &target)

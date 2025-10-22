@@ -14,19 +14,12 @@
 #include "Resources/Models/MOD_Tree.h"
 #include "Resources/Models/MOD_SuziFlat.h"
 
-double lastX = 400, lastY = 300;
-float speed = 1;
-
+GameObject *goLight1 = new GameObject();
+GameObject *goLight2 = new GameObject();
 
 void TestLevel::OnKeyboardKeyEvent(KeyboardKeyEventArgs e)
 {
     Level::OnKeyboardKeyEvent(e);
-
-    if (e.Key == GLFW_KEY_LEFT_SHIFT)
-    {
-        if (e.Action == GLFW_PRESS) speed = 3;
-        else if (e.Action == GLFW_RELEASE) speed = 1;
-    }
 }
 
 void TestLevel::OnMouseKeyEvent(MouseKeyEventArgs e)
@@ -67,6 +60,14 @@ void TestLevel::OnLoaded()
     this->SpawnGameObject(player);
 
     this->SetActiveCamera(camera);
+
+    goLight1->AddComponent(new LightComponent());
+    goLight1->AddComponent(new ModelComponent(MOD_DefaultSphere(ShaderInfo("./Resources/Shaders/default.frag"))));
+    this->SpawnGameObject(goLight1, Transform(Location(30, 3, 20), Rotation(), Scale(0.3)));
+
+    goLight2->AddComponent(new LightComponent());
+    goLight2->AddComponent(new ModelComponent(MOD_DefaultSphere(ShaderInfo("./Resources/Shaders/default.frag"))));
+    this->SpawnGameObject(goLight2, Transform(Location(10, 3, 10), Rotation(), Scale(0.3)));
 
     for (int i = 0; i < 10; i++)
     {
@@ -119,4 +120,11 @@ void TestLevel::OnRendered()
 void TestLevel::OnTick()
 {
     Level::OnTick();
+
+    float moveAmountX = sin(glfwGetTime() + 1452) / 30;
+    float moveAmountY = sin(glfwGetTime() + 5353) / 50;
+    float moveAmountZ = sin(glfwGetTime()) / 30;
+    //LOG_W("Move amount: %f", moveAmount);
+    goLight1->AddWorldLocation(Location(moveAmountX, moveAmountY, moveAmountZ));
+    goLight2->AddWorldLocation(Location(-moveAmountX, moveAmountY, -moveAmountZ));
 }

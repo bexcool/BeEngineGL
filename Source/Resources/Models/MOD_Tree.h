@@ -6,4 +6,4 @@
 #include "../../Core/Graphics/Model.h"
 #include "Resources/Models/ModelDatas/tree.h"
 
-GEN_MODEL_HEADER_SI(MOD_Tree, tree, ShaderInfo("./Resources/Shaders/default.frag"))
+GEN_MODEL_HEADER(MOD_Tree, tree)

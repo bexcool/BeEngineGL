@@ -6,4 +6,6 @@
 #include "Core/Graphics/Model.h"
 #include "ModelDatas/bushes.h"
 
-GEN_MODEL_HEADER_SI(MOD_Bush, bushes, ShaderInfo("Resources/Shaders/labert.frag"))
+//GEN_MODEL_HEADER_SI(MOD_Bush, bushes, ShaderInfo("Resources/Shaders/lambert.frag"))
+
+GEN_MODEL_HEADER(MOD_Bush, bushes)

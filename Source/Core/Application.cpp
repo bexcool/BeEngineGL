@@ -60,7 +60,7 @@ void Application::OnKeyboardKeyEvent(KeyboardKeyEventArgs e)
 		{
 			case GLFW_KEY_Y:
 			{
-				auto *level2 = new BallsLevel();
+				auto *level2 = new TestLevel();
 
 				LoadLevel(level2);
 

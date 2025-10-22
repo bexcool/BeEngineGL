@@ -31,7 +31,7 @@ void BallsLevel::OnLoaded()
 
     auto ballBlinnPhong = new GameObject();
     ballBlinnPhong->AddComponent(ballBlinnPhongModel);
-    //SpawnGameObject(ballBlinnPhong, Transform(Location(0, -2, 0), Rotation(), Scale()));
+    SpawnGameObject(ballBlinnPhong, Transform(Location(0, -2, 0), Rotation(), Scale()));
 
     // Phong
     auto ballPhongModel = new ModelComponent();
@@ -45,7 +45,7 @@ void BallsLevel::OnLoaded()
 
     auto ball2 = new GameObject();
     ball2->AddComponent(ball2Model);
-    ball2->AddComponent(new LightComponent());
+    //ball2->AddComponent(new LightComponent());
     SpawnGameObject(ball2, Transform(Location(0, 0, -2), Rotation(), Scale()));
 
     auto *player = new PlayerCharacter();
@@ -72,8 +72,8 @@ void BallsLevel::OnTick()
     Level::OnTick();
 
     float moveAmount = sin(glfwGetTime()) / 40;
-    LOG_W("Move amount: %f", moveAmount);
-    ballPhong->AddWorldLocation(Location(0, moveAmount, 0));
+    //LOG_W("Move amount: %f", moveAmount);
+    //ballPhong->AddWorldLocation(Location(0, moveAmount, 0));
 }
 
 void BallsLevel::OnKeyboardKeyEvent(KeyboardKeyEventArgs e)

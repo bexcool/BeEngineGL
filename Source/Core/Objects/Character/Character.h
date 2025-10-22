@@ -9,7 +9,7 @@
 class Character : public GameObject
 {
     double _walkSpeed = 1.0;
-    double _runSpeed = 3.0;
+    double _runSpeed = 6.0;
 
 public:
     void SetWalkSpeed(float speed);

@@ -20,7 +20,8 @@ private:
     Model _model = MOD_DefaultSphere();
 
 public:
-    ModelComponent();
+    ModelComponent() = default;
+    ModelComponent(Model _model);
 
     void SetModel(Model model);
 

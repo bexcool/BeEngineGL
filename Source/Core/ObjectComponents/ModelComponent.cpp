@@ -8,7 +8,10 @@
 
 #include "Core/logger.h"
 
-ModelComponent::ModelComponent() {}
+ModelComponent::ModelComponent(Model _model)
+{
+    SetModel(_model);
+}
 
 void ModelComponent::SetModel(Model model)
 {

@@ -14,6 +14,7 @@ class CameraComponent : public GameObjectComponent
 {
     Location _lookTargetLocation = Location(1, 0, 0);
     float _sensitivity = 0.1f;
+    float _fov = 90.0f;
 
 public:
     CameraComponent() : GameObjectComponent() {}
@@ -23,6 +24,9 @@ public:
 
     void SetSensitivity(float sensitivity);
     float GetSensitivity();
+
+    float GetFOV();
+    void SetFOV(float fov);
 
     void SetLookTargetLocation(const Location &target);
     Location GetLookTargetLocation();

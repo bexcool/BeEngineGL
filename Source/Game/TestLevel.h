@@ -8,7 +8,8 @@
 class TestLevel : public Level
 {
 public:
-    TestLevel(std::string title) : Level(title) {}
+    TestLevel() : Level("TestLevel") {}
+    virtual ~TestLevel() = default;
 
     void OnLoaded() override;
     void OnUnloaded() override;
