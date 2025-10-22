@@ -10,6 +10,23 @@ void Level::RemoveAndDeleteObject(GameObject *gameObject)
     delete gameObject;
 }
 
+void Level::AddLightComponent(LightComponent *lightComponent)
+{
+    _lightComponents.push_back(lightComponent);
+}
+
+void Level::RemoveLightComponent(LightComponent *lightComponent)
+{
+    auto lc = std::ranges::find(_lightComponents, lightComponent);
+    if (lc != _lightComponents.end())
+        _lightComponents.erase(lc);
+}
+
+std::vector<LightComponent *> Level::GetLightComponents()
+{
+    return _lightComponents;
+}
+
 void Level::AddObject(GameObject *gameObject)
 {
     _gameObjects.push_back(gameObject);
@@ -30,6 +47,7 @@ void Level::SpawnGameObject(GameObject *gameObject)
 void Level::SpawnGameObject(GameObject *gameObject, const Transform transform)
 {
     gameObject->SetWorldTransform(transform);
+    gameObject->OnSpawned();
     this->AddObject(gameObject);
 }
 

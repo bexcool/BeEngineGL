@@ -7,6 +7,7 @@
 #include "ObjectComponents/CameraComponent.h"
 #include "Events/KeyboardKeyEventArgs.h"
 #include "Events/MouseKeyEventArgs.h"
+#include "ObjectComponents/LightComponent.h"
 #include "Objects/Character/PlayerCharacter.h"
 
 
@@ -17,6 +18,7 @@ class Level
     std::string _name;
 
     std::vector<GameObject *> _gameObjects;
+    std::vector<LightComponent *> _lightComponents;
 
 protected:
     ~Level() = default;
@@ -27,6 +29,10 @@ public:
     Level(std::string name) : _name(name) {};
 
     std::string GetName() { return _name; }
+
+    void AddLightComponent(LightComponent *lightComponent);
+    void RemoveLightComponent(LightComponent *lightComponent);
+    std::vector<LightComponent *> GetLightComponents();
 
     void AddObject(GameObject *gameObject);
     void RemoveObject(GameObject *gameObject);

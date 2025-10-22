@@ -4,8 +4,12 @@
 
 #include "BallsLevel.h"
 
+#include "Core/Application.h"
+#include "Core/logger.h"
 #include "Core/ObjectComponents/ModelComponent.h"
 #include "Resources/Models/MOD_DefaultSphere.h"
+
+GameObject *ballPhong = new GameObject();
 
 void BallsLevel::OnLoaded()
 {
@@ -18,6 +22,7 @@ void BallsLevel::OnLoaded()
 
     auto ballDefault = new GameObject();
     ballDefault->AddComponent(ballDefaultModel);
+    ballDefault->AddComponent(new LightComponent());
     SpawnGameObject(ballDefault, Transform(Location(0, 2, 0), Rotation(), Scale()));
 
     // Blinn-Phong
@@ -26,13 +31,12 @@ void BallsLevel::OnLoaded()
 
     auto ballBlinnPhong = new GameObject();
     ballBlinnPhong->AddComponent(ballBlinnPhongModel);
-    SpawnGameObject(ballBlinnPhong, Transform(Location(0, -2, 0), Rotation(), Scale()));
+    //SpawnGameObject(ballBlinnPhong, Transform(Location(0, -2, 0), Rotation(), Scale()));
 
     // Phong
     auto ballPhongModel = new ModelComponent();
     ballPhongModel->SetModel(MOD_DefaultSphere(ShaderInfo("Resources/Shaders/phong.frag")));
 
-    auto ballPhong = new GameObject();
     ballPhong->AddComponent(ballPhongModel);
     SpawnGameObject(ballPhong, Transform(Location(0, 0, 2), Rotation(), Scale()));
 
@@ -41,13 +45,14 @@ void BallsLevel::OnLoaded()
 
     auto ball2 = new GameObject();
     ball2->AddComponent(ball2Model);
+    ball2->AddComponent(new LightComponent());
     SpawnGameObject(ball2, Transform(Location(0, 0, -2), Rotation(), Scale()));
 
     auto *player = new PlayerCharacter();
     auto *camera = new CameraComponent();
     player->AddComponent(camera);
 
-    this->SpawnGameObject(player);
+    this->SpawnGameObject(player, Transform(Location(-8, 0, 0), Rotation(), Scale()));
 
     this->SetActiveCamera(camera);
 }
@@ -65,6 +70,10 @@ void BallsLevel::OnRendered()
 void BallsLevel::OnTick()
 {
     Level::OnTick();
+
+    float moveAmount = sin(glfwGetTime()) / 40;
+    LOG_W("Move amount: %f", moveAmount);
+    ballPhong->AddWorldLocation(Location(0, moveAmount, 0));
 }
 
 void BallsLevel::OnKeyboardKeyEvent(KeyboardKeyEventArgs e)

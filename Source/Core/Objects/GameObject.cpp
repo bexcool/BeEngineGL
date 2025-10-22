@@ -54,6 +54,11 @@ std::string GameObject::GetName()
     return _name;
 }
 
+bool GameObject::IsSpawned()
+{
+    return _spawned;
+}
+
 void GameObject::SetController(std::unique_ptr<Controller> controller)
 {
     _controller = std::move(controller);
@@ -68,6 +73,12 @@ Controller *GameObject::GetController() const
 void GameObject::AddComponent(GameObjectComponent *component)
 {
     _components.push_back(component);
+
+    if (auto lc = dynamic_cast<LightComponent *>(component))
+    {
+        Application::GetInstance()->GetLevel()->AddLightComponent(lc);
+    }
+
     component->OnAttached(this);
 }
 
@@ -109,6 +120,11 @@ void GameObject::SetWorldLocation(const Location &worldLocation)
     _worldTransform.SetLocation(worldLocation);
 }
 
+void GameObject::AddWorldLocation(const Location &worldLocation)
+{
+    _worldTransform.SetLocation(Location(worldLocation + GetWorldLocation()));
+}
+
 Rotation GameObject::GetWorldRotation() const
 {
     return _worldTransform.GetRotation();
@@ -117,4 +133,9 @@ Rotation GameObject::GetWorldRotation() const
 void GameObject::SetWorldRotation(const Rotation &worldRotation)
 {
     _worldTransform.SetRotation(worldRotation);
+}
+
+void GameObject::OnSpawned()
+{
+    _spawned = true;
 }

@@ -89,6 +89,7 @@ add_executable(ZPG
         Source/Resources/Models/MOD_Tree.h
         Source/Core/Math/Vector3.cpp
         Source/Core/Math/Vector3.h
+        Source/Core/Graphics/Light.h
 )
 
 add_custom_target(copyResources

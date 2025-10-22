@@ -16,6 +16,7 @@ class Controller;
 class GameObject : public ICoreEvents
 {
     bool _destroyRequested = false;
+    bool _spawned = false;
 
     Transform _worldTransform = Transform();
     std::vector<GameObjectComponent *> _components;
@@ -36,6 +37,9 @@ public:
     void SetName(const std::string &name);
     std::string GetName();
 
+    // Spawn
+    bool IsSpawned();
+
     // Controller
     void SetController(std::unique_ptr<Controller> controller);
     Controller *GetController() const;
@@ -52,12 +56,13 @@ public:
 
     Location GetWorldLocation() const;
     void SetWorldLocation(const Location &worldLocation);
+    void AddWorldLocation(const Location &worldLocation);
 
     Rotation GetWorldRotation() const;
     void SetWorldRotation(const Rotation &worldRotation);
 
     // Virtual
-    virtual void OnSpawned() {}
+    virtual void OnSpawned();
 
     // Overrides
     void OnRender() override;

@@ -58,8 +58,28 @@ void ShaderProgram::Use()
 
     if (camera == nullptr) return;
 
-    SendInt("lightCount", 1);
-    SendVec4("lights[0].position", glm::vec4(0, 3, 0, 1));
+    int lightsWithNonZeroIntensity = 0;
+    auto lights = Application::GetInstance()->GetLevel()->GetLightComponents();
+
+    for (int i = 0; i < lights.size(); i++)
+    {
+        float worldIntensity = lights[i]->GetWorldIntensity();
+        if (worldIntensity <= 0.0f) continue;
+
+        lightsWithNonZeroIntensity++;
+
+        std::string position = "lights[";
+        position.append(std::to_string(i));
+        position.append("].position");
+        SendVec4(position, glm::vec4(lights[i]->GetWorldLocation().AsVec3(), 1.0));
+
+        std::string color = "lights[";
+        color.append(std::to_string(i));
+        color.append("].color");
+        SendVec4(color, glm::vec4(worldIntensity, worldIntensity, worldIntensity, 1));
+    }
+
+    SendInt("lightCount", lightsWithNonZeroIntensity);
 
     glUseProgram(_shaderProgram);
 
@@ -80,11 +100,25 @@ void ShaderProgram::SendVec4(const std::string &destination, const glm::vec4 &va
     GLint variableDestination = glGetUniformLocation(this->_shaderProgram, destination.c_str());
     if (variableDestination < 0)
     {
-        LOG_W("The variable %s does not exist.", destination.c_str());
+        //LOG_W("The variable %s does not exist.", destination.c_str());
     } else
     {
         glUseProgram(this->_shaderProgram);
         glUniform4f(variableDestination, value.x, value.y, value.z, value.w);
+    }
+}
+
+void ShaderProgram::SendUint(const std::string &destination, const unsigned int value) const
+{
+    GLint variableDestination = glGetUniformLocation(this->_shaderProgram, destination.c_str());
+    if (variableDestination < 0)
+    {
+        //LOG_W("The variable %s does not exist.", destination.c_str());
+    } else
+    {
+        glUseProgram(this->_shaderProgram);
+        glUniform1ui(variableDestination, value);
+        //glUseProgram(0);
     }
 }
 
@@ -93,7 +127,7 @@ void ShaderProgram::SendInt(const std::string &destination, const int value) con
     GLint variableDestination = glGetUniformLocation(this->_shaderProgram, destination.c_str());
     if (variableDestination < 0)
     {
-        LOG_W("The variable %s does not exist.", destination.c_str());
+        //LOG_W("The variable %s does not exist.", destination.c_str());
     } else
     {
         glUseProgram(this->_shaderProgram);
