@@ -38,7 +38,7 @@ public:
     void RemoveObject(GameObject *gameObject);
 
     void SpawnGameObject(GameObject *gameObject);
-    void SpawnGameObject(GameObject *gameObject, const Transform transform);
+    void SpawnGameObject(GameObject *gameObject, const Transform &transform);
 
     std::vector<GameObject *> *GetGameObjects() { return &_gameObjects; }
 

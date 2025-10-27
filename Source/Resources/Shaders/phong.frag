@@ -5,6 +5,7 @@
 struct light
 {
     vec4 position;
+    vec3 spotDirection;
     vec4 color;
 };
 
@@ -18,7 +19,8 @@ in vec3 vert_cameraWorldLocation;
 
 out vec4 fragColor;
 
-float map(float value, float min1, float max1, float min2, float max2) {
+float map(float value, float min1, float max1, float min2, float max2)
+{
     return min2 + (value - min1) * (max2 - min2) / (max1 - min1);
 }
 
@@ -44,14 +46,24 @@ void main(void)
         float normalLightDirDotProduct = max(dot(lightDirection, vert_worldNormal), 0.0);
         vec4 diffuse = normalLightDirDotProduct * (modelColor);
 
-        finalDiffuse += diffuse * lightDistance;
-
         vec3 reflectDirection = reflect(-lightDirection, vert_worldNormal);
         float specular = pow(max(dot(viewDirection, reflectDirection), 0.0), 32);
 
-        finalAmbient += clamp(ambient * lightDistance, 0, 0.1);
-        finalSpecular += specular * lights[i].color * lightDistance;
+        float finalSpot = 1;
+        if (lights[i].spotDirection != vec3(0))
+        {
+            finalSpot = 0;
+            
+            float spot = dot(normalize(lights[i].spotDirection), -lightDirection);
+            float cutoff = 0.9;          // Inner cone
+            float outerCutoff = 0.8;     // Outer cone
+            finalSpot = clamp((spot - outerCutoff) / (cutoff - outerCutoff), 0, 1);
+        }
+
+        finalAmbient += ambient * lightDistance;
+        finalSpecular += specular * lights[i].color * lightDistance * finalSpot;
+        finalDiffuse += diffuse * lightDistance * finalSpot;
     }
 
-    fragColor = finalAmbient + finalSpecular + finalDiffuse;
+    fragColor = clamp(finalAmbient, 0, 0.1) + (finalSpecular + finalDiffuse);
 }

@@ -14,7 +14,7 @@ class CameraComponent : public GameObjectComponent
 {
     Location _lookTargetLocation = Location(1, 0, 0);
     float _sensitivity = 0.1f;
-    float _fov = 90.0f;
+    float _fov = 70.0f;
 
 public:
     CameraComponent() : GameObjectComponent() {}

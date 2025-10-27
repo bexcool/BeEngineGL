@@ -4,6 +4,6 @@
 
 #pragma once
 #include "../../Core/Graphics/Model.h"
-#include "Resources/Models/ModelDatas/suzi_flat.h"
+#include "Resources/Models/ModelDatas/plain.h"
 
-LEGACY_GEN_MODEL_HEADER(MOD_SuziFlat, suziFlat)
+LEGACY_GEN_MODEL_HEADER(MOD_Plain, plain)

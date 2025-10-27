@@ -3,6 +3,7 @@
 //
 
 #pragma once
+#include <glm/ext/quaternion_float.hpp>
 
 class Rotation
 {
@@ -14,9 +15,12 @@ public:
 
     Rotation(float roll, float pitch, float yaw) : _x(roll), _y(pitch), _z(yaw) {}
 
-    float GetRoll() const { return _x; }
-    float GetPitch() const { return _y; }
-    float GetYaw() const { return _z; }
+    [[nodiscard]] float GetRoll() const { return _x; }
+    [[nodiscard]] float GetPitch() const { return _y; }
+    [[nodiscard]] float GetYaw() const { return _z; }
+    [[nodiscard]] glm::vec3 GetForwardVector() const;
+
+    [[nodiscard]] glm::quat AsQuat() const;
 
     Rotation operator+(const Rotation &rotation) const;
 };

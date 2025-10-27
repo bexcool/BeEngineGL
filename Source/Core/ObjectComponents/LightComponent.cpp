@@ -4,6 +4,11 @@
 
 #include "LightComponent.h"
 
+LightComponent::LightComponent(const Light &light)
+{
+    SetLight(light);
+}
+
 Light LightComponent::GetLight()
 {
     return _light;

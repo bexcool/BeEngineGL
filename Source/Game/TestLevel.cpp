@@ -4,13 +4,12 @@
 
 #include "TestLevel.h"
 
-#include <glm/detail/func_trigonometric.inl>
-
 #include "Core/Application.h"
 #include "Core/Events/InputManager.h"
 #include "Core/ObjectComponents/ModelComponent.h"
 #include "Core/Objects/Character/PlayerCharacter.h"
 #include "Resources/Models/MOD_Bush.h"
+#include "Resources/Models/MOD_Plane.h"
 #include "Resources/Models/MOD_Tree.h"
 #include "Resources/Models/MOD_SuziFlat.h"
 
@@ -34,13 +33,19 @@ void TestLevel::OnLoaded()
         Rotation(),
         Scale(0.5f)
     );
-    auto suziObject = new GameObject();
+    auto GO_f1 = new GameObject();
 
-    auto suziModel = new ModelComponent();
-    suziModel->SetModel(MOD_SuziFlat(ShaderInfo("./Resources/Shaders/default.frag")));
-    suziObject->AddComponent(suziModel);
+    auto MC_F1 = new ModelComponent();
+    //suziModel->SetModel(MOD_SuziFlat(ShaderInfo("./Resources/Shaders/default.frag")));
+    auto MOD_F1 = Model();
+    MOD_F1.SetModel("Resources/Assets/Models/formula1.obj", ShaderInfo("Resources/Shaders/phong.frag"));
+    MC_F1->SetModel(MOD_F1);
+    GO_f1->AddComponent(MC_F1);
+    GO_f1->AddComponent(new LightComponent(), Transform(Location(9, 5, 0), Rotation(), Scale()));
+    GO_f1->AddComponent(new LightComponent(), Transform(Location(0, 5, 0), Rotation(), Scale()));
+    GO_f1->AddComponent(new LightComponent(), Transform(Location(-9, 5, 0), Rotation(), Scale()));
 
-    this->SpawnGameObject(suziObject, suziTrans);
+    this->SpawnGameObject(GO_f1, suziTrans);
 
 
     // Default sphere
@@ -63,11 +68,18 @@ void TestLevel::OnLoaded()
 
     goLight1->AddComponent(new LightComponent());
     goLight1->AddComponent(new ModelComponent(MOD_DefaultSphere(ShaderInfo("./Resources/Shaders/default.frag"))));
-    this->SpawnGameObject(goLight1, Transform(Location(30, 3, 20), Rotation(), Scale(0.3)));
+    this->SpawnGameObject(goLight1, Transform(Location(30, 5, 20), Rotation(), Scale(0.3)));
 
-    goLight2->AddComponent(new LightComponent());
+    auto goLight2Comp = new LightComponent(Light{.isPointLight = false});
+    goLight2->AddComponent(goLight2Comp, Transform(Location(), Rotation(0, -90, 0), Scale()));
+    auto goLight2Comp2 = new LightComponent(Light{.isPointLight = false});
+    goLight2->AddComponent(goLight2Comp2, Transform(Location(), Rotation(0, -45, 0), Scale()));
     goLight2->AddComponent(new ModelComponent(MOD_DefaultSphere(ShaderInfo("./Resources/Shaders/default.frag"))));
-    this->SpawnGameObject(goLight2, Transform(Location(10, 3, 10), Rotation(), Scale(0.3)));
+    this->SpawnGameObject(goLight2, Transform(Location(10, 5, 10), Rotation(), Scale(0.3)));
+
+    auto planeGO = new GameObject();
+    planeGO->AddComponent(new ModelComponent(MOD_Plain()));
+    this->SpawnGameObject(planeGO, Transform(Location(), Rotation(), Scale(100)));
 
     for (int i = 0; i < 10; i++)
     {

@@ -7,7 +7,7 @@
 #include "ShaderInfo.h"
 #include "ShaderProgram.h"
 
-#define GEN_MODEL_HEADER_SI(className, modelData, shaderInfoData) \
+#define LEGACY_GEN_MODEL_HEADER_SI(className, modelData, shaderInfoData) \
 class className : public Model\
 {\
     public:\
@@ -21,7 +21,7 @@ className(const ShaderInfo &shaderInfo)\
 }\
 };
 
-#define GEN_MODEL_HEADER(className, modelData) \
+#define LEGACY_GEN_MODEL_HEADER(className, modelData) \
 class className : public Model\
 {\
 public:\
@@ -49,6 +49,10 @@ class Model
 
 public:
     Model() = default;
+    ~Model();
+
+    void SetModel(std::string modelPath);
+    void SetModel(std::string modelPath, const ShaderInfo &shaderInfo);
     void SetModel(const float *vertices, unsigned int amount);
     void SetModel(const float *vertices, unsigned int amount, const ShaderInfo &shaderInfo);
 

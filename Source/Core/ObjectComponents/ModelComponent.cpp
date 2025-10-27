@@ -15,7 +15,7 @@ ModelComponent::ModelComponent(Model _model)
 
 void ModelComponent::SetModel(Model model)
 {
-    _model = std::move(model);
+    _model = model;
 }
 
 void ModelComponent::OnAttached(GameObject *parent)

@@ -90,6 +90,8 @@ add_executable(ZPG
         Source/Core/Math/Vector3.cpp
         Source/Core/Math/Vector3.h
         Source/Core/Graphics/Light.h
+        Source/Resources/Models/MOD_Plane.h
+        Source/Libs/tiny_obj_loader.h
 )
 
 add_custom_target(copyResources

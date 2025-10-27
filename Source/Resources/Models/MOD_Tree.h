@@ -6,4 +6,4 @@
 #include "../../Core/Graphics/Model.h"
 #include "Resources/Models/ModelDatas/tree.h"
 
-GEN_MODEL_HEADER(MOD_Tree, tree)
+LEGACY_GEN_MODEL_HEADER(MOD_Tree, tree)

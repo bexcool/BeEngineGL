@@ -7,5 +7,6 @@
 
 struct Light
 {
-    float intensity;
+    float intensity = 1.0f;
+    bool isPointLight = true;
 };

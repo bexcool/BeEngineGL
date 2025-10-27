@@ -22,7 +22,7 @@ void BallsLevel::OnLoaded()
 
     auto ballDefault = new GameObject();
     ballDefault->AddComponent(ballDefaultModel);
-    ballDefault->AddComponent(new LightComponent());
+    //ballDefault->AddComponent(new LightComponent());
     SpawnGameObject(ballDefault, Transform(Location(0, 2, 0), Rotation(), Scale()));
 
     // Blinn-Phong
@@ -47,6 +47,10 @@ void BallsLevel::OnLoaded()
     ball2->AddComponent(ball2Model);
     //ball2->AddComponent(new LightComponent());
     SpawnGameObject(ball2, Transform(Location(0, 0, -2), Rotation(), Scale()));
+
+    auto light = new GameObject();
+    light->AddComponent(new LightComponent());
+    SpawnGameObject(light);
 
     auto *player = new PlayerCharacter();
     auto *camera = new CameraComponent();

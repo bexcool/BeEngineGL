@@ -9,10 +9,11 @@
 
 class LightComponent : public GameObjectComponent
 {
-    Light _light = {.intensity = 1};
+    Light _light = Light();
 
 public:
     LightComponent() = default;
+    explicit LightComponent(const Light &light);
 
     Light GetLight();
     void SetLight(Light light);

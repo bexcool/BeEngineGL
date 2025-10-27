@@ -71,12 +71,20 @@ void ShaderProgram::Use()
         std::string position = "lights[";
         position.append(std::to_string(i));
         position.append("].position");
-        SendVec4(position, glm::vec4(lights[i]->GetWorldLocation().AsVec3(), 1.0));
+        SendVec4(position, glm::vec4(lights[i]->GetWorldLocation().AsVec3(), 1));
 
         std::string color = "lights[";
         color.append(std::to_string(i));
         color.append("].color");
         SendVec4(color, glm::vec4(worldIntensity, worldIntensity, worldIntensity, 1));
+
+        if (!lights[i]->GetLight().isPointLight)
+        {
+            std::string spotDirection = "lights[";
+            spotDirection.append(std::to_string(i));
+            spotDirection.append("].spotDirection");
+            SendVec3(spotDirection, lights[i]->GetWorldRotation().GetForwardVector());
+        }
     }
 
     SendInt("lightCount", lightsWithNonZeroIntensity);
@@ -105,6 +113,19 @@ void ShaderProgram::SendVec4(const std::string &destination, const glm::vec4 &va
     {
         glUseProgram(this->_shaderProgram);
         glUniform4f(variableDestination, value.x, value.y, value.z, value.w);
+    }
+}
+
+void ShaderProgram::SendVec3(const std::string &destination, const glm::vec3 &value) const
+{
+    GLint variableDestination = glGetUniformLocation(this->_shaderProgram, destination.c_str());
+    if (variableDestination < 0)
+    {
+        //LOG_W("The variable %s does not exist.", destination.c_str());
+    } else
+    {
+        glUseProgram(this->_shaderProgram);
+        glUniform3f(variableDestination, value.x, value.y, value.z);
     }
 }
 

@@ -41,10 +41,11 @@ void Level::RemoveObject(GameObject *gameObject)
 
 void Level::SpawnGameObject(GameObject *gameObject)
 {
+    gameObject->OnSpawned();
     this->AddObject(gameObject);
 }
 
-void Level::SpawnGameObject(GameObject *gameObject, const Transform transform)
+void Level::SpawnGameObject(GameObject *gameObject, const Transform &transform)
 {
     gameObject->SetWorldTransform(transform);
     gameObject->OnSpawned();

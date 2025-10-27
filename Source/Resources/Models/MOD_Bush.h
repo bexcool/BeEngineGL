@@ -8,4 +8,4 @@
 
 //GEN_MODEL_HEADER_SI(MOD_Bush, bushes, ShaderInfo("Resources/Shaders/lambert.frag"))
 
-GEN_MODEL_HEADER(MOD_Bush, bushes)
+LEGACY_GEN_MODEL_HEADER(MOD_Bush, bushes)

@@ -35,6 +35,7 @@ public:
 	void Use();
 
 	void SendVec4(const std::string &destination, const glm::vec4 &value) const;
+	void SendVec3(const std::string &destination, const glm::vec3 &value) const;
 	void SendUint(const std::string &destination, unsigned int value) const;
 	void SendInt(const std::string &destination, int value) const;
 
