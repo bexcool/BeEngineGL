@@ -8,6 +8,7 @@
 #include "Core/Events/InputManager.h"
 #include "Core/ObjectComponents/ModelComponent.h"
 #include "Core/Objects/Character/PlayerCharacter.h"
+#include "Resources/Assets/Models/MOD_F1.h"
 #include "Resources/Models/MOD_Bush.h"
 #include "Resources/Models/MOD_Plane.h"
 #include "Resources/Models/MOD_Tree.h"
@@ -15,10 +16,23 @@
 
 GameObject *goLight1 = new GameObject();
 GameObject *goLight2 = new GameObject();
+LightComponent *GOC_Flashlight = new LightComponent(Light{.intensity = 1, .radius = 20, .isPointLight = false});
 
 void TestLevel::OnKeyboardKeyEvent(KeyboardKeyEventArgs e)
 {
     Level::OnKeyboardKeyEvent(e);
+
+    if (e.Action == GLFW_PRESS)
+    {
+        if (e.Key == GLFW_KEY_F)
+        {
+            auto light = GOC_Flashlight->GetLight();
+
+            light.intensity = light.intensity ? 0 : 1;
+
+            GOC_Flashlight->SetLight(light);
+        }
+    }
 }
 
 void TestLevel::OnMouseKeyEvent(MouseKeyEventArgs e)
@@ -34,16 +48,10 @@ void TestLevel::OnLoaded()
         Scale(0.5f)
     );
     auto GO_f1 = new GameObject();
-
-    auto MC_F1 = new ModelComponent();
-    //suziModel->SetModel(MOD_SuziFlat(ShaderInfo("./Resources/Shaders/default.frag")));
-    auto MOD_F1 = Model();
-    MOD_F1.SetModel("Resources/Assets/Models/formula1.obj", ShaderInfo("Resources/Shaders/phong.frag"));
-    MC_F1->SetModel(MOD_F1);
-    GO_f1->AddComponent(MC_F1);
-    GO_f1->AddComponent(new LightComponent(), Transform(Location(9, 5, 0), Rotation(), Scale()));
-    GO_f1->AddComponent(new LightComponent(), Transform(Location(0, 5, 0), Rotation(), Scale()));
-    GO_f1->AddComponent(new LightComponent(), Transform(Location(-9, 5, 0), Rotation(), Scale()));
+    GO_f1->AddComponent(new ModelComponent(MOD_F1()));
+    GO_f1->AddComponent(new LightComponent(Light{.radius = 20}), Transform(Location(12, 5, 0)));
+    GO_f1->AddComponent(new LightComponent(Light{.radius = 30, .isPointLight = false}), Transform(Location(-10, 5, -10), Rotation(0, -30, 150)));
+    GO_f1->AddComponent(new LightComponent(Light{.radius = 20}), Transform(Location(8, 5, 0)));
 
     this->SpawnGameObject(GO_f1, suziTrans);
 
@@ -61,6 +69,8 @@ void TestLevel::OnLoaded()
     auto *player = new PlayerCharacter();
     auto *camera = new CameraComponent();
     player->AddComponent(camera);
+
+    player->AddComponent(GOC_Flashlight, Transform(Rotation(0, 0, 90)));
 
     this->SpawnGameObject(player);
 
@@ -93,7 +103,7 @@ void TestLevel::OnLoaded()
             treeGO->AddComponent(treeModelComp);
 
             this->SpawnGameObject(treeGO, Transform(
-                                      Location(static_cast<float>(i) * 5 + 10, 0, static_cast<float>(j) * 5 + 10),
+                                      Location(static_cast<float>(i) * 5, 0, static_cast<float>(j) * 5),
                                       Rotation(),
                                       Scale()
                                   ));
@@ -111,7 +121,7 @@ void TestLevel::OnLoaded()
             bushGO->AddComponent(bushModelComp);
 
             this->SpawnGameObject(bushGO, Transform(
-                                      Location(static_cast<float>(i) * 5 + 12.5, 0, static_cast<float>(j) * 5 + 12.5),
+                                      Location(static_cast<float>(i) * 5 + 2.5, 0, static_cast<float>(j) * 5 + 2.5),
                                       Rotation(),
                                       Scale()
                                   ));

@@ -35,6 +35,34 @@ SetModel(modelData, sizeof(modelData) / (sizeof(float) * 6), shaderInfo);\
 }\
 };
 
+#define GEN_MODEL_HEADER(className, modelPath) \
+class className : public Model\
+{\
+public:\
+className()\
+{\
+SetModel(modelPath, ShaderInfo("Resources/Shaders/phong.frag"));\
+}\
+className(const ShaderInfo &shaderInfo)\
+{\
+SetModel(modelPath, shaderInfo);\
+}\
+};
+
+#define GEN_MODEL_HEADER_SI(className, modelPath, shaderInfoData) \
+class className : public Model\
+{\
+public:\
+className()\
+{\
+SetModel(modelPath, shaderInfoData);\
+}\
+className(const ShaderInfo &shaderInfo)\
+{\
+SetModel(modelPath, shaderInfo);\
+}\
+};
+
 class Model
 {
     Shader *_fragmentShader, *_vertexShader;

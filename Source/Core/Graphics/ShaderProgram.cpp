@@ -64,7 +64,6 @@ void ShaderProgram::Use()
     for (int i = 0; i < lights.size(); i++)
     {
         float worldIntensity = lights[i]->GetWorldIntensity();
-        if (worldIntensity <= 0.0f) continue;
 
         lightsWithNonZeroIntensity++;
 
@@ -72,6 +71,11 @@ void ShaderProgram::Use()
         position.append(std::to_string(i));
         position.append("].position");
         SendVec4(position, glm::vec4(lights[i]->GetWorldLocation().AsVec3(), 1));
+
+        std::string radius = "lights[";
+        radius.append(std::to_string(i));
+        radius.append("].radius");
+        SendFloat(radius, lights[i]->GetLight().radius);
 
         std::string color = "lights[";
         color.append(std::to_string(i));
@@ -153,6 +157,20 @@ void ShaderProgram::SendInt(const std::string &destination, const int value) con
     {
         glUseProgram(this->_shaderProgram);
         glUniform1i(variableDestination, value);
+        //glUseProgram(0);
+    }
+}
+
+void ShaderProgram::SendFloat(const std::string &destination, const float value) const
+{
+    GLint variableDestination = glGetUniformLocation(this->_shaderProgram, destination.c_str());
+    if (variableDestination < 0)
+    {
+        //LOG_W("The variable %s does not exist.", destination.c_str());
+    } else
+    {
+        glUseProgram(this->_shaderProgram);
+        glUniform1f(variableDestination, value);
         //glUseProgram(0);
     }
 }

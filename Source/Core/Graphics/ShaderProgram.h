@@ -38,6 +38,7 @@ public:
 	void SendVec3(const std::string &destination, const glm::vec3 &value) const;
 	void SendUint(const std::string &destination, unsigned int value) const;
 	void SendInt(const std::string &destination, int value) const;
+	void SendFloat(const std::string &destination, float value) const;
 
 	void Dispose() override;
 };

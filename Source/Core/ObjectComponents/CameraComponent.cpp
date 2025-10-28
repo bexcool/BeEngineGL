@@ -94,6 +94,7 @@ void CameraComponent::OnTick()
         ));
 
         // TODO: Apply the yaw to the player character
-        SetLocalRotation(Rotation(0, pitch, yaw));
+        //SetLocalRotation(Rotation(0, pitch, yaw));
+        GetParent()->SetWorldRotation(Rotation(0, pitch, yaw));
     }
 }

@@ -20,7 +20,12 @@ class Transform
 
 public:
     Transform() = default;
-    Transform(Location translation, Rotation rotation, Scale scale);
+    Transform(Location location);
+    Transform(Location location, Rotation rotation);
+    Transform(Location location, Scale scale);
+    Transform(Rotation rotation);
+    Transform(Scale scale);
+    Transform(Location location, Rotation rotation, Scale scale);
     Transform(glm::mat4 *transformMatrix);
 
     glm::mat4 AsMatrix();

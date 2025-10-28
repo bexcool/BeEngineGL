@@ -23,9 +23,36 @@ void Transform::RecreateTransformMatrix()
     _transformMatrix = glm::scale<float>(_transformMatrix, glm::vec3(_scale.GetX(), _scale.GetY(), _scale.GetZ()));
 }
 
-Transform::Transform(Location translation, Rotation rotation, Scale scale)
+Transform::Transform(Location location)
 {
-    _location = translation;
+    _location = location;
+}
+
+Transform::Transform(Location location, Rotation rotation)
+{
+    _location = location;
+    _rotation = rotation;
+}
+
+Transform::Transform(Location location, Scale scale)
+{
+    _location = location;
+    _scale = scale;
+}
+
+Transform::Transform(Rotation rotation)
+{
+    _rotation = rotation;
+}
+
+Transform::Transform(Scale scale)
+{
+    _scale = scale;
+}
+
+Transform::Transform(Location location, Rotation rotation, Scale scale)
+{
+    _location = location;
     _rotation = rotation;
     _scale = scale;
 

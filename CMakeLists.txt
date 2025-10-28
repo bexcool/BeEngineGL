@@ -92,6 +92,7 @@ add_executable(ZPG
         Source/Core/Graphics/Light.h
         Source/Resources/Models/MOD_Plane.h
         Source/Libs/tiny_obj_loader.h
+        Source/Resources/Assets/Models/MOD_F1.h
 )
 
 add_custom_target(copyResources
