@@ -14,8 +14,7 @@
 #include "Resources/Models/MOD_Tree.h"
 #include "Resources/Models/MOD_SuziFlat.h"
 
-GameObject *goLight1 = new GameObject();
-GameObject *goLight2 = new GameObject();
+std::vector<GameObject *> fireflies;
 LightComponent *GOC_Flashlight = new LightComponent(Light{.intensity = 1, .radius = 20, .isPointLight = false});
 
 void TestLevel::OnKeyboardKeyEvent(KeyboardKeyEventArgs e)
@@ -50,7 +49,7 @@ void TestLevel::OnLoaded()
     auto GO_f1 = new GameObject();
     GO_f1->AddComponent(new ModelComponent(MOD_F1()));
     GO_f1->AddComponent(new LightComponent(Light{.radius = 20}), Transform(Location(12, 5, 0)));
-    GO_f1->AddComponent(new LightComponent(Light{.radius = 30, .isPointLight = false}), Transform(Location(-10, 5, -10), Rotation(0, -30, 150)));
+    GO_f1->AddComponent(new LightComponent(Light{.radius = 13, .isPointLight = false}), Transform(Location(-10, 5, -10), Rotation(0, -30, 150)));
     GO_f1->AddComponent(new LightComponent(Light{.radius = 20}), Transform(Location(8, 5, 0)));
 
     this->SpawnGameObject(GO_f1, suziTrans);
@@ -76,16 +75,23 @@ void TestLevel::OnLoaded()
 
     this->SetActiveCamera(camera);
 
-    goLight1->AddComponent(new LightComponent());
+    auto goLight1 = new GameObject();
+    goLight1->AddComponent(new LightComponent(Light{.intensity = 0.2, .radius = 3}));
     goLight1->AddComponent(new ModelComponent(MOD_DefaultSphere(ShaderInfo("./Resources/Shaders/default.frag"))));
-    this->SpawnGameObject(goLight1, Transform(Location(30, 5, 20), Rotation(), Scale(0.3)));
+    this->SpawnGameObject(goLight1, Transform(Location(30, 5, 20), Rotation(), Scale(0.1)));
+    fireflies.push_back(goLight1);
 
-    auto goLight2Comp = new LightComponent(Light{.isPointLight = false});
-    goLight2->AddComponent(goLight2Comp, Transform(Location(), Rotation(0, -90, 0), Scale()));
-    auto goLight2Comp2 = new LightComponent(Light{.isPointLight = false});
-    goLight2->AddComponent(goLight2Comp2, Transform(Location(), Rotation(0, -45, 0), Scale()));
+    auto goLight2 = new GameObject();
+    goLight2->AddComponent(new LightComponent(Light{.intensity = 0.2, .radius = 3}));
     goLight2->AddComponent(new ModelComponent(MOD_DefaultSphere(ShaderInfo("./Resources/Shaders/default.frag"))));
-    this->SpawnGameObject(goLight2, Transform(Location(10, 5, 10), Rotation(), Scale(0.3)));
+    this->SpawnGameObject(goLight2, Transform(Location(35, 5, 23), Rotation(), Scale(0.1)));
+    fireflies.push_back(goLight2);
+
+    auto goLight3 = new GameObject();
+    goLight3->AddComponent(new LightComponent(Light{.intensity = 0.2, .radius = 3}));
+    goLight3->AddComponent(new ModelComponent(MOD_DefaultSphere(ShaderInfo("./Resources/Shaders/default.frag"))));
+    this->SpawnGameObject(goLight3, Transform(Location(35, 5, 18), Rotation(), Scale(0.1)));
+    fireflies.push_back(goLight3);
 
     auto planeGO = new GameObject();
     planeGO->AddComponent(new ModelComponent(MOD_Plain()));
@@ -147,6 +153,10 @@ void TestLevel::OnTick()
     float moveAmountY = sin(glfwGetTime() + 5353) / 50;
     float moveAmountZ = sin(glfwGetTime()) / 30;
     //LOG_W("Move amount: %f", moveAmount);
-    goLight1->AddWorldLocation(Location(moveAmountX, moveAmountY, moveAmountZ));
-    goLight2->AddWorldLocation(Location(-moveAmountX, moveAmountY, -moveAmountZ));
+    for (int i = 0; i < fireflies.size(); i++)
+    {
+        bool invertZ = i % 2 == 0;
+
+        fireflies[i]->AddWorldLocation(Location(moveAmountX, moveAmountY, moveAmountZ * (invertZ ? -1 : 1)));
+    }
 }

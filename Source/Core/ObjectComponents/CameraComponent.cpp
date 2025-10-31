@@ -64,7 +64,7 @@ void CameraComponent::OnTick()
     float yaw = camerRot.GetYaw(),
             pitch = camerRot.GetPitch();
 
-    if (InputManager::IsMouseKeyPressed(GLFW_MOUSE_BUTTON_LEFT))
+    if (InputManager::IsMouseKeyPressed(GLFW_MOUSE_BUTTON_RIGHT))
     {
         auto controller = GetParent()->GetController();
 
