@@ -37,10 +37,18 @@ Renderer::Renderer(GLFWwindow *window)
 
 void Renderer::Render() const
 {
+	auto app = Application::GetInstance();
+
 	// clear color and depth buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	auto skyBox = app->GetLevel()->GetSkyBox();
+	if (skyBox)
+	{
+		skyBox->Render();
+		glClear(GL_DEPTH_BUFFER_BIT);
+	}
 	// draw triangles
-	auto app = Application::GetInstance();
 	if (app->GetLevel() != nullptr)
 	{
 		for (auto object: (*app->GetLevel()->GetGameObjects()))

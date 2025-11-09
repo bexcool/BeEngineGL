@@ -90,9 +90,19 @@ add_executable(ZPG
         Source/Core/Math/Vector3.cpp
         Source/Core/Math/Vector3.h
         Source/Core/Graphics/Light.h
-        Source/Resources/Models/MOD_Plane.h
+        Source/Resources/Models/MOD_Plain.h
         Source/Libs/tiny_obj_loader.h
         Source/Resources/Assets/Models/MOD_F1.h
+        Source/Libs/stb_image.h
+        Source/Resources/Assets/Models/MOD_Plane.h
+        Source/Resources/Assets/Models/Shrek/MOD_Shrek.h
+        Source/Resources/Assets/Models/Shrek/MOD_Fiona.h
+        Source/Resources/Assets/Models/Shrek/MOD_Toilet.h
+        Source/Core/Graphics/SkyBox/SkyBoxModel.cpp
+        Source/Core/Graphics/SkyBox/SkyBoxModel.h
+        Source/Resources/Assets/Models/MOD_SkyBox.h
+        Source/Core/Graphics/SkyBox/SkyBoxShaderProgram.cpp
+        Source/Core/Graphics/SkyBox/SkyBoxShaderProgram.h
 )
 
 add_custom_target(copyResources

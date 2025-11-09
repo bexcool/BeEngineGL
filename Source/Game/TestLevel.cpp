@@ -9,10 +9,12 @@
 #include "Core/ObjectComponents/ModelComponent.h"
 #include "Core/Objects/Character/PlayerCharacter.h"
 #include "Resources/Assets/Models/MOD_F1.h"
+#include "Resources/Assets/Models/MOD_Plane.h"
+#include "Resources/Assets/Models/Shrek/MOD_Fiona.h"
+#include "Resources/Assets/Models/Shrek/MOD_Shrek.h"
+#include "Resources/Assets/Models/Shrek/MOD_Toilet.h"
 #include "Resources/Models/MOD_Bush.h"
-#include "Resources/Models/MOD_Plane.h"
 #include "Resources/Models/MOD_Tree.h"
-#include "Resources/Models/MOD_SuziFlat.h"
 
 std::vector<GameObject *> fireflies;
 LightComponent *GOC_Flashlight = new LightComponent(Light{.intensity = 1, .radius = 20, .isPointLight = false});
@@ -41,6 +43,8 @@ void TestLevel::OnMouseKeyEvent(MouseKeyEventArgs e)
 
 void TestLevel::OnLoaded()
 {
+    SetSkyBox(new SkyBoxModel());
+
     auto suziTrans = Transform(
         Location(10, 10, 0),
         Rotation(),
@@ -54,6 +58,20 @@ void TestLevel::OnLoaded()
 
     this->SpawnGameObject(GO_f1, suziTrans);
 
+    // Shrek
+    auto shrekGO = new GameObject();
+    shrekGO->AddComponent(new ModelComponent(MOD_Shrek()));
+    this->SpawnGameObject(shrekGO, Transform(Location(-5, 0, -5)));
+
+    // Fiona
+    auto fionaGO = new GameObject();
+    fionaGO->AddComponent(new ModelComponent(MOD_Fiona()));
+    this->SpawnGameObject(fionaGO, Transform(Location(-10, 0, -5)));
+
+    // Toiled
+    auto toiletGO = new GameObject();
+    toiletGO->AddComponent(new ModelComponent(MOD_Toilet()));
+    this->SpawnGameObject(toiletGO, Transform(Location(-7.5, 0, -5)));
 
     // Default sphere
     auto defSphereComp = new ModelComponent();
@@ -77,24 +95,30 @@ void TestLevel::OnLoaded()
 
     auto goLight1 = new GameObject();
     goLight1->AddComponent(new LightComponent(Light{.intensity = 0.2, .radius = 3}));
-    goLight1->AddComponent(new ModelComponent(MOD_DefaultSphere(ShaderInfo("./Resources/Shaders/default.frag"))));
+    goLight1->AddComponent(new ModelComponent(MOD_DefaultSphere(ShaderInfo{
+        .fragmentShaderPath = "./Resources/Shaders/default.frag"
+    })));
     this->SpawnGameObject(goLight1, Transform(Location(30, 5, 20), Rotation(), Scale(0.1)));
     fireflies.push_back(goLight1);
 
     auto goLight2 = new GameObject();
     goLight2->AddComponent(new LightComponent(Light{.intensity = 0.2, .radius = 3}));
-    goLight2->AddComponent(new ModelComponent(MOD_DefaultSphere(ShaderInfo("./Resources/Shaders/default.frag"))));
+    goLight2->AddComponent(new ModelComponent(MOD_DefaultSphere(ShaderInfo{
+        .fragmentShaderPath = "./Resources/Shaders/default.frag"
+    })));
     this->SpawnGameObject(goLight2, Transform(Location(35, 5, 23), Rotation(), Scale(0.1)));
     fireflies.push_back(goLight2);
 
     auto goLight3 = new GameObject();
     goLight3->AddComponent(new LightComponent(Light{.intensity = 0.2, .radius = 3}));
-    goLight3->AddComponent(new ModelComponent(MOD_DefaultSphere(ShaderInfo("./Resources/Shaders/default.frag"))));
+    goLight3->AddComponent(new ModelComponent(MOD_DefaultSphere(ShaderInfo{
+        .fragmentShaderPath = "./Resources/Shaders/default.frag"
+    })));
     this->SpawnGameObject(goLight3, Transform(Location(35, 5, 18), Rotation(), Scale(0.1)));
     fireflies.push_back(goLight3);
 
     auto planeGO = new GameObject();
-    planeGO->AddComponent(new ModelComponent(MOD_Plain()));
+    planeGO->AddComponent(new ModelComponent(MOD_Plane()));
     this->SpawnGameObject(planeGO, Transform(Location(), Rotation(), Scale(100)));
 
     for (int i = 0; i < 10; i++)
@@ -134,6 +158,7 @@ void TestLevel::OnLoaded()
         }
     }
 }
+
 
 void TestLevel::OnUnloaded()
 {

@@ -7,6 +7,7 @@
 #include "ObjectComponents/CameraComponent.h"
 #include "Events/KeyboardKeyEventArgs.h"
 #include "Events/MouseKeyEventArgs.h"
+#include "Graphics/SkyBox/SkyBoxModel.h"
 #include "ObjectComponents/LightComponent.h"
 #include "Objects/Character/PlayerCharacter.h"
 
@@ -15,6 +16,8 @@ class Level
 {
     PlayerController *_playerController;
     CameraComponent *_activeCamera;
+    SkyBoxModel *_skyBox;
+
     std::string _name;
 
     std::vector<GameObject *> _gameObjects;
@@ -49,6 +52,10 @@ public:
     // Camera
     void SetActiveCamera(CameraComponent *camera);
     CameraComponent *GetActiveCamera();
+
+    // Sky box
+    void SetSkyBox(SkyBoxModel *skyBox);
+    SkyBoxModel *GetSkyBox();
 
     /**
      * Called when level was loaded.

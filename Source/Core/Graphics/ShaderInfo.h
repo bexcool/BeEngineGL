@@ -4,20 +4,15 @@
 
 #pragma once
 #include <string>
+#include <glm/vec4.hpp>
+#include <utility>
 
 
-class ShaderInfo
+struct ShaderInfo
 {
-    std::string _vertexShaderPath = "./Resources/Shaders/default.vert";
-    std::string _fragmentShaderPath = "./Resources/Shaders/default.frag";
-
-public:
-    ShaderInfo() = default;
-    explicit ShaderInfo(std::string fragmentShaderPath);
-    ShaderInfo(std::string shaderPath, int shaderType);
-    ShaderInfo(std::string vertexShaderPath, std::string fragmentShaderPath);
-    ~ShaderInfo() = default;
-
-    std::string GetVertexShaderPath();
-    std::string GetFragmentShaderPath();
+    std::string vertexShaderPath = "./Resources/Shaders/default.vert";
+    std::string fragmentShaderPath = "./Resources/Shaders/phong.frag";
+    bool useTexture = false;
+    std::string texturePath = "./Resources/Assets/Textures/DefaultTexture.png";
+    glm::vec4 color = glm::vec4(1.0, 1.0, 1.0, 1.0);
 };

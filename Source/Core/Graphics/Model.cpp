@@ -13,14 +13,15 @@
 
 void Model::LinkShaderProgram()
 {
-    _vertexShader = new Shader(GL_VERTEX_SHADER, _shaderInfo.GetVertexShaderPath());
+    _vertexShader = new Shader(GL_VERTEX_SHADER, _shaderInfo.vertexShaderPath);
     _vertexShader->Compile();
 
-    _fragmentShader = new Shader(GL_FRAGMENT_SHADER, _shaderInfo.GetFragmentShaderPath());
+    _fragmentShader = new Shader(GL_FRAGMENT_SHADER, _shaderInfo.fragmentShaderPath);
     _fragmentShader->Compile();
 
-    _shaderProgram = new ShaderProgram(_vertexShader, _fragmentShader, _transform.get());
+    _shaderProgram = new ShaderProgram(_vertexShader, _fragmentShader, _shaderInfo, _transform.get());
     _shaderProgram->LinkShaders();
+    if (_shaderInfo.useTexture) _shaderProgram->CreateTextures();
 }
 
 Model::~Model()
@@ -37,6 +38,13 @@ Model::~Model()
 }
 
 void Model::SetModel(std::string modelPath)
+{
+    SetModelCustomSP(modelPath);
+
+    LinkShaderProgram();
+}
+
+void Model::SetModelCustomSP(std::string modelPath)
 {
     std::filesystem::path filePath = modelPath;
 
@@ -106,8 +114,6 @@ void Model::SetModel(std::string modelPath)
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *) (3 * sizeof(float)));
     glEnableVertexAttribArray(2); //enable vertex attributes
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *) (6 * sizeof(float)));
-
-    LinkShaderProgram();
 }
 
 void Model::SetModel(std::string modelPath, const ShaderInfo &shaderInfo)
@@ -115,6 +121,13 @@ void Model::SetModel(std::string modelPath, const ShaderInfo &shaderInfo)
     _shaderInfo = shaderInfo;
 
     SetModel(modelPath);
+}
+
+void Model::SetModelCustomSP(std::string modelPath, const ShaderInfo &shaderInfo)
+{
+    _shaderInfo = shaderInfo;
+
+    SetModelCustomSP(modelPath);
 }
 
 void Model::SetModel(const float *vertices, unsigned int amount)

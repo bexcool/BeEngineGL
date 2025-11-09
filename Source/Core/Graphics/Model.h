@@ -27,7 +27,7 @@ class className : public Model\
 public:\
 className()\
 {\
-SetModel(modelData, sizeof(modelData) / (sizeof(float) * 6), ShaderInfo("Resources/Shaders/phong.frag"));\
+SetModel(modelData, sizeof(modelData) / (sizeof(float) * 6), ShaderInfo());\
 }\
 className(const ShaderInfo &shaderInfo)\
 {\
@@ -41,7 +41,7 @@ class className : public Model\
 public:\
 className()\
 {\
-SetModel(modelPath, ShaderInfo("Resources/Shaders/phong.frag"));\
+SetModel(modelPath, ShaderInfo());\
 }\
 className(const ShaderInfo &shaderInfo)\
 {\
@@ -65,6 +65,7 @@ SetModel(modelPath, shaderInfo);\
 
 class Model
 {
+protected:
     Shader *_fragmentShader, *_vertexShader;
     ShaderInfo _shaderInfo = ShaderInfo();
     ShaderProgram *_shaderProgram;
@@ -80,7 +81,9 @@ public:
     ~Model();
 
     void SetModel(std::string modelPath);
+    void SetModelCustomSP(std::string modelPath);
     void SetModel(std::string modelPath, const ShaderInfo &shaderInfo);
+    void SetModelCustomSP(std::string modelPath, const ShaderInfo &shaderInfo);
     void SetModel(const float *vertices, unsigned int amount);
     void SetModel(const float *vertices, unsigned int amount, const ShaderInfo &shaderInfo);
 

@@ -74,6 +74,16 @@ CameraComponent *Level::GetActiveCamera()
     return _activeCamera;
 }
 
+void Level::SetSkyBox(SkyBoxModel *skyBox)
+{
+    _skyBox = skyBox;
+}
+
+SkyBoxModel *Level::GetSkyBox()
+{
+    return _skyBox;
+}
+
 void Level::OnKeyboardKeyEvent(KeyboardKeyEventArgs e)
 {
     for (auto go: _gameObjects)

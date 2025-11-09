@@ -8,6 +8,7 @@
 #include <glm/ext/matrix_float4x4.hpp>
 
 #include "Shader.h"
+#include "ShaderInfo.h"
 #include "../Math/Transform.h"
 #include "Core/Interfaces/IDisposable.h"
 
@@ -15,8 +16,8 @@ class ModelComponent;
 
 class ShaderProgram : public IDisposable
 {
-private:
-	GLuint _shaderProgram;
+protected:
+	GLuint _shaderProgramId;
 	Shader *_vertexShader;
 	Shader *_fragmentShader;
 	GLuint _modelTransformId;
@@ -25,20 +26,26 @@ private:
 	GLuint _cameraLocationId;
 	Transform *_modelTransform;
 
+	ShaderInfo _shaderInfo = ShaderInfo();
+	GLuint _textureId;
+
 public:
 	ShaderProgram(Shader *vertexShader, Shader *fragmentShader);
 	ShaderProgram(Shader *vertexShader, Shader *fragmentShader, Transform *modelTransform);
+	ShaderProgram(Shader *vertexShader, Shader *fragmentShader, const ShaderInfo &shaderInfo, Transform *modelTransfrom);
 
 	~ShaderProgram() override;
 
 	void LinkShaders();
-	void Use();
+	void virtual CreateTextures();
+	void virtual Use();
 
 	void SendVec4(const std::string &destination, const glm::vec4 &value) const;
 	void SendVec3(const std::string &destination, const glm::vec3 &value) const;
 	void SendUint(const std::string &destination, unsigned int value) const;
 	void SendInt(const std::string &destination, int value) const;
 	void SendFloat(const std::string &destination, float value) const;
+	void SendBool(const std::string &destination, bool value) const;
 
 	void Dispose() override;
 };
