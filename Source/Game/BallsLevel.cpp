@@ -15,6 +15,7 @@ void BallsLevel::OnLoaded()
 {
     Level::OnLoaded();
 
+    SetSkyBox(new SkyBoxModel());
 
     // Default
     auto ballDefaultModel = new ModelComponent();

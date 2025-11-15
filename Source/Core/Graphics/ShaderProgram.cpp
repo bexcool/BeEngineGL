@@ -137,6 +137,8 @@ void ShaderProgram::Use()
     auto clr = _shaderInfo.color;
     SendVec4("color", clr);
 
+    SendVec4("ambient", glm::vec4(0.05, 0.05, 0.05, 1));
+
     SendInt("useTexture", _shaderInfo.useTexture);
     if (_shaderInfo.useTexture)
     {

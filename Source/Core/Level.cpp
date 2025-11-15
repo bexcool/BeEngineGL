@@ -92,7 +92,14 @@ void Level::OnKeyboardKeyEvent(KeyboardKeyEventArgs e)
     }
 }
 
-void Level::OnMouseKeyEvent(MouseKeyEventArgs e) {}
+void Level::OnMouseKeyEvent(MouseKeyEventArgs e)
+{
+    for (auto go: _gameObjects)
+    {
+        go->GetController()->OnMouseKeyEvent(e);
+    }
+}
+
 void Level::OnLoaded() {}
 
 void Level::OnUnloaded()

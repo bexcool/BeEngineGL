@@ -15,13 +15,10 @@ void SkyBoxShaderProgram::Use()
 
     glUseProgram(_shaderProgramId);
 
-    SendInt("useTexture", _shaderInfo.useTexture);
-    if (_shaderInfo.useTexture)
-    {
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_CUBE_MAP, _textureId);
-        SendInt("texture2D", 0);
-    }
+    SendInt("useTexture", 1);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, _textureId);
+    SendInt("texture2D", 0);
 
     glUniformMatrix4fv(_modelTransformId, 1, GL_FALSE, &_modelTransform->AsMatrix()[0][0]);
     glUniformMatrix4fv(_viewTransformId, 1, GL_FALSE, &camera->GetCameraViewMatrix()[0][0]);
@@ -39,7 +36,6 @@ void SkyBoxShaderProgram::CreateTextures()
 {
     stbi_set_flip_vertically_on_load(false);
 
-    glActiveTexture(GL_TEXTURE0);
     glGenTextures(1, &_textureId);
     glBindTexture(GL_TEXTURE_CUBE_MAP, _textureId);
 

@@ -43,6 +43,8 @@ void TestLevel::OnMouseKeyEvent(MouseKeyEventArgs e)
 
 void TestLevel::OnLoaded()
 {
+    Level::OnLoaded();
+
     SetSkyBox(new SkyBoxModel());
 
     auto suziTrans = Transform(

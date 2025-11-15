@@ -11,7 +11,7 @@
 
 SkyBoxModel::SkyBoxModel()
 {
-    SetModelCustomSP("./Resources/Assets/Models/cube.obj", ShaderInfo{.fragmentShaderPath = "./Resources/Shaders/skybox.frag", .useTexture = true});
+    SetModelCustomSP("./Resources/Assets/Models/cube.obj", ShaderInfo{.fragmentShaderPath = "./Resources/Shaders/skybox.frag.glsl", .vertexShaderPath = "./Resources/Shaders/skybox.vert.glsl", .useTexture = true});
 
     LinkShaderProgram();
 }
@@ -26,7 +26,7 @@ void SkyBoxModel::LinkShaderProgram()
 
     _shaderProgram = new SkyBoxShaderProgram(_vertexShader, _fragmentShader, _shaderInfo, _transform.get());
     _shaderProgram->LinkShaders();
-    if (_shaderInfo.useTexture) dynamic_cast<SkyBoxShaderProgram *>(_shaderProgram)->CreateTextures();
+    dynamic_cast<SkyBoxShaderProgram *>(_shaderProgram)->CreateTextures();
 }
 
 void SkyBoxModel::Render()

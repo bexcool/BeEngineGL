@@ -66,7 +66,7 @@ void main(void)
             float spot = dot(normalize(lights[i].spotDirection), -lightDirection);
             float cutoff = 0.9;          // Inner cone
             float outerCutoff = 0.8;     // Outer cone
-            finalSpot = clamp((spot - outerCutoff) / (cutoff - outerCutoff), 0.05, 1);
+            finalSpot = clamp((spot - outerCutoff) / (cutoff - outerCutoff), 0, 1);
         }
 
         finalAmbient += ambient * attenuation;
