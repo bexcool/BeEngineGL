@@ -16,7 +16,6 @@ using namespace std;
 
 class ModelComponent : public GameObjectComponent
 {
-private:
     Model _model = MOD_DefaultSphere();
 
 public:
@@ -24,6 +23,7 @@ public:
     ModelComponent(Model _model);
 
     void SetModel(Model model);
+    Model GetModel();
 
     void OnAttached(GameObject *parent) override;
     void OnRender() override;

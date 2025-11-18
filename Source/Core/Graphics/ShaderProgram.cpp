@@ -92,12 +92,13 @@ void ShaderProgram::CreateTextures()
 
 void ShaderProgram::Use()
 {
-    auto camera = Application::GetInstance()->GetLevel()->GetActiveCamera();
+    auto level = Application::GetInstance()->GetLevel();
+    auto camera = level->GetActiveCamera();
 
     if (camera == nullptr) return;
 
     int lightsWithNonZeroIntensity = 0;
-    auto lights = Application::GetInstance()->GetLevel()->GetLightComponents();
+    auto lights = level->GetLightComponents();
 
     glUseProgram(_shaderProgramId);
 
@@ -133,7 +134,11 @@ void ShaderProgram::Use()
 
     SendInt("lightCount", lightsWithNonZeroIntensity);
 
+    SendFloat("skyLightIntensity", level->GetSkyLightIntensity());
+
     // glm::vec4(0.385, 0.647, 0.812, 1.0)
+
+
     auto clr = _shaderInfo.color;
     SendVec4("color", clr);
 

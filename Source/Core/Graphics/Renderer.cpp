@@ -60,6 +60,7 @@ void Renderer::Render() const
 		for (auto object: (*app->GetLevel()->GetGameObjects()))
 		{
 			glStencilFunc(GL_ALWAYS, index, 0xFF);
+			object->StencilIndex = index;
 			object->OnRender();
 			index++;
 		}

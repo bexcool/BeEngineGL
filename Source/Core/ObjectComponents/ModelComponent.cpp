@@ -18,6 +18,11 @@ void ModelComponent::SetModel(Model model)
     _model = model;
 }
 
+Model ModelComponent::GetModel()
+{
+    return _model;
+}
+
 void ModelComponent::OnAttached(GameObject *parent)
 {
     GameObjectComponent::OnAttached(parent);

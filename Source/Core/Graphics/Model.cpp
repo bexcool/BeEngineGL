@@ -37,8 +37,19 @@ Model::~Model()
         glDeleteVertexArrays(1, &_VAO);
 }
 
+ShaderInfo Model::GetShaderInfo()
+{
+    return _shaderInfo;
+}
+
+std::string Model::GetModelPath()
+{
+    return _modelPath;
+}
+
 void Model::SetModel(std::string modelPath)
 {
+    _modelPath = modelPath;
     SetModelCustomSP(modelPath);
 
     LinkShaderProgram();
@@ -46,6 +57,7 @@ void Model::SetModel(std::string modelPath)
 
 void Model::SetModelCustomSP(std::string modelPath)
 {
+    _modelPath = modelPath;
     std::filesystem::path filePath = modelPath;
 
     tinyobj::attrib_t attrib;
@@ -116,8 +128,9 @@ void Model::SetModelCustomSP(std::string modelPath)
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *) (6 * sizeof(float)));
 }
 
-void Model::SetModel(std::string modelPath, const ShaderInfo &shaderInfo)
+void Model::SetModel(const std::string &modelPath, const ShaderInfo &shaderInfo)
 {
+    _modelPath = modelPath;
     _shaderInfo = shaderInfo;
 
     SetModel(modelPath);
@@ -125,6 +138,7 @@ void Model::SetModel(std::string modelPath, const ShaderInfo &shaderInfo)
 
 void Model::SetModelCustomSP(std::string modelPath, const ShaderInfo &shaderInfo)
 {
+    _modelPath = modelPath;
     _shaderInfo = shaderInfo;
 
     SetModelCustomSP(modelPath);

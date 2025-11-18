@@ -12,6 +12,7 @@ struct light
 
 uniform light lights[MAX_LIGHTS];
 uniform int lightCount;
+uniform float skyLightIntensity;
 
 uniform bool useTexture;
 uniform sampler2D texture2D;
@@ -69,10 +70,9 @@ void main(void)
             finalSpot = clamp((spot - outerCutoff) / (cutoff - outerCutoff), 0.05, 1);
         }
 
-        finalAmbient += ambient * attenuation;
         finalSpecular += specular * lights[i].color * attenuation * finalSpot;
-        finalDiffuse += diffuse * attenuation * finalSpot;
+        finalDiffuse += diffuse * clamp(attenuation * finalSpot, 0.08, 1);
     }
 
-    fragColor = clamp(clamp(finalAmbient, 0, ambient.x) + finalSpecular + finalDiffuse, 0, 1);
+    fragColor = clamp(modelColor * ambient * skyLightIntensity + finalSpecular + finalDiffuse, 0, 1);
 }

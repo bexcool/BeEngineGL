@@ -84,11 +84,21 @@ SkyBoxModel *Level::GetSkyBox()
     return _skyBox;
 }
 
+void Level::SetSkyLightIntensity(float intensity)
+{
+    _skyLightIntensity = intensity;
+}
+
+float Level::GetSkyLightIntensity()
+{
+    return _skyLightIntensity;
+}
+
 void Level::OnKeyboardKeyEvent(KeyboardKeyEventArgs e)
 {
     for (auto go: _gameObjects)
     {
-        go->GetController()->OnKeyboardKeyEvent(e);
+        if (go) go->GetController()->OnKeyboardKeyEvent(e);
     }
 }
 
@@ -96,7 +106,7 @@ void Level::OnMouseKeyEvent(MouseKeyEventArgs e)
 {
     for (auto go: _gameObjects)
     {
-        go->GetController()->OnMouseKeyEvent(e);
+        if (go) go->GetController()->OnMouseKeyEvent(e);
     }
 }
 

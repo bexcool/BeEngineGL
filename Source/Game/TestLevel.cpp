@@ -46,6 +46,7 @@ void TestLevel::OnLoaded()
     Level::OnLoaded();
 
     SetSkyBox(new SkyBoxModel());
+    SetSkyLightIntensity(5);
 
     auto suziTrans = Transform(
         Location(10, 10, 0),
@@ -76,6 +77,7 @@ void TestLevel::OnLoaded()
     this->SpawnGameObject(toiletGO, Transform(Location(-7.5, 0, -5)));
 
     // Default sphere
+    /*
     auto defSphereComp = new ModelComponent();
     defSphereComp->SetModel(MOD_DefaultSphere());
 
@@ -83,7 +85,7 @@ void TestLevel::OnLoaded()
     defSphereGO->AddComponent(defSphereComp);
     auto trans = Transform(Location(15, 10, 0), Rotation(), Scale());
     this->SpawnGameObject(defSphereGO, trans);
-
+*/
 
     auto *player = new PlayerCharacter();
     auto *camera = new CameraComponent();
@@ -95,6 +97,7 @@ void TestLevel::OnLoaded()
 
     this->SetActiveCamera(camera);
 
+    /*
     auto goLight1 = new GameObject();
     goLight1->AddComponent(new LightComponent(Light{.intensity = 0.2, .radius = 3}));
     goLight1->AddComponent(new ModelComponent(MOD_DefaultSphere(ShaderInfo{
@@ -118,11 +121,11 @@ void TestLevel::OnLoaded()
     })));
     this->SpawnGameObject(goLight3, Transform(Location(35, 5, 18), Rotation(), Scale(0.1)));
     fireflies.push_back(goLight3);
-
+    */
     auto planeGO = new GameObject();
     planeGO->AddComponent(new ModelComponent(MOD_Plane()));
     this->SpawnGameObject(planeGO, Transform(Location(), Rotation(), Scale(100)));
-
+    /*
     for (int i = 0; i < 10; i++)
     {
         for (int j = 0; j < 10; j++)
@@ -159,6 +162,7 @@ void TestLevel::OnLoaded()
                                   ));
         }
     }
+    */
 }
 
 

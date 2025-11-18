@@ -30,6 +30,8 @@ public:
     GameObject() = default;
     ~GameObject() override;
 
+    int StencilIndex = -1;
+
     void Destroy();
     bool GetDestroyRequested() const;
 

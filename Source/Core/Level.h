@@ -17,6 +17,7 @@ class Level
     PlayerController *_playerController;
     CameraComponent *_activeCamera;
     SkyBoxModel *_skyBox;
+    float _skyLightIntensity = 1.0f;
 
     std::string _name;
 
@@ -56,6 +57,10 @@ public:
     // Sky box
     void SetSkyBox(SkyBoxModel *skyBox);
     SkyBoxModel *GetSkyBox();
+
+    // Sky light
+    void SetSkyLightIntensity(float intensity);
+    float GetSkyLightIntensity();
 
     /**
      * Called when level was loaded.

@@ -66,6 +66,7 @@ SetModel(modelPath, shaderInfo);\
 class Model
 {
 protected:
+    std::string _modelPath;
     Shader *_fragmentShader, *_vertexShader;
     ShaderInfo _shaderInfo = ShaderInfo();
     ShaderProgram *_shaderProgram;
@@ -80,9 +81,12 @@ public:
     Model() = default;
     ~Model();
 
+    ShaderInfo GetShaderInfo();
+    std::string GetModelPath();
+
     void SetModel(std::string modelPath);
     void SetModelCustomSP(std::string modelPath);
-    void SetModel(std::string modelPath, const ShaderInfo &shaderInfo);
+    void SetModel(const std::string &modelPath, const ShaderInfo &shaderInfo);
     void SetModelCustomSP(std::string modelPath, const ShaderInfo &shaderInfo);
     void SetModel(const float *vertices, unsigned int amount);
     void SetModel(const float *vertices, unsigned int amount, const ShaderInfo &shaderInfo);
