@@ -10,6 +10,8 @@
 class SkyBoxShaderProgram : public ShaderProgram
 {
 public:
+    CubeMap CubeMap;
+
     SkyBoxShaderProgram(Shader *vertexShader, Shader *fragmentShader, const ShaderInfo &shaderInfo, Transform *modelTransfrom) : ShaderProgram(vertexShader, fragmentShader, shaderInfo, modelTransfrom) {}
 
     void Use() override;

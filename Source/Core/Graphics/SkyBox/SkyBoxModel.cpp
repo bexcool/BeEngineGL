@@ -2,6 +2,8 @@
 // Created by Petr Pavlík on 06.11.2025.
 //
 
+#include <utility>
+
 #include "./SkyBoxModel.h"
 
 #include "SkyBoxShaderProgram.h"
@@ -9,8 +11,10 @@
 #include "Libs/stb_image.h"
 #include "Resources/Assets/Models/MOD_SkyBox.h"
 
-SkyBoxModel::SkyBoxModel()
+SkyBoxModel::SkyBoxModel(CubeMap cubeMap)
 {
+    this->_cubeMap = std::move(cubeMap);
+
     SetModelCustomSP("./Resources/Assets/Models/cube.obj", ShaderInfo{.fragmentShaderPath = "./Resources/Shaders/skybox.frag.glsl", .vertexShaderPath = "./Resources/Shaders/skybox.vert.glsl", .useTexture = true});
 
     LinkShaderProgram();
@@ -18,13 +22,15 @@ SkyBoxModel::SkyBoxModel()
 
 void SkyBoxModel::LinkShaderProgram()
 {
-    _vertexShader = new Shader(GL_VERTEX_SHADER, _shaderInfo.vertexShaderPath);
+    const auto si = _material->get()->GetShaderInfo();
+    _vertexShader = new Shader(GL_VERTEX_SHADER, si.vertexShaderPath);
     _vertexShader->Compile();
 
-    _fragmentShader = new Shader(GL_FRAGMENT_SHADER, _shaderInfo.fragmentShaderPath);
+    _fragmentShader = new Shader(GL_FRAGMENT_SHADER, si.fragmentShaderPath);
     _fragmentShader->Compile();
 
-    _shaderProgram = new SkyBoxShaderProgram(_vertexShader, _fragmentShader, _shaderInfo, _transform.get());
+    _shaderProgram = new SkyBoxShaderProgram(_vertexShader, _fragmentShader, si, _transform.get());
+    dynamic_cast<SkyBoxShaderProgram *>(_shaderProgram)->CubeMap = _cubeMap;
     _shaderProgram->LinkShaders();
     dynamic_cast<SkyBoxShaderProgram *>(_shaderProgram)->CreateTextures();
 }

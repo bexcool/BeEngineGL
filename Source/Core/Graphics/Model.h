@@ -6,6 +6,7 @@
 #include "Shader.h"
 #include "ShaderInfo.h"
 #include "ShaderProgram.h"
+#include "Material/Material.h"
 
 #define LEGACY_GEN_MODEL_HEADER_SI(className, modelData, shaderInfoData) \
 class className : public Model\
@@ -41,11 +42,11 @@ class className : public Model\
 public:\
 className()\
 {\
-SetModel(modelPath, ShaderInfo());\
+SetModel(modelPath, Material());\
 }\
-className(const ShaderInfo &shaderInfo)\
+explicit className(const Material &material)\
 {\
-SetModel(modelPath, shaderInfo);\
+SetModel(modelPath, material);\
 }\
 };
 
@@ -67,8 +68,8 @@ class Model
 {
 protected:
     std::string _modelPath;
-    Shader *_fragmentShader, *_vertexShader;
-    ShaderInfo _shaderInfo = ShaderInfo();
+    Shader *_fragmentShader = nullptr, *_vertexShader = nullptr;
+    std::shared_ptr<Material> _material;
     ShaderProgram *_shaderProgram;
     unsigned int _amountOfVertices;
     GLuint _VAO = 0, _VBO = 0;
@@ -81,15 +82,12 @@ public:
     Model() = default;
     ~Model();
 
-    ShaderInfo GetShaderInfo();
     std::string GetModelPath();
 
     void SetModel(std::string modelPath);
     void SetModelCustomSP(std::string modelPath);
-    void SetModel(const std::string &modelPath, const ShaderInfo &shaderInfo);
-    void SetModelCustomSP(std::string modelPath, const ShaderInfo &shaderInfo);
-    void SetModel(const float *vertices, unsigned int amount);
-    void SetModel(const float *vertices, unsigned int amount, const ShaderInfo &shaderInfo);
+    void SetModel(const std::string &modelPath, const Material &material);
+    void SetModelCustomSP(const std::string &modelPath, const Material &material);
 
     void Render(const Transform &transform);
 };

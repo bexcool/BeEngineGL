@@ -7,6 +7,7 @@
 #include "Core/Application.h"
 #include "Core/logger.h"
 #include "Core/ObjectComponents/ModelComponent.h"
+#include "Resources/Assets/Models/Shrek/MOD_Shrek.h"
 #include "Resources/Models/MOD_DefaultSphere.h"
 
 GameObject *ballPhong = new GameObject();
@@ -15,7 +16,14 @@ void BallsLevel::OnLoaded()
 {
     Level::OnLoaded();
 
-    SetSkyBox(new SkyBoxModel());
+    SetSkyBox(new SkyBoxModel({
+        "./Resources/Assets/Textures/MilkyWay/stars_rt.png",
+        "./Resources/Assets/Textures/MilkyWay/stars_lf.png",
+        "./Resources/Assets/Textures/MilkyWay/stars_up.png",
+        "./Resources/Assets/Textures/MilkyWay/stars_dn.png",
+        "./Resources/Assets/Textures/MilkyWay/stars_ft.png",
+        "./Resources/Assets/Textures/MilkyWay/stars_bk.png"
+    }));
 
     // Default
     auto ballDefaultModel = new ModelComponent();

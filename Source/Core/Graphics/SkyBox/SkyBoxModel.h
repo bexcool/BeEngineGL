@@ -4,12 +4,15 @@
 
 #pragma once
 #include "../Model.h"
+#include "Core/Graphics/CubeMap.h"
 
 
 class SkyBoxModel : public Model
 {
+    CubeMap _cubeMap;
+
 public:
-    SkyBoxModel();
+    explicit SkyBoxModel(CubeMap cubeMap);
 
     void LinkShaderProgram();
     void Render();

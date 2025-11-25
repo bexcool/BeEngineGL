@@ -83,14 +83,9 @@ add_executable(ZPG
         Source/Core/ObjectComponents/LightComponent.h
         Source/Core/Graphics/Model.cpp
         Source/Core/Graphics/Model.h
-        Source/Resources/Models/MOD_DefaultSphere.h
-        Source/Resources/Models/MOD_Bush.h
-        Source/Resources/Models/MOD_SuziFlat.h
-        Source/Resources/Models/MOD_Tree.h
         Source/Core/Math/Vector3.cpp
         Source/Core/Math/Vector3.h
         Source/Core/Graphics/Light.h
-        Source/Resources/Models/MOD_Plain.h
         Source/Libs/tiny_obj_loader.h
         Source/Resources/Assets/Models/MOD_F1.h
         Source/Libs/stb_image.h
@@ -103,6 +98,18 @@ add_executable(ZPG
         Source/Resources/Assets/Models/MOD_SkyBox.h
         Source/Core/Graphics/SkyBox/SkyBoxShaderProgram.cpp
         Source/Core/Graphics/SkyBox/SkyBoxShaderProgram.h
+        Source/Game/SolarSystemLevel.cpp
+        Source/Game/SolarSystemLevel.h
+        Source/Resources/Assets/Models/MOD_login_pav0531.h
+        Source/Core/Graphics/CubeMap.h
+        Source/Resources/Assets/Models/MOD_Sphere.h
+        Source/Core/Graphics/Material/Material.cpp
+        Source/Core/Graphics/Material/Material.h
+        Source/Core/Graphics/Material/MaterialParameter.cpp
+        Source/Core/Graphics/Material/MaterialParameter.h
+        Source/Core/Graphics/Material/Texture.cpp
+        Source/Core/Graphics/Material/Texture.h
+        Source/Resources/Assets/Models/Shrek/MAT_Shrek.h
 )
 
 add_custom_target(copyResources

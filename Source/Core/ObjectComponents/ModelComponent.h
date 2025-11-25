@@ -10,13 +10,13 @@
 
 #include "GameObjectComponent.h"
 #include "Core/Graphics/Model.h"
-#include "Resources/Models/MOD_DefaultSphere.h"
+#include "Resources/Assets/Models/MOD_Sphere.h"
 
 using namespace std;
 
 class ModelComponent : public GameObjectComponent
 {
-    Model _model = MOD_DefaultSphere();
+    Model _model = MOD_Sphere();
 
 public:
     ModelComponent() = default;

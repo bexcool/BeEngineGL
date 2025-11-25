@@ -41,27 +41,29 @@ void SkyBoxShaderProgram::CreateTextures()
 
     int text_width, text_height, channels;
     unsigned char *data;
-    data = stbi_load("./Resources/Assets/Textures/CubeMap/posx.jpg", &text_width, &text_height, &channels, 4);
+
+    // "./Resources/Assets/Textures/CubeMap/posx.jpg"
+    data = stbi_load(this->CubeMap.posx.c_str(), &text_width, &text_height, &channels, 4);
     glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X, 0, GL_RGBA, text_width, text_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
     stbi_image_free(data);
 
-    data = stbi_load("./Resources/Assets/Textures/CubeMap/negx.jpg", &text_width, &text_height, &channels, 4);
+    data = stbi_load(this->CubeMap.negx.c_str(), &text_width, &text_height, &channels, 4);
     glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_X, 0, GL_RGBA, text_width, text_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
     stbi_image_free(data);
 
-    data = stbi_load("./Resources/Assets/Textures/CubeMap/posy.jpg", &text_width, &text_height, &channels, 4);
+    data = stbi_load(this->CubeMap.posy.c_str(), &text_width, &text_height, &channels, 4);
     glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Y, 0, GL_RGBA, text_width, text_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
     stbi_image_free(data);
 
-    data = stbi_load("./Resources/Assets/Textures/CubeMap/negy.jpg", &text_width, &text_height, &channels, 4);
+    data = stbi_load(this->CubeMap.negy.c_str(), &text_width, &text_height, &channels, 4);
     glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, GL_RGBA, text_width, text_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
     stbi_image_free(data);
 
-    data = stbi_load("./Resources/Assets/Textures/CubeMap/posz.jpg", &text_width, &text_height, &channels, 4);
+    data = stbi_load(this->CubeMap.posz.c_str(), &text_width, &text_height, &channels, 4);
     glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Z, 0, GL_RGBA, text_width, text_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
     stbi_image_free(data);
 
-    data = stbi_load("./Resources/Assets/Textures/CubeMap/negz.jpg", &text_width, &text_height, &channels, 4);
+    data = stbi_load(this->CubeMap.negz.c_str(), &text_width, &text_height, &channels, 4);
     glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, GL_RGBA, text_width, text_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
     stbi_image_free(data);
 

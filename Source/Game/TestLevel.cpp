@@ -9,12 +9,11 @@
 #include "Core/ObjectComponents/ModelComponent.h"
 #include "Core/Objects/Character/PlayerCharacter.h"
 #include "Resources/Assets/Models/MOD_F1.h"
+#include "Resources/Assets/Models/MOD_login_pav0531.h"
 #include "Resources/Assets/Models/MOD_Plane.h"
 #include "Resources/Assets/Models/Shrek/MOD_Fiona.h"
 #include "Resources/Assets/Models/Shrek/MOD_Shrek.h"
 #include "Resources/Assets/Models/Shrek/MOD_Toilet.h"
-#include "Resources/Models/MOD_Bush.h"
-#include "Resources/Models/MOD_Tree.h"
 
 std::vector<GameObject *> fireflies;
 LightComponent *GOC_Flashlight = new LightComponent(Light{.intensity = 1, .radius = 20, .isPointLight = false});
@@ -45,7 +44,7 @@ void TestLevel::OnLoaded()
 {
     Level::OnLoaded();
 
-    SetSkyBox(new SkyBoxModel());
+    SetSkyBox(new SkyBoxModel(DEFAULT_CUBEMAP));
     SetSkyLightIntensity(5);
 
     auto suziTrans = Transform(
@@ -60,6 +59,11 @@ void TestLevel::OnLoaded()
     GO_f1->AddComponent(new LightComponent(Light{.radius = 20}), Transform(Location(8, 5, 0)));
 
     this->SpawnGameObject(GO_f1, suziTrans);
+
+    // Login
+    auto loginGO = new GameObject();
+    loginGO->AddComponent(new ModelComponent(MOD_login_pav0531()));
+    this->SpawnGameObject(loginGO, Transform(Location(0, 5, 0), Rotation(180, 0, 0)));
 
     // Shrek
     auto shrekGO = new GameObject();

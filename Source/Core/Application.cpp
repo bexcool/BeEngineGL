@@ -9,6 +9,7 @@
 #include "logger.h"
 #include "Events/InputManager.h"
 #include "Game/BallsLevel.h"
+#include "Game/SolarSystemLevel.h"
 #include "ObjectComponents/ModelComponent.h"
 
 Application *Application::_currentApp = nullptr;
@@ -35,9 +36,9 @@ void Application::Run()
 	InputManager::Initialize();
 
 	// Tests
-	auto *level1 = new BallsLevel();
+	auto *level = new SolarSystemLevel();
 
-	LoadLevel(level1);
+	LoadLevel(level);
 
 	_gameLoop->Start();
 }
@@ -60,9 +61,9 @@ void Application::OnKeyboardKeyEvent(KeyboardKeyEventArgs e)
 		{
 			case GLFW_KEY_Y:
 			{
-				auto *level2 = new TestLevel();
+				auto *level = new TestLevel();
 
-				LoadLevel(level2);
+				LoadLevel(level);
 
 				break;
 			}
