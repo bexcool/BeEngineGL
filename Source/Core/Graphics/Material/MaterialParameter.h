@@ -10,8 +10,8 @@
 
 class MaterialParameter
 {
-    glm::vec4 _value = glm::vec4(1, 1, 1, 0);
-    std::optional<Texture> _texture = DEFAULT_TEXTURE;
+    glm::vec4 _value = glm::vec4(1, 1, 1, 1);
+    Texture _texture = (Texture) DEFAULT_TEXTURE;
 
 public:
     MaterialParameter() = default;
@@ -19,7 +19,12 @@ public:
     explicit MaterialParameter(const Texture &texture);
     MaterialParameter(glm::vec4 value, const Texture &texture);
 
-    [[nodiscard]] bool HasTexture() const;
+    [[nodiscard]] bool HasTexture();
     [[nodiscard]] const glm::vec4 &GetValue() const;
-    [[nodiscard]] const std::optional<Texture> &GetTexture() const;
+    [[nodiscard]] Texture GetTexture() const;
+};
+
+enum class MatParameterType
+{
+    Diffuse
 };

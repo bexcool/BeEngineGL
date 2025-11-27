@@ -5,5 +5,4 @@
 #pragma once
 #include "Core/Graphics/Model.h"
 
-GEN_MODEL_HEADER_SI(MOD_Plane, "Resources/Assets/Models/plane.obj", (ShaderInfo{
-                        .useTexture = true, .texturePath = "./Resources/Assets/Textures/grass.png" }))
+BE_MODEL(MOD_Plane, "Resources/Assets/Models/plane.obj", Material())

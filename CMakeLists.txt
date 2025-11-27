@@ -13,13 +13,6 @@ add_executable(ZPG
         Source/Core/Graphics/ShaderProgram.h
         Source/Core/Graphics/Shader.cpp
         Source/Core/Graphics/Shader.h
-        Source/Resources/Models/ModelDatas/bushes.h
-        Source/Resources/Models/ModelDatas/gift.h
-        Source/Resources/Models/ModelDatas/plain.h
-        Source/Resources/Models/ModelDatas/sphere.h
-        Source/Resources/Models/ModelDatas/suzi_flat.h
-        Source/Resources/Models/ModelDatas/suzi_smooth.h
-        Source/Resources/Models/ModelDatas/tree.h
         Source/Core/ObjectComponents/ModelComponent.cpp
         Source/Core/ObjectComponents/ModelComponent.h
         Source/Core/Math/Transform.cpp
@@ -110,6 +103,8 @@ add_executable(ZPG
         Source/Core/Graphics/Material/Texture.cpp
         Source/Core/Graphics/Material/Texture.h
         Source/Resources/Assets/Models/Shrek/MAT_Shrek.h
+        Source/Resources/Assets/Models/Shrek/TEX_Shrek.h
+        Source/Resources/Assets/Textures/TEX_Default.h
 )
 
 add_custom_target(copyResources

@@ -5,7 +5,4 @@
 #pragma once
 #include "Core/Graphics/Model.h"
 
-GEN_MODEL_HEADER_SI(MOD_Toilet, "Resources/Assets/Models/Shrek/toilet.obj", (ShaderInfo{
-                        .useTexture = true,
-                        .texturePath = "./Resources/Assets/Models/Shrek/toilet.jpg"
-                        }))
+BE_MODEL(MOD_Toilet, "Resources/Assets/Models/Shrek/toilet.obj", Material())

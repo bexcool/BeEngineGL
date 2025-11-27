@@ -8,3 +8,8 @@ Texture::Texture(std::string path)
 {
     this->_path = std::move(path);
 }
+
+std::string Texture::GetPath()
+{
+    return _path;
+}

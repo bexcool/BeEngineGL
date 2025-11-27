@@ -3,8 +3,6 @@
 //
 
 #pragma once
-#include "../Graphics/Shader.h"
-#include "../Graphics/ShaderProgram.h"
 
 #include <vector>
 

@@ -36,31 +36,17 @@ SetModel(modelData, sizeof(modelData) / (sizeof(float) * 6), shaderInfo);\
 }\
 };
 
-#define GEN_MODEL_HEADER(className, modelPath) \
+#define BE_MODEL(className, modelPath, material) \
 class className : public Model\
 {\
 public:\
 className()\
-{\
-SetModel(modelPath, Material());\
-}\
-explicit className(const Material &material)\
 {\
 SetModel(modelPath, material);\
 }\
-};
-
-#define GEN_MODEL_HEADER_SI(className, modelPath, shaderInfoData) \
-class className : public Model\
+explicit className(const Material &__material)\
 {\
-public:\
-className()\
-{\
-SetModel(modelPath, shaderInfoData);\
-}\
-className(const ShaderInfo &shaderInfo)\
-{\
-SetModel(modelPath, shaderInfo);\
+SetModel(modelPath, __material);\
 }\
 };
 
@@ -68,25 +54,24 @@ class Model
 {
 protected:
     std::string _modelPath;
-    Shader *_fragmentShader = nullptr, *_vertexShader = nullptr;
+    std::shared_ptr<Shader> _fragmentShader = nullptr, _vertexShader = nullptr;
     std::shared_ptr<Material> _material;
-    ShaderProgram *_shaderProgram;
-    unsigned int _amountOfVertices;
+    std::shared_ptr<ShaderProgram> _shaderProgram;
+    unsigned int _amountOfVertices = 0;
     GLuint _VAO = 0, _VBO = 0;
 
     std::shared_ptr<Transform> _transform = std::make_shared<Transform>();
-
-    void LinkShaderProgram();
 
 public:
     Model() = default;
     ~Model();
 
     std::string GetModelPath();
+    std::shared_ptr<Material> GetMaterial();
 
     void SetModel(std::string modelPath);
     void SetModelCustomSP(std::string modelPath);
-    void SetModel(const std::string &modelPath, const Material &material);
+    void SetModel(const std::string &modelPath, Material material);
     void SetModelCustomSP(const std::string &modelPath, const Material &material);
 
     void Render(const Transform &transform);

@@ -4,8 +4,6 @@
 
 #include "PlayerCharacter.h"
 
-#include <GLFW/glfw3.h>
-
 #include "Core/Controllers/PlayerController.h"
 #include "Core/Events/InputManager.h"
 

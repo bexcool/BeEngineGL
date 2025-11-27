@@ -5,12 +5,9 @@
 #include "Renderer.h"
 
 #include <glm/ext/matrix_float4x4.hpp>
-#include <glm/ext/matrix_transform.hpp>
 #include <fstream>
-#include <iostream>
 
 #include "../ObjectComponents/ModelComponent.h"
-#include "Shader.h"
 #include "ShaderProgram.h"
 #include "../Application.h"
 #include "Core/logger.h"

@@ -4,8 +4,6 @@
 
 #pragma once
 #include "Core/Graphics/Model.h"
+#include "./MAT_Shrek.h"
 
-GEN_MODEL_HEADER_SI(MOD_Shrek, "Resources/Assets/Models/Shrek/shrek.obj", (ShaderInfo{
-                        .useTexture = true,
-                        .texturePath = "./Resources/Assets/Models/Shrek/shrek.png"
-                        }))
+BE_MODEL(MOD_Shrek, "Resources/Assets/Models/Shrek/shrek.obj", MAT_Shrek())

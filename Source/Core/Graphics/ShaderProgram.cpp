@@ -4,8 +4,7 @@
 
 #include "ShaderProgram.h"
 
-#include <glm/ext/matrix_float4x4.hpp>
-#include <glm/ext/matrix_transform.hpp>
+#include <utility>
 
 #include "../Application.h"
 #include "Core/logger.h"
@@ -14,28 +13,42 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "Libs/stb_image.h"
 
-ShaderProgram::ShaderProgram(Shader *vertexShader, Shader *fragmentShader)
+ShaderProgram::ShaderProgram(const std::shared_ptr<Shader> &vertexShader, const std::shared_ptr<Shader> &fragmentShader)
 {
     this->_vertexShader = vertexShader;
     this->_fragmentShader = fragmentShader;
 }
 
-ShaderProgram::ShaderProgram(Shader *vertexShader, Shader *fragmentShader, Transform *modelTransfrom)
+ShaderProgram::ShaderProgram(const std::shared_ptr<Shader> &vertexShader, const std::shared_ptr<Shader> &fragmentShader, std::shared_ptr<Transform> modelTransform)
 {
     this->_vertexShader = vertexShader;
     this->_fragmentShader = fragmentShader;
-    this->_modelTransform = modelTransfrom;
+    this->_modelTransform = std::move(modelTransform);
 }
 
-ShaderProgram::ShaderProgram(Shader *vertexShader, Shader *fragmentShader, const ShaderInfo &shaderInfo, Transform *modelTransfrom)
+ShaderProgram::ShaderProgram(const std::shared_ptr<Shader> &vertexShader, const std::shared_ptr<Shader> &fragmentShader, Material *material)
 {
     this->_vertexShader = vertexShader;
     this->_fragmentShader = fragmentShader;
-    this->_shaderInfo = shaderInfo;
-    this->_modelTransform = modelTransfrom;
+    this->_material = material;
 }
 
-ShaderProgram::~ShaderProgram() {}
+ShaderProgram::ShaderProgram(const std::shared_ptr<Shader> &vertexShader, const std::shared_ptr<Shader> &fragmentShader, Material *material, std::shared_ptr<Transform> modelTransform)
+{
+    this->_vertexShader = vertexShader;
+    this->_fragmentShader = fragmentShader;
+    this->_material = material;
+    this->_modelTransform = std::move(modelTransform);
+}
+
+ShaderProgram::~ShaderProgram()
+{
+    if (_shaderProgramId)
+    {
+        glDeleteProgram(_shaderProgramId);
+        _shaderProgramId = 0;
+    }
+}
 
 void ShaderProgram::LinkShaders()
 {
@@ -59,6 +72,12 @@ void ShaderProgram::LinkShaders()
         glGetProgramInfoLog(_shaderProgramId, infoLogLength, NULL, strInfoLog);
         fprintf(stderr, "Linker failure: %s\n", strInfoLog);
         delete[] strInfoLog;
+
+        glDetachShader(_shaderProgramId, _vertexShader->GetShaderID());
+        glDetachShader(_shaderProgramId, _fragmentShader->GetShaderID());
+        glDeleteProgram(_shaderProgramId);
+
+        _shaderProgramId = 0;
     }
 }
 
@@ -69,25 +88,31 @@ void ShaderProgram::CreateTextures()
 
     stbi_set_flip_vertically_on_load(true);
 
-    unsigned char *data = stbi_load(_shaderInfo.texturePath.c_str(), &text_width, &text_height, &channels, 4);
-    if (!data)
+    auto texDiffuseParam = _material->GetParameter(MatParameterType::Diffuse);
+    if (texDiffuseParam->HasTexture())
     {
-        LOG_E("Error loading texture: %", _shaderInfo.texturePath.c_str());
+        auto path = texDiffuseParam->GetTexture().GetPath();
+
+        unsigned char *data = stbi_load(path.c_str(), &text_width, &text_height, &channels, 4);
+        if (!data)
+        {
+            LOG_E("Error loading texture: %", path.c_str());
+        }
+
+        glActiveTexture(GL_TEXTURE0);
+        glGenTextures(1, &_textureId);
+        glBindTexture(GL_TEXTURE_2D, _textureId);
+
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, text_width, text_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+        stbi_image_free(data);
     }
-
-    glActiveTexture(GL_TEXTURE0);
-    glGenTextures(1, &_textureId);
-    glBindTexture(GL_TEXTURE_2D, _textureId);
-
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, text_width, text_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-    glGenerateMipmap(GL_TEXTURE_2D);
-
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-    stbi_image_free(data);
 }
 
 void ShaderProgram::Use()
@@ -139,13 +164,15 @@ void ShaderProgram::Use()
     // glm::vec4(0.385, 0.647, 0.812, 1.0)
 
 
-    auto clr = _shaderInfo.color;
-    SendVec4("color", clr);
+    //auto clr = _material->GetParameter(MatParameterType::Diffuse)->GetValue();
+    SendVec4("color", glm::vec4(1));
 
     SendVec4("ambient", glm::vec4(0.05, 0.05, 0.05, 1));
 
-    SendInt("useTexture", _shaderInfo.useTexture);
-    if (_shaderInfo.useTexture)
+    auto texDiffuseParam = _material->GetParameter(MatParameterType::Diffuse);
+    SendInt("useTexture", texDiffuseParam->HasTexture());
+
+    if (texDiffuseParam->HasTexture())
     {
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, _textureId);
@@ -162,6 +189,11 @@ void ShaderProgram::Use()
         camera->GetWorldLocation().GetZ()
     };
     glUniform3fv(_cameraLocationId, 1, cameraPos);
+}
+
+void ShaderProgram::SetTransformReference(const std::shared_ptr<Transform> &transform)
+{
+    this->_modelTransform = transform;
 }
 
 void ShaderProgram::SendVec4(const std::string &destination, const glm::vec4 &value) const
@@ -244,9 +276,4 @@ void ShaderProgram::SendBool(const std::string &destination, const bool value) c
         glUniform1i(variableDestination, value);
         //glUseProgram(0);
     }
-}
-
-void ShaderProgram::Dispose()
-{
-    glDeleteProgram(_shaderProgramId);
 }

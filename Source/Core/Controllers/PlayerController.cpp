@@ -102,7 +102,7 @@ void PlayerController::OnKeyboardKeyEvent(KeyboardKeyEventArgs e)
                             auto model = modelComp->GetModel();
 
                             _selectedModelPath = model.GetModelPath();
-                            _selectedModelShaderInfo = model.GetShaderInfo();
+                            _selectedMaterial = model.GetMaterial();
                         }
                     }
                 }
@@ -175,7 +175,7 @@ void PlayerController::OnMouseKeyEvent(MouseKeyEventArgs e)
 
     if (e.Button == GLFW_MOUSE_BUTTON_LEFT && e.Action == GLFW_RELEASE)
     {
-        if (_selectedModelPath == "") return;
+        if (_selectedModelPath.empty()) return;
 
         int index;
         Location location;
@@ -183,7 +183,7 @@ void PlayerController::OnMouseKeyEvent(MouseKeyEventArgs e)
         TraceForStencilObject(&location, &index);
 
         auto model = Model();
-        model.SetModel(_selectedModelPath, _selectedModelShaderInfo);
+        model.SetModel(_selectedModelPath, Material());
 
         auto go = new GameObject();
         go->AddComponent(new ModelComponent(model));

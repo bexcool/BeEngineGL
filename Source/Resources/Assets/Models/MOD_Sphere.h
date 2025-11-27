@@ -5,4 +5,4 @@
 #pragma once
 #include "Core/Graphics/Model.h"
 
-GEN_MODEL_HEADER(MOD_Sphere, "./Resources/Assets/Models/sphere.obj")
+BE_MODEL(MOD_Sphere, "./Resources/Assets/Models/sphere.obj", Material())

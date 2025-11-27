@@ -12,26 +12,9 @@
 #define TINYOBJLOADER_IMPLEMENTATION
 #include "Libs/tiny_obj_loader.h"
 
-void Model::LinkShaderProgram()
-{
-    const auto si = _material->GetShaderInfo();
-    _vertexShader = new Shader(GL_VERTEX_SHADER, si.vertexShaderPath);
-    _vertexShader->Compile();
-
-    _fragmentShader = new Shader(GL_FRAGMENT_SHADER, si.fragmentShaderPath);
-    _fragmentShader->Compile();
-
-    _shaderProgram = new ShaderProgram(_vertexShader, _fragmentShader, si, _transform.get());
-    _shaderProgram->LinkShaders();
-    if (si.useTexture) _shaderProgram->CreateTextures();
-}
-
 Model::~Model()
 {
     return;
-
-    delete _vertexShader;
-    delete _fragmentShader;
 
     if (_VBO)
         glDeleteBuffers(1, &_VBO);
@@ -44,12 +27,15 @@ std::string Model::GetModelPath()
     return _modelPath;
 }
 
+std::shared_ptr<Material> Model::GetMaterial()
+{
+    return _material;
+}
+
 void Model::SetModel(std::string modelPath)
 {
     _modelPath = modelPath;
     SetModelCustomSP(modelPath);
-
-    LinkShaderProgram();
 }
 
 void Model::SetModelCustomSP(std::string modelPath)
@@ -125,10 +111,12 @@ void Model::SetModelCustomSP(std::string modelPath)
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *) (6 * sizeof(float)));
 }
 
-void Model::SetModel(const std::string &modelPath, const Material &material)
+void Model::SetModel(const std::string &modelPath, Material material)
 {
     _modelPath = modelPath;
-    _material = std::make_unique<Material>(material);
+    _material = std::make_shared<Material>(material);
+    _shaderProgram = _material->GetShaderProgram();
+    _shaderProgram->SetTransformReference(_transform);
 
     SetModel(modelPath);
 }
@@ -136,7 +124,7 @@ void Model::SetModel(const std::string &modelPath, const Material &material)
 void Model::SetModelCustomSP(const std::string &modelPath, const Material &material)
 {
     _modelPath = modelPath;
-    _material = std::make_unique<Material>(material);
+    _material = std::make_shared<Material>(material);
 
     SetModelCustomSP(modelPath);
 }
@@ -145,7 +133,7 @@ void Model::Render(const Transform &transform)
 {
     *_transform = transform;
 
-    _shaderProgram->Use();
+    _material->GetShaderProgram()->Use();
     glBindVertexArray(_VAO);
     glDrawArrays(GL_TRIANGLES, 0, _amountOfVertices);
 }

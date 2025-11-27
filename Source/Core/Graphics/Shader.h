@@ -4,11 +4,9 @@
 
 #pragma once
 
-#define GLFW_INCLUDE_NONE
-#include <GLFW/glfw3.h>
 #include <GL/glew.h>
-#include <sstream>
-#include <glm/vec4.hpp>
+#include <string>
+#include <utility>
 
 class Shader
 {
@@ -17,10 +15,10 @@ class Shader
     std::string _shaderPath;
 
 public:
-    Shader(int shaderType, std::string shaderPath) : _shaderType(shaderType), _shaderPath(shaderPath) {}
+    Shader(int shaderType, std::string shaderPath) : _shaderType(shaderType), _shaderPath(std::move(shaderPath)) {}
 
     static std::string ShaderTypeToString(int shaderType);
 
     void Compile();
-    GLuint GetShaderID() { return _shaderID; }
+    [[nodiscard]] GLuint GetShaderID() const { return _shaderID; }
 };

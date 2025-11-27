@@ -20,9 +20,9 @@ MaterialParameter::MaterialParameter(const glm::vec4 value, const Texture &textu
     _texture = texture;
 }
 
-bool MaterialParameter::HasTexture() const
+bool MaterialParameter::HasTexture()
 {
-    return _texture.has_value();
+    return !_texture.GetPath().empty();
 }
 
 const glm::vec4 &MaterialParameter::GetValue() const
@@ -30,7 +30,7 @@ const glm::vec4 &MaterialParameter::GetValue() const
     return _value;
 }
 
-const std::optional<Texture> &MaterialParameter::GetTexture() const
+Texture MaterialParameter::GetTexture() const
 {
     return _texture;
 }

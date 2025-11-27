@@ -5,40 +5,41 @@
 #pragma once
 
 #include <GL/glew.h>
-#include <glm/ext/matrix_float4x4.hpp>
 
 #include "Shader.h"
-#include "ShaderInfo.h"
 #include "../Math/Transform.h"
-#include "Core/Interfaces/IDisposable.h"
+#include "Material/Material.h"
 
 class ModelComponent;
 
-class ShaderProgram : public IDisposable
+class ShaderProgram
 {
 protected:
-	GLuint _shaderProgramId;
-	Shader *_vertexShader;
-	Shader *_fragmentShader;
-	GLuint _modelTransformId;
-	GLuint _projectionTransformId;
-	GLuint _viewTransformId;
-	GLuint _cameraLocationId;
-	Transform *_modelTransform;
+	GLuint _shaderProgramId = GL_NONE;
+	std::shared_ptr<Shader> _vertexShader;
+	std::shared_ptr<Shader> _fragmentShader;
+	GLuint _modelTransformId = GL_NONE;
+	GLuint _projectionTransformId = GL_NONE;
+	GLuint _viewTransformId = GL_NONE;
+	GLuint _cameraLocationId = GL_NONE;
+	std::shared_ptr<Transform> _modelTransform = nullptr;
 
-	ShaderInfo _shaderInfo = ShaderInfo();
-	GLuint _textureId;
+	Material *_material;
+	GLuint _textureId = GL_NONE;
 
 public:
-	ShaderProgram(Shader *vertexShader, Shader *fragmentShader);
-	ShaderProgram(Shader *vertexShader, Shader *fragmentShader, Transform *modelTransform);
-	ShaderProgram(Shader *vertexShader, Shader *fragmentShader, const ShaderInfo &shaderInfo, Transform *modelTransfrom);
+	ShaderProgram(const std::shared_ptr<Shader> &vertexShader, const std::shared_ptr<Shader> &fragmentShader);
+	ShaderProgram(const std::shared_ptr<Shader> &vertexShader, const std::shared_ptr<Shader> &fragmentShader, std::shared_ptr<Transform> modelTransform);
+	ShaderProgram(const std::shared_ptr<Shader> &vertexShader, const std::shared_ptr<Shader> &fragmentShader, Material *material);
+	ShaderProgram(const std::shared_ptr<Shader> &vertexShader, const std::shared_ptr<Shader> &fragmentShader, Material *material, std::shared_ptr<Transform> modelTransform);
 
-	~ShaderProgram() override;
+	virtual ~ShaderProgram();
 
 	void LinkShaders();
-	void virtual CreateTextures();
-	void virtual Use();
+	virtual void CreateTextures();
+	virtual void Use();
+
+	void SetTransformReference(const std::shared_ptr<Transform> &transform);
 
 	void SendVec4(const std::string &destination, const glm::vec4 &value) const;
 	void SendVec3(const std::string &destination, const glm::vec3 &value) const;
@@ -46,6 +47,4 @@ public:
 	void SendInt(const std::string &destination, int value) const;
 	void SendFloat(const std::string &destination, float value) const;
 	void SendBool(const std::string &destination, bool value) const;
-
-	void Dispose() override;
 };

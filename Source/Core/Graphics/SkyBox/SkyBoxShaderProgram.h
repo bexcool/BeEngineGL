@@ -3,17 +3,20 @@
 //
 
 #pragma once
+#include <utility>
+
 #include "SkyBoxModel.h"
 #include "../ShaderProgram.h"
 
+class Material;
 
 class SkyBoxShaderProgram : public ShaderProgram
 {
 public:
     CubeMap CubeMap;
 
-    SkyBoxShaderProgram(Shader *vertexShader, Shader *fragmentShader, const ShaderInfo &shaderInfo, Transform *modelTransfrom) : ShaderProgram(vertexShader, fragmentShader, shaderInfo, modelTransfrom) {}
+    SkyBoxShaderProgram(const std::shared_ptr<Shader> &vertexShader, const std::shared_ptr<Shader> &fragmentShader, Material *material, std::shared_ptr<Transform> modelTransform) : ShaderProgram(vertexShader, fragmentShader, material, std::move(modelTransform)) {}
 
     void Use() override;
-    void CreateTextures() override; // Co to je za blbost?
+    void CreateTextures() override;
 };

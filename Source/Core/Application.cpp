@@ -36,7 +36,7 @@ void Application::Run()
 	InputManager::Initialize();
 
 	// Tests
-	auto *level = new SolarSystemLevel();
+	auto *level = new TestLevel();
 
 	LoadLevel(level);
 
