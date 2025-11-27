@@ -25,7 +25,7 @@ void BallsLevel::OnLoaded()
 
     // Default
     auto ballDefaultModel = new ModelComponent();
-    ballDefaultModel->SetModel(MOD_Sphere(Material((ShaderInfo{.fragmentShaderPath = "Resources/Shaders/default.frag"}))));
+    ballDefaultModel->SetModel(MOD_Sphere(std::make_shared<Material>(((ShaderInfo{.fragmentShaderPath = "Resources/Shaders/default.frag"})))));
 
     auto ballDefault = new GameObject();
     ballDefault->AddComponent(ballDefaultModel);
@@ -34,9 +34,11 @@ void BallsLevel::OnLoaded()
 
     // Blinn-Phong
     auto ballBlinnPhongModel = new ModelComponent();
+    /*
     ballBlinnPhongModel->SetModel(MOD_Sphere(Material(ShaderInfo{
         .fragmentShaderPath = "Resources/Shaders/blinn_phong.frag"
     })));
+    */
 
     auto ballBlinnPhong = new GameObject();
     ballBlinnPhong->AddComponent(ballBlinnPhongModel);
@@ -44,15 +46,17 @@ void BallsLevel::OnLoaded()
 
     // Phong
     auto ballPhongModel = new ModelComponent();
-    ballPhongModel->SetModel(MOD_Sphere(Material(ShaderInfo{.fragmentShaderPath = "./Resources/Shaders/phong.frag"})));
+    //ballPhongModel->SetModel(MOD_Sphere(Material(ShaderInfo{.fragmentShaderPath = "./Resources/Shaders/phong.frag"})));
 
     ballPhong->AddComponent(ballPhongModel);
     SpawnGameObject(ballPhong, Transform(Location(0, 0, 2), Rotation(), Scale()));
 
     auto ball2Model = new ModelComponent();
+    /*
     ball2Model->SetModel(MOD_Sphere(Material(ShaderInfo{
         .fragmentShaderPath = "./Resources/Shaders/lambert.frag"
     })));
+    */
 
     auto ball2 = new GameObject();
     ball2->AddComponent(ball2Model);

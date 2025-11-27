@@ -161,11 +161,11 @@ void ShaderProgram::Use()
 
     SendFloat("skyLightIntensity", level->GetSkyLightIntensity());
 
-    // glm::vec4(0.385, 0.647, 0.812, 1.0)
+    //glm::vec4(0.385, 0.647, 0.812, 1.0);
 
 
-    //auto clr = _material->GetParameter(MatParameterType::Diffuse)->GetValue();
-    SendVec4("color", glm::vec4(1));
+    auto clr = _material->GetParameter(MatParameterType::Diffuse)->GetValue();
+    SendVec4("color", glm::vec4(clr, 1));
 
     SendVec4("ambient", glm::vec4(0.05, 0.05, 0.05, 1));
 

@@ -44,7 +44,7 @@ className()\
 {\
 SetModel(modelPath, material);\
 }\
-explicit className(const Material &__material)\
+explicit className(std::shared_ptr<Material> __material)\
 {\
 SetModel(modelPath, __material);\
 }\
@@ -71,7 +71,7 @@ public:
 
     void SetModel(std::string modelPath);
     void SetModelCustomSP(std::string modelPath);
-    void SetModel(const std::string &modelPath, Material material);
+    void SetModel(const std::string &modelPath, std::shared_ptr<Material> material);
     void SetModelCustomSP(const std::string &modelPath, const Material &material);
 
     void Render(const Transform &transform);

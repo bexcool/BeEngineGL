@@ -5,4 +5,4 @@
 #pragma once
 #include "Core/Graphics/Model.h"
 
-BE_MODEL(MOD_Fiona, "Resources/Assets/Models/Shrek/fiona.obj", Material())
+BE_MODEL(MOD_Fiona, "Resources/Assets/Models/Shrek/fiona.obj", std::make_shared<Material>())

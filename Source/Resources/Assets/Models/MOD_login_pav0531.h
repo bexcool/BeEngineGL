@@ -5,4 +5,4 @@
 #pragma once
 #include "Core/Graphics/Model.h"
 
-BE_MODEL(MOD_login_pav0531, "Resources/Assets/Models/login_pav0531.obj", Material())
+BE_MODEL(MOD_login_pav0531, "Resources/Assets/Models/login_pav0531.obj", std::make_shared<Material>())

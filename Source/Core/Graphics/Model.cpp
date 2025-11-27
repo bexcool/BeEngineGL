@@ -111,10 +111,10 @@ void Model::SetModelCustomSP(std::string modelPath)
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *) (6 * sizeof(float)));
 }
 
-void Model::SetModel(const std::string &modelPath, Material material)
+void Model::SetModel(const std::string &modelPath, std::shared_ptr<Material> material)
 {
     _modelPath = modelPath;
-    _material = std::make_shared<Material>(material);
+    _material = material;
     _shaderProgram = _material->GetShaderProgram();
     _shaderProgram->SetTransformReference(_transform);
 

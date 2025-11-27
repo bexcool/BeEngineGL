@@ -3,24 +3,24 @@
 //
 
 #pragma once
-#include <glm/vec4.hpp>
+#include <glm/vec3.hpp>
 
 #include "Texture.h"
 
 
 class MaterialParameter
 {
-    glm::vec4 _value = glm::vec4(1, 1, 1, 1);
-    Texture _texture = (Texture) DEFAULT_TEXTURE;
+    glm::vec3 _value = glm::vec3(1);
+    Texture _texture = DEFAULT_TEXTURE;
 
 public:
     MaterialParameter() = default;
-    explicit MaterialParameter(glm::vec4 value);
+    explicit MaterialParameter(glm::vec3 value);
     explicit MaterialParameter(const Texture &texture);
-    MaterialParameter(glm::vec4 value, const Texture &texture);
+    MaterialParameter(glm::vec3 value, const Texture &texture);
 
     [[nodiscard]] bool HasTexture();
-    [[nodiscard]] const glm::vec4 &GetValue() const;
+    [[nodiscard]] glm::vec3 GetValue() const;
     [[nodiscard]] Texture GetTexture() const;
 };
 

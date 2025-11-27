@@ -183,7 +183,7 @@ void PlayerController::OnMouseKeyEvent(MouseKeyEventArgs e)
         TraceForStencilObject(&location, &index);
 
         auto model = Model();
-        model.SetModel(_selectedModelPath, Material());
+        model.SetModel(_selectedModelPath, std::make_shared<Material>());
 
         auto go = new GameObject();
         go->AddComponent(new ModelComponent(model));

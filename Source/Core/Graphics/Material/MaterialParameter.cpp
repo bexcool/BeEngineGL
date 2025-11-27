@@ -4,7 +4,7 @@
 
 #include "MaterialParameter.h"
 
-MaterialParameter::MaterialParameter(const glm::vec4 value)
+MaterialParameter::MaterialParameter(const glm::vec3 value)
 {
     _value = value;
 }
@@ -14,7 +14,7 @@ MaterialParameter::MaterialParameter(const Texture &texture)
     _texture = texture;
 }
 
-MaterialParameter::MaterialParameter(const glm::vec4 value, const Texture &texture)
+MaterialParameter::MaterialParameter(const glm::vec3 value, const Texture &texture)
 {
     _value = value;
     _texture = texture;
@@ -25,7 +25,7 @@ bool MaterialParameter::HasTexture()
     return !_texture.GetPath().empty();
 }
 
-const glm::vec4 &MaterialParameter::GetValue() const
+glm::vec3 MaterialParameter::GetValue() const
 {
     return _value;
 }
