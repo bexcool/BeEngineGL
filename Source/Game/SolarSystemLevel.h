@@ -8,9 +8,12 @@
 
 class SolarSystemLevel : public Level
 {
+    GameObject *goEarth = nullptr;
+
 public:
     SolarSystemLevel() : Level("SolarSystemLevel") {};
     virtual ~SolarSystemLevel() = default;
     void OnLoaded() override;
+    void OnTick() override;
 };
 

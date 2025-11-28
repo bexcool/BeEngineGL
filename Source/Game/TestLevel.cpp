@@ -8,6 +8,7 @@
 #include "Core/Events/InputManager.h"
 #include "Core/ObjectComponents/ModelComponent.h"
 #include "Core/Objects/Character/PlayerCharacter.h"
+#include "Resources/Assets/Materials/MAT_Grass.h"
 #include "Resources/Assets/Models/MOD_F1.h"
 #include "Resources/Assets/Models/MOD_login_pav0531.h"
 #include "Resources/Assets/Models/MOD_Plane.h"
@@ -47,10 +48,8 @@ void TestLevel::OnLoaded()
     SetSkyBox(new SkyBoxModel(DEFAULT_CUBEMAP));
     SetSkyLightIntensity(5);
 
-    auto suziTrans = Transform(
-        Location(10, 10, 0),
-        Rotation(),
-        Scale(0.5f)
+    auto f1Trans = Transform(
+        Location(10, 10, 0)
     );
     auto GO_f1 = new GameObject();
     GO_f1->AddComponent(new ModelComponent(MOD_F1()));
@@ -58,7 +57,7 @@ void TestLevel::OnLoaded()
     GO_f1->AddComponent(new LightComponent(Light{.radius = 13, .isPointLight = false}), Transform(Location(-10, 5, -10), Rotation(0, -30, 150)));
     GO_f1->AddComponent(new LightComponent(Light{.radius = 20}), Transform(Location(8, 5, 0)));
 
-    this->SpawnGameObject(GO_f1, suziTrans);
+    this->SpawnGameObject(GO_f1, f1Trans);
 
     // Login
     auto loginGO = new GameObject();
@@ -127,7 +126,7 @@ void TestLevel::OnLoaded()
     fireflies.push_back(goLight3);
     */
     auto planeGO = new GameObject();
-    planeGO->AddComponent(new ModelComponent(MOD_Plane()));
+    planeGO->AddComponent(new ModelComponent(MOD_Plane(std::make_shared<MAT_Grass>())));;
     this->SpawnGameObject(planeGO, Transform(Location(), Rotation(), Scale(100)));
     /*
     for (int i = 0; i < 10; i++)

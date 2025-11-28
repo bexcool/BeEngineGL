@@ -18,9 +18,11 @@ class ModelComponent : public GameObjectComponent
 
 public:
     ModelComponent() = default;
-    ModelComponent(Model _model);
+    explicit ModelComponent(const Model &model);
+    explicit ModelComponent(const Transform &relativeTransform);
+    ModelComponent(const Model &model, const Transform &relativeTransform);
 
-    void SetModel(Model model);
+    void SetModel(const Model &model);
     Model GetModel();
 
     void OnAttached(GameObject *parent) override;

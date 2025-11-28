@@ -11,5 +11,6 @@ class Location : public Vector3
 public:
     Location() : Vector3() {};
     explicit Location(const Vector3 &v) : Vector3(v) {}
+    explicit Location(const glm::vec3 &v) : Vector3(v) {}
     Location(float x, float y, float z) : Vector3(x, y, z) {}
 };

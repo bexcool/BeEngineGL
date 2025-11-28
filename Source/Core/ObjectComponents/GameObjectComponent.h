@@ -30,7 +30,7 @@ public:
 
     // Local
     [[nodiscard]] Transform GetLocalTransform() const;
-    void SetLocalTransform(Transform transform);
+    void SetLocalTransform(const Transform &transform);
     [[nodiscard]] Location GetLocalLocation() const;
     void SetLocalLocation(Location location);
     [[nodiscard]] Rotation GetLocalRotation() const;

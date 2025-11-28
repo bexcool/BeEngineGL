@@ -21,5 +21,5 @@ glm::quat Rotation::AsQuat() const
 
 Rotation Rotation::operator+(const Rotation &rotation) const
 {
-    return {GetRoll() + rotation.GetRoll(), GetPitch() + rotation.GetPitch(), GetYaw() + rotation.GetYaw()};
+    return {GetPitch() + rotation.GetPitch(), GetYaw() + rotation.GetYaw(), GetRoll() + rotation.GetRoll()};
 }

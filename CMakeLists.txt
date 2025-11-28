@@ -105,6 +105,7 @@ add_executable(ZPG
         Source/Resources/Assets/Models/Shrek/MAT_Shrek.h
         Source/Resources/Assets/Models/Shrek/TEX_Shrek.h
         Source/Resources/Assets/Textures/TEX_Default.h
+        Source/Core/Graphics/Material/MaterialData.h
 )
 
 add_custom_target(copyResources

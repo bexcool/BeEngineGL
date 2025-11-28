@@ -61,7 +61,7 @@ void Application::OnKeyboardKeyEvent(KeyboardKeyEventArgs e)
 		{
 			case GLFW_KEY_Y:
 			{
-				auto *level = new TestLevel();
+				auto *level = new SolarSystemLevel();
 
 				LoadLevel(level);
 

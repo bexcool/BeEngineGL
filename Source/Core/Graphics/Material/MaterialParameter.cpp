@@ -7,6 +7,7 @@
 MaterialParameter::MaterialParameter(const glm::vec3 value)
 {
     _value = value;
+    _texture = EMPTY_TEXTURE;
 }
 
 MaterialParameter::MaterialParameter(const Texture &texture)

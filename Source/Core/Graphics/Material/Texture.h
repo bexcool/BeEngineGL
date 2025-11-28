@@ -27,3 +27,4 @@ public:
 };
 
 static const Texture DEFAULT_TEXTURE("./Resources/Assets/Textures/DefaultTexture.png");
+static const Texture EMPTY_TEXTURE("");

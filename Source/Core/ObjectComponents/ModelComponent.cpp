@@ -8,12 +8,23 @@
 
 #include "Core/logger.h"
 
-ModelComponent::ModelComponent(Model _model)
+ModelComponent::ModelComponent(const Model &model)
 {
-    SetModel(_model);
+    SetModel(model);
 }
 
-void ModelComponent::SetModel(Model model)
+ModelComponent::ModelComponent(const Transform &relativeTransform)
+{
+    SetLocalTransform(relativeTransform);
+}
+
+ModelComponent::ModelComponent(const Model &model, const Transform &relativeTransform)
+{
+    SetLocalTransform(relativeTransform);
+    SetModel(model);
+}
+
+void ModelComponent::SetModel(const Model &model)
 {
     _model = model;
 }

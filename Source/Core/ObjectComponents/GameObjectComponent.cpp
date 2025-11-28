@@ -21,7 +21,16 @@ void GameObjectComponent::Destroy()
 
 Transform GameObjectComponent::GetWorldTransform() const
 {
-    return _parent->GetWorldTransform() + _localTransform;
+    //return _parent->GetWorldTransform() + _localTransform;
+
+    glm::mat4 rotation = glm::mat4(1.0f);
+    rotation = glm::rotate(rotation, glm::radians(_parent->GetWorldRotation().GetPitch()), glm::vec3(1.0f, 0.0f, 0.0f));
+    rotation = glm::rotate(rotation, glm::radians(_parent->GetWorldRotation().GetYaw()), glm::vec3(0.0f, 1.0f, 0.0f));
+    rotation = glm::rotate(rotation, glm::radians(_parent->GetWorldRotation().GetRoll()), glm::vec3(0.0f, 0.0f, 1.0f));
+
+    auto actualLocation = glm::vec3(rotation * glm::vec4(GetLocalLocation().AsVec3() - _parent->GetWorldLocation().AsVec3(), 1.0f)) + _parent->GetWorldLocation().AsVec3();
+
+    return Transform(Location(Location(actualLocation) + _parent->GetWorldLocation()), GetLocalRotation() + _parent->GetWorldRotation(), GetLocalScale() + _parent->GetWorldTransform().GetScale());
 }
 
 Transform GameObjectComponent::GetLocalTransform() const
@@ -29,7 +38,7 @@ Transform GameObjectComponent::GetLocalTransform() const
     return _localTransform;
 }
 
-void GameObjectComponent::SetLocalTransform(const Transform transform)
+void GameObjectComponent::SetLocalTransform(const Transform &transform)
 {
     _localTransform = transform;
 }

@@ -3,6 +3,7 @@
 //
 
 #pragma once
+#include "MAT_Toilet.h"
 #include "Core/Graphics/Model.h"
 
-BE_MODEL(MOD_Toilet, "Resources/Assets/Models/Shrek/toilet.obj", std::make_shared<Material>())
+BE_MODEL(MOD_Toilet, "Resources/Assets/Models/Shrek/toilet.obj", std::make_shared<MAT_Toilet>())

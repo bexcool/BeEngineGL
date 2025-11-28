@@ -11,6 +11,7 @@
 #include "Core/logger.h"
 #include "Core/ObjectComponents/ModelComponent.h"
 #include "Core/Objects/Character/Character.h"
+#include "Resources/Assets/Materials/MAT_Red.h"
 #include "Resources/Assets/Models/Shrek/MOD_Fiona.h"
 
 void PlayerController::SetRun(bool isRunning)
@@ -183,7 +184,7 @@ void PlayerController::OnMouseKeyEvent(MouseKeyEventArgs e)
         TraceForStencilObject(&location, &index);
 
         auto model = Model();
-        model.SetModel(_selectedModelPath, std::make_shared<Material>());
+        model.SetModel(_selectedModelPath, std::make_shared<Material>(*_selectedMaterial));
 
         auto go = new GameObject();
         go->AddComponent(new ModelComponent(model));

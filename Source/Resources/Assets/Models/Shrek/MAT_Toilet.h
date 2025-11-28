@@ -1,12 +1,9 @@
-//
-// Created by Petr Pavlík on 25.11.2025.
-//
-
 #pragma once
 
-#include "TEX_Shrek.h"
+#include "TEX_Toilet.h"
+#include "Core/Graphics/Material/Texture.h"
 #include "Core/Graphics/Material/Material.h"
 #include "Core/Graphics/Material/MaterialData.h"
 #include "Core/Graphics/Material/MaterialParameter.h"
 
-BE_MATERIAL(MAT_Shrek, (MaterialData{.diffuse = MaterialParameter(TEX_Shrek())}))
+BE_MATERIAL(MAT_Toilet, (MaterialData{.diffuse = MaterialParameter(TEX_Toilet())}))

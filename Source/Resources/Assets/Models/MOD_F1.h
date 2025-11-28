@@ -4,5 +4,6 @@
 
 #pragma once
 #include "Core/Graphics/Model.h"
+#include "Resources/Assets/Materials/MAT_Red.h"
 
-BE_MODEL(MOD_F1, "./Resources/Assets/Models/formula1.obj", std::make_shared<Material>())
+BE_MODEL(MOD_F1, "./Resources/Assets/Models/formula1.obj", std::make_shared<MAT_Red>())
