@@ -18,9 +18,9 @@ void Transform::RecreateTransformMatrix()
     _transformMatrix = glm::scale<float>(_transformMatrix, glm::vec3(_scale.GetX(), _scale.GetY(), _scale.GetZ()));
     _transformMatrix = glm::translate<float>(_transformMatrix,
                                              glm::vec3(_location.GetX(), _location.GetY(), _location.GetZ()));
-    _transformMatrix = glm::rotate<float>(_transformMatrix, glm::radians(_rotation.GetRoll()), glm::vec3(1, 0, 0));
-    _transformMatrix = glm::rotate<float>(_transformMatrix, glm::radians(_rotation.GetPitch()), glm::vec3(0, 1, 0));
     _transformMatrix = glm::rotate<float>(_transformMatrix, glm::radians(_rotation.GetYaw()), glm::vec3(0, 0, 1));
+    _transformMatrix = glm::rotate<float>(_transformMatrix, glm::radians(_rotation.GetPitch()), glm::vec3(0, 1, 0));
+    _transformMatrix = glm::rotate<float>(_transformMatrix, glm::radians(_rotation.GetRoll()), glm::vec3(1, 0, 0));
 }
 
 Transform::Transform(Location location)

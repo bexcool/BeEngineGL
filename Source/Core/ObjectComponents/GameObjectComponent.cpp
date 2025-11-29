@@ -19,18 +19,30 @@ void GameObjectComponent::Destroy()
     delete this;
 }
 
+void GameObjectComponent::SetRotationLock(bool lockRoll, bool lockPitch, bool lockYaw)
+{
+    _lockRoll = lockRoll;
+    _lockPitch = lockPitch;
+    _lockYaw = lockYaw;
+}
+
 Transform GameObjectComponent::GetWorldTransform() const
 {
-    //return _parent->GetWorldTransform() + _localTransform;
+    if (!_parent) return GetLocalTransform();
 
-    glm::mat4 rotation = glm::mat4(1.0f);
-    rotation = glm::rotate(rotation, glm::radians(_parent->GetWorldRotation().GetPitch()), glm::vec3(1.0f, 0.0f, 0.0f));
-    rotation = glm::rotate(rotation, glm::radians(_parent->GetWorldRotation().GetYaw()), glm::vec3(0.0f, 1.0f, 0.0f));
-    rotation = glm::rotate(rotation, glm::radians(_parent->GetWorldRotation().GetRoll()), glm::vec3(0.0f, 0.0f, 1.0f));
+    const auto &parentTransform = _parent->GetWorldTransform();
+    Rotation parentRot = parentTransform.GetRotation();
+    Scale parentScale = parentTransform.GetScale();
 
-    auto actualLocation = glm::vec3(rotation * glm::vec4(GetLocalLocation().AsVec3() - _parent->GetWorldLocation().AsVec3(), 1.0f)) + _parent->GetWorldLocation().AsVec3();
+    glm::mat4 rotation(1.0f);
+    rotation = glm::rotate(rotation, glm::radians(parentRot.GetPitch()), glm::vec3(0, 1, 0)); // pitch around Y
+    rotation = glm::rotate(rotation, glm::radians(parentRot.GetRoll()), glm::vec3(1, 0, 0)); // roll around X
+    rotation = glm::rotate(rotation, glm::radians(parentRot.GetYaw()), glm::vec3(0, 0, 1)); // yaw around Z
 
-    return Transform(Location(Location(actualLocation) + _parent->GetWorldLocation()), GetLocalRotation() + _parent->GetWorldRotation(), GetLocalScale() + _parent->GetWorldTransform().GetScale());
+    glm::vec3 scaledLocalPos = GetLocalLocation().AsVec3() * parentScale.AsVec3();
+    glm::vec3 worldPos = parentTransform.GetLocation().AsVec3() + glm::vec3(rotation * glm::vec4(scaledLocalPos, 1.0f));
+
+    return {Location(worldPos), parentRot + GetLocalRotation(), parentScale * GetLocalScale()};
 }
 
 Transform GameObjectComponent::GetLocalTransform() const

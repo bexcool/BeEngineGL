@@ -14,6 +14,10 @@ class GameObjectComponent : public ICoreEvents
     Transform _localTransform = Transform();
     GameObject *_parent = nullptr;
 
+    bool _lockRoll = false;
+    bool _lockPitch = false;
+    bool _lockYaw = false;
+
 public:
     GameObjectComponent() = default;
     ~GameObjectComponent() override;
@@ -21,6 +25,9 @@ public:
     [[nodiscard]] GameObject *GetParent() const;
 
     void Destroy();
+
+    // Rotation
+    void SetRotationLock(bool lockRoll, bool lockPitch, bool lockYaw);
 
     // World
     [[nodiscard]] Transform GetWorldTransform() const;

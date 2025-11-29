@@ -94,7 +94,7 @@ void TestLevel::OnLoaded()
     auto *camera = new CameraComponent();
     player->AddComponent(camera);
 
-    player->AddComponent(GOC_Flashlight, Transform(Rotation(0, 0, 90)));
+    player->AddComponent(GOC_Flashlight, Transform(Rotation(0, 0, 0)));
 
     this->SpawnGameObject(player);
 

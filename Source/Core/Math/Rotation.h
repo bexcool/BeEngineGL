@@ -13,11 +13,11 @@ private:
 public:
     Rotation() : _x(0.0f), _y(0.0f), _z(0.0f) {}
 
-    Rotation(float pitch, float yaw, float roll) : _x(pitch), _y(yaw), _z(roll) {}
+    Rotation(float roll, float pitch, float yaw) : _x(roll), _y(pitch), _z(yaw) {}
 
-    [[nodiscard]] float GetPitch() const { return _x; }
-    [[nodiscard]] float GetYaw() const { return _y; }
-    [[nodiscard]] float GetRoll() const { return _z; }
+    [[nodiscard]] float GetRoll() const { return _x; }
+    [[nodiscard]] float GetPitch() const { return _y; }
+    [[nodiscard]] float GetYaw() const { return _z; }
     [[nodiscard]] glm::vec3 GetForwardVector() const;
 
     [[nodiscard]] glm::quat AsQuat() const;

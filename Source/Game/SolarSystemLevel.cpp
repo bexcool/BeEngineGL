@@ -7,6 +7,7 @@
 #include "Core/Application.h"
 #include "Core/logger.h"
 #include "Core/ObjectComponents/ModelComponent.h"
+#include "Resources/Assets/Materials/MAT_Earth.h"
 #include "Resources/Assets/Materials/MAT_Red.h"
 #include "Resources/Assets/Models/MOD_Sphere.h"
 
@@ -23,14 +24,17 @@ void SolarSystemLevel::OnLoaded()
         "./Resources/Assets/Textures/MilkyWay/stars_bk.png"
     }));
 
-    SetSkyLightIntensity(100);
+    SetSkyLightIntensity(10);
 
     auto goSun = new GameObject();
-    goSun->AddComponent(new ModelComponent(MOD_Sphere(std::make_shared<MAT_Red>())));
+    goSun->AddComponent(new ModelComponent(MOD_Sphere(std::make_shared<MAT_Red>()), Transform(Scale(2))));
+    goSun->AddComponent(new LightComponent(Light{.intensity = 10}));
     this->SpawnGameObject(goSun);
 
     goEarth = new GameObject();
-    goEarth->AddComponent(new ModelComponent(MOD_Sphere(), Transform(Location(10, 0, 0))));
+    auto gocEarth = new ModelComponent(MOD_Sphere(std::make_shared<MAT_Earth>()), Transform(Location(10, 0, 0)));
+    gocEarth->SetRotationLock(true, true, true);
+    goEarth->AddComponent(gocEarth);
     this->SpawnGameObject(goEarth);
 
     auto *player = new PlayerCharacter();
@@ -47,6 +51,6 @@ void SolarSystemLevel::OnTick()
     Level::OnTick();
 
     auto rot = goEarth->GetWorldRotation();
-    goEarth->SetWorldRotation(Rotation(0, rot.GetYaw() + 100 * Application::GetInstance()->GetDeltaTime(), 0));
-    LOG_W("Rotation: %f", goEarth->GetWorldRotation().GetYaw());
+    goEarth->SetWorldRotation(Rotation(0, rot.GetPitch() + 100 * Application::GetInstance()->GetDeltaTime(), 0));
+    LOG_W("Rotation: %f", goEarth->GetWorldRotation().GetPitch());
 }
