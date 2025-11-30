@@ -8,17 +8,17 @@
 
 #include "Core/logger.h"
 
-ModelComponent::ModelComponent(const Model &model)
+ModelComponent::ModelComponent(const Model &model) : GameObjectComponent("ModelComponent")
 {
     SetModel(model);
 }
 
-ModelComponent::ModelComponent(const Transform &relativeTransform)
+ModelComponent::ModelComponent(const Transform &relativeTransform) : GameObjectComponent("ModelComponent")
 {
     SetLocalTransform(relativeTransform);
 }
 
-ModelComponent::ModelComponent(const Model &model, const Transform &relativeTransform)
+ModelComponent::ModelComponent(const Model &model, const Transform &relativeTransform) : GameObjectComponent("ModelComponent")
 {
     SetLocalTransform(relativeTransform);
     SetModel(model);

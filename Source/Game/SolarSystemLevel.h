@@ -4,11 +4,13 @@
 
 #pragma once
 #include "Core/Level.h"
+#include "Core/ObjectComponents/SplineComponent.h"
 
 
 class SolarSystemLevel : public Level
 {
-    GameObject *goEarth = nullptr;
+    GameObject *goEarth = nullptr, *goUFO = nullptr;
+    SplineComponent *spline = nullptr;
 
 public:
     SolarSystemLevel() : Level("SolarSystemLevel") {};

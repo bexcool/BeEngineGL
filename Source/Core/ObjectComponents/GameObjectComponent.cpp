@@ -4,6 +4,13 @@
 
 #include "GameObjectComponent.h"
 
+#include <utility>
+
+GameObjectComponent::GameObjectComponent(std::string name)
+{
+    _displayName = std::move(name);
+}
+
 GameObjectComponent::~GameObjectComponent()
 {
     GameObjectComponent::OnRemovedFromParent();

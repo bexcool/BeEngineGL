@@ -17,7 +17,7 @@ class ModelComponent : public GameObjectComponent
     Model _model = MOD_Sphere();
 
 public:
-    ModelComponent() = default;
+    ModelComponent() : GameObjectComponent("ModelComponent") {};
     explicit ModelComponent(const Model &model);
     explicit ModelComponent(const Transform &relativeTransform);
     ModelComponent(const Model &model, const Transform &relativeTransform);

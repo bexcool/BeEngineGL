@@ -106,6 +106,8 @@ add_executable(ZPG
         Source/Resources/Assets/Models/Shrek/TEX_Shrek.h
         Source/Resources/Assets/Textures/TEX_Default.h
         Source/Core/Graphics/Material/MaterialData.h
+        Source/Core/ObjectComponents/SplineComponent.cpp
+        Source/Core/ObjectComponents/SplineComponent.h
 )
 
 add_custom_target(copyResources

@@ -17,7 +17,7 @@ class CameraComponent : public GameObjectComponent
     float _fov = 70.0f;
 
 public:
-    CameraComponent() : GameObjectComponent() {}
+    CameraComponent() : GameObjectComponent("CameraComponent") {}
 
     glm::mat4 GetCameraViewMatrix();
     glm::mat4 GetCameraProjectionMatrix();

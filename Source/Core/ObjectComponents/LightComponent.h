@@ -12,10 +12,10 @@ class LightComponent : public GameObjectComponent
     Light _light = Light();
 
 public:
-    LightComponent() = default;
+    LightComponent() : GameObjectComponent("ModelComponent") {};
     explicit LightComponent(const Light &light);
 
-    Light GetLight();
+    [[nodiscard]] Light GetLight() const;
     void SetLight(Light light);
 
     float GetWorldIntensity();

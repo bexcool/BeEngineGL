@@ -4,12 +4,12 @@
 
 #include "LightComponent.h"
 
-LightComponent::LightComponent(const Light &light)
+LightComponent::LightComponent(const Light &light) : GameObjectComponent("ModelComponent")
 {
     SetLight(light);
 }
 
-Light LightComponent::GetLight()
+Light LightComponent::GetLight() const
 {
     return _light;
 }

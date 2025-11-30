@@ -11,6 +11,8 @@ class GameObject;
 
 class GameObjectComponent : public ICoreEvents
 {
+    std::string _displayName;
+
     Transform _localTransform = Transform();
     GameObject *_parent = nullptr;
 
@@ -19,7 +21,7 @@ class GameObjectComponent : public ICoreEvents
     bool _lockYaw = false;
 
 public:
-    GameObjectComponent() = default;
+    explicit GameObjectComponent(std::string name);
     ~GameObjectComponent() override;
 
     [[nodiscard]] GameObject *GetParent() const;
@@ -45,6 +47,7 @@ public:
     [[nodiscard]] Scale GetLocalScale() const;
     void SetLocalScale(Scale scale);
 
+    // Engine events
     void OnTick() override {}
     void OnRender() override {}
 
