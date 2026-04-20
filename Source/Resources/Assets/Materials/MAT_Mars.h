@@ -5,7 +5,7 @@
 #include "Core/Graphics/Material/Material.h"
 #include "Core/Graphics/Material/MaterialData.h"
 #include "Core/Graphics/Material/MaterialParameter.h"
+#include "Resources/Assets/Textures/TEX_Mars.h"
 
-BE_MATERIAL(MAT_Red, (MaterialData{
-                .diffuse = MaterialParameter(glm::vec3(1,0,0)),
-                .shininess = MaterialParameter(8.0f)}))
+BE_MATERIAL(MAT_Mars, (MaterialData{.diffuse = MaterialParameter(TEX_Mars()),
+                .shininess = MaterialParameter(0)}))

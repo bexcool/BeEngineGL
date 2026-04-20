@@ -38,4 +38,5 @@ public:
     void SetScale(Scale scale);
 
     Transform operator+(const Transform &transform) const;
+    Transform operator-(const Transform &transform) const;
 };

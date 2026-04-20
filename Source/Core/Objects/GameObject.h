@@ -8,7 +8,6 @@
 #include "../ObjectComponents/GameObjectComponent.h"
 #include "../Math/Transform.h"
 #include "../Controllers/Controller.h"
-#include "../Events/KeyboardKeyEventArgs.h"
 
 class GameObjectComponent;
 class Controller;
@@ -20,6 +19,7 @@ class GameObject : public ICoreEvents
 
     Transform _worldTransform = Transform();
     std::vector<GameObjectComponent *> _components;
+    GameObject *_parent = nullptr;
 
     std::string _name;
 
@@ -34,6 +34,10 @@ public:
 
     void Destroy();
     bool GetDestroyRequested() const;
+
+    // Parent
+    void AttachToGameObject(GameObject *gameObject, Location offset);
+    GameObject *GetParent();
 
     // Name
     void SetName(const std::string &name);

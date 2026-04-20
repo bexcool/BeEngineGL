@@ -7,7 +7,6 @@
 
 class Rotation
 {
-private:
     float _x, _y, _z;
 
 public:
@@ -23,4 +22,5 @@ public:
     [[nodiscard]] glm::quat AsQuat() const;
 
     Rotation operator+(const Rotation &rotation) const;
+    Rotation operator-(const Rotation &rotation) const;
 };

@@ -6,14 +6,31 @@
 
 SplineComponent::SplineComponent() : GameObjectComponent("SplineComponent")
 {
-    A = glm::mat4(glm::vec4(-1.0, 3.0, -3.0, 1.0),
-                  glm::vec4(3.0, -6.0, 3.0, 0),
-                  glm::vec4(-3.0, 3.0, 0, 0),
-                  glm::vec4(1, 0, 0, 0));
+    A = glm::mat4x3(glm::vec3(-1.0, 3.0, -3.0),
+                    glm::vec3(3.0, -6.0, 3.0),
+                    glm::vec3(-3.0, 3.0, 0),
+                    glm::vec3(1, 0, 0));
     B = glm::mat4x3(glm::vec3(-1, 0, 0),
                     glm::vec3(0, 1, 0),
                     glm::vec3(0, -1, 0),
                     glm::vec3(1, 0, 0));
+}
+
+SplineComponent::SplineComponent(CurvePoint cp1, CurvePoint cp2) : GameObjectComponent("SplineComponent")
+{
+    A = glm::mat4x3(
+        cp1.p1,
+        cp1.p2,
+        cp1.p3,
+        cp1.p4
+    );
+
+    B = glm::mat4x3(
+        cp2.p1,
+        cp2.p2,
+        cp2.p3,
+        cp2.p4
+    );
 }
 
 Location SplineComponent::GetLocationFromAlpha(double alpha)

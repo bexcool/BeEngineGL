@@ -49,7 +49,9 @@ Transform GameObjectComponent::GetWorldTransform() const
     glm::vec3 scaledLocalPos = GetLocalLocation().AsVec3() * parentScale.AsVec3();
     glm::vec3 worldPos = parentTransform.GetLocation().AsVec3() + glm::vec3(rotation * glm::vec4(scaledLocalPos, 1.0f));
 
-    return {Location(worldPos), parentRot + GetLocalRotation(), parentScale * GetLocalScale()};
+    Rotation actualRot{_lockRoll ? 0 : parentRot.GetRoll(), _lockPitch ? 0 : parentRot.GetPitch(), _lockYaw ? 0 : parentRot.GetYaw()};
+
+    return {Location(worldPos), actualRot + GetLocalRotation(), parentScale * GetLocalScale()};
 }
 
 Transform GameObjectComponent::GetLocalTransform() const

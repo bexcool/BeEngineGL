@@ -15,6 +15,7 @@ class MaterialParameter
 
 public:
     MaterialParameter() = default;
+    explicit MaterialParameter(float scalar);
     explicit MaterialParameter(glm::vec3 value);
     explicit MaterialParameter(const Texture &texture);
     MaterialParameter(glm::vec3 value, const Texture &texture);
@@ -26,5 +27,5 @@ public:
 
 enum class MatParameterType
 {
-    Diffuse
+    Diffuse, Shininess, Emission
 };

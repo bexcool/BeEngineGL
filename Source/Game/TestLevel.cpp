@@ -9,8 +9,11 @@
 #include "Core/ObjectComponents/ModelComponent.h"
 #include "Core/Objects/Character/PlayerCharacter.h"
 #include "Resources/Assets/Materials/MAT_Grass.h"
+#include "Resources/Assets/Materials/MAT_Sun.h"
 #include "Resources/Assets/Models/MOD_F1.h"
 #include "Resources/Assets/Models/MOD_login_pav0531.h"
+#include "Resources/Assets/Models/MOD_LowPolyTree_leaves.h"
+#include "Resources/Assets/Models/MOD_LowPolyTree_log.h"
 #include "Resources/Assets/Models/MOD_Plane.h"
 #include "Resources/Assets/Models/Shrek/MOD_Fiona.h"
 #include "Resources/Assets/Models/Shrek/MOD_Shrek.h"
@@ -100,72 +103,69 @@ void TestLevel::OnLoaded()
 
     this->SetActiveCamera(camera);
 
-    /*
+
     auto goLight1 = new GameObject();
     goLight1->AddComponent(new LightComponent(Light{.intensity = 0.2, .radius = 3}));
-    goLight1->AddComponent(new ModelComponent(MOD_DefaultSphere(ShaderInfo{
-        .fragmentShaderPath = "./Resources/Shaders/default.frag"
-    })));
+    goLight1->AddComponent(new ModelComponent(MOD_Sphere(std::make_shared<MAT_Sun>())));
     this->SpawnGameObject(goLight1, Transform(Location(30, 5, 20), Rotation(), Scale(0.1)));
     fireflies.push_back(goLight1);
+    /*
+        auto goLight2 = new GameObject();
+        goLight2->AddComponent(new LightComponent(Light{.intensity = 0.2, .radius = 3}));
+        goLight2->AddComponent(new ModelComponent(MOD_DefaultSphere(ShaderInfo{
+            .fragmentShaderPath = "./Resources/Shaders/default.frag"
+        })));
+        this->SpawnGameObject(goLight2, Transform(Location(35, 5, 23), Rotation(), Scale(0.1)));
+        fireflies.push_back(goLight2);
 
-    auto goLight2 = new GameObject();
-    goLight2->AddComponent(new LightComponent(Light{.intensity = 0.2, .radius = 3}));
-    goLight2->AddComponent(new ModelComponent(MOD_DefaultSphere(ShaderInfo{
-        .fragmentShaderPath = "./Resources/Shaders/default.frag"
-    })));
-    this->SpawnGameObject(goLight2, Transform(Location(35, 5, 23), Rotation(), Scale(0.1)));
-    fireflies.push_back(goLight2);
+        auto goLight3 = new GameObject();
+        goLight3->AddComponent(new LightComponent(Light{.intensity = 0.2, .radius = 3}));
+        goLight3->AddComponent(new ModelComponent(MOD_DefaultSphere(ShaderInfo{
+            .fragmentShaderPath = "./Resources/Shaders/default.frag"
+        })));
+        this->SpawnGameObject(goLight3, Transform(Location(35, 5, 18), Rotation(), Scale(0.1)));
+        fireflies.push_back(goLight3);*/
 
-    auto goLight3 = new GameObject();
-    goLight3->AddComponent(new LightComponent(Light{.intensity = 0.2, .radius = 3}));
-    goLight3->AddComponent(new ModelComponent(MOD_DefaultSphere(ShaderInfo{
-        .fragmentShaderPath = "./Resources/Shaders/default.frag"
-    })));
-    this->SpawnGameObject(goLight3, Transform(Location(35, 5, 18), Rotation(), Scale(0.1)));
-    fireflies.push_back(goLight3);
-    */
     auto planeGO = new GameObject();
     planeGO->AddComponent(new ModelComponent(MOD_Plane(std::make_shared<MAT_Grass>())));;
     this->SpawnGameObject(planeGO, Transform(Location(), Rotation(), Scale(100)));
-    /*
-    for (int i = 0; i < 10; i++)
+
+    for (int i = 0; i < 3; i++)
     {
-        for (int j = 0; j < 10; j++)
+        for (int j = 0; j < 3; j++)
         {
             auto treeGO = new GameObject();
             treeGO->SetName("treeGO");
 
-            auto treeModelComp = new ModelComponent();
-            treeModelComp->SetModel(MOD_Tree());
-            treeGO->AddComponent(treeModelComp);
+            treeGO->AddComponent(new ModelComponent(MOD_LowPolyTree_log()));
+            treeGO->AddComponent(new ModelComponent(MOD_LowPolyTree_leaves()));
 
             this->SpawnGameObject(treeGO, Transform(
-                                      Location(static_cast<float>(i) * 5, 0, static_cast<float>(j) * 5),
+                                      Location(static_cast<float>(i) * 15 + 15, 0, static_cast<float>(j) * 15 + 15),
                                       Rotation(),
                                       Scale()
                                   ));
         }
     }
-
-    for (int i = 0; i < 10; i++)
-    {
-        for (int j = 0; j < 10; j++)
+    /*
+        for (int i = 0; i < 10; i++)
         {
-            auto bushModelComp = new ModelComponent();
-            bushModelComp->SetModel(MOD_Bush());
+            for (int j = 0; j < 10; j++)
+            {
+                auto bushModelComp = new ModelComponent();
+                bushModelComp->SetModel(MOD_Bush());
 
-            auto bushGO = new GameObject();
-            bushGO->AddComponent(bushModelComp);
+                auto bushGO = new GameObject();
+                bushGO->AddComponent(bushModelComp);
 
-            this->SpawnGameObject(bushGO, Transform(
-                                      Location(static_cast<float>(i) * 5 + 2.5, 0, static_cast<float>(j) * 5 + 2.5),
-                                      Rotation(),
-                                      Scale()
-                                  ));
+                this->SpawnGameObject(bushGO, Transform(
+                                          Location(static_cast<float>(i) * 5 + 2.5, 0, static_cast<float>(j) * 5 + 2.5),
+                                          Rotation(),
+                                          Scale()
+                                      ));
+            }
         }
-    }
-    */
+        */
 }
 
 

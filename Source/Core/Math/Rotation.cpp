@@ -23,3 +23,8 @@ Rotation Rotation::operator+(const Rotation &rotation) const
 {
     return {GetRoll() + rotation.GetRoll(), GetPitch() + rotation.GetPitch(), GetYaw() + rotation.GetYaw()};
 }
+
+Rotation Rotation::operator-(const Rotation &rotation) const
+{
+    return {GetRoll() - rotation.GetRoll(), GetPitch() - rotation.GetPitch(), GetYaw() - rotation.GetYaw()};
+}

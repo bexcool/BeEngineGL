@@ -161,23 +161,30 @@ void ShaderProgram::Use()
 
     SendFloat("skyLightIntensity", level->GetSkyLightIntensity());
 
-    //glm::vec4(0.385, 0.647, 0.812, 1.0);
-
-
-    auto clr = _material->GetParameter(MatParameterType::Diffuse)->GetValue();
-    SendVec4("color", glm::vec4(clr, 1));
 
     SendVec4("ambient", glm::vec4(0.05, 0.05, 0.05, 1));
 
+    // Difuse
+    auto diffuse_value = _material->GetParameter(MatParameterType::Diffuse)->GetValue();
+    SendVec4("diffuse_value", glm::vec4(diffuse_value, 1));
+
     auto texDiffuseParam = _material->GetParameter(MatParameterType::Diffuse);
-    SendInt("useTexture", texDiffuseParam->HasTexture());
+    SendInt("diffuse_useTexture", texDiffuseParam->HasTexture());
 
     if (texDiffuseParam->HasTexture())
     {
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, _textureId);
-        SendInt("texture2D", 0);
+        SendInt("diffuse_texture2D", 0);
     }
+
+    // Shininess
+    auto shininess_value = _material->GetParameter(MatParameterType::Shininess)->GetValue();
+    SendVec3("shininess_value", shininess_value);
+
+    // Emission
+    auto emission_value = _material->GetParameter(MatParameterType::Emission)->GetValue();
+    SendVec3("emission_value", emission_value);
 
     glUniformMatrix4fv(_modelTransformId, 1, GL_FALSE, &_modelTransform->AsMatrix()[0][0]);
     glUniformMatrix4fv(_viewTransformId, 1, GL_FALSE, &camera->GetCameraViewMatrix()[0][0]);

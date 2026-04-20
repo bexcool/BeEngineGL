@@ -44,6 +44,18 @@ bool GameObject::GetDestroyRequested() const
     return _destroyRequested;
 }
 
+void GameObject::AttachToGameObject(GameObject *gameObject, const Location offset)
+{
+    _parent = gameObject;
+
+    this->SetWorldLocation(Location(_parent->GetWorldLocation() + offset));
+}
+
+GameObject *GameObject::GetParent()
+{
+    return _parent;
+}
+
 void GameObject::SetName(const std::string &name)
 {
     _name = name;
@@ -101,7 +113,21 @@ std::vector<GameObjectComponent *> &GameObject::GetComponents()
 
 Transform GameObject::GetWorldTransform() const
 {
-    return _worldTransform;
+    if (!_parent) return _worldTransform;
+
+    const auto &parentTransform = _parent->GetWorldTransform();
+    Rotation parentRot = parentTransform.GetRotation();
+    Scale parentScale = parentTransform.GetScale();
+
+    glm::mat4 rotation(1.0f);
+    rotation = glm::rotate(rotation, glm::radians(parentRot.GetPitch()), glm::vec3(0, 1, 0)); // pitch around Y
+    rotation = glm::rotate(rotation, glm::radians(parentRot.GetRoll()), glm::vec3(1, 0, 0)); // roll around X
+    rotation = glm::rotate(rotation, glm::radians(parentRot.GetYaw()), glm::vec3(0, 0, 1)); // yaw around Z
+
+    glm::vec3 scaledLocalPos = _worldTransform.GetLocation().AsVec3() * parentScale.AsVec3();
+    glm::vec3 worldPos = parentTransform.GetLocation().AsVec3() + glm::vec3(rotation * glm::vec4(scaledLocalPos, 1.0f));
+
+    return {Location(worldPos), parentRot + _worldTransform.GetRotation(), parentScale * _worldTransform.GetScale()};
 }
 
 void GameObject::SetWorldTransform(const Transform &worldTransform)
@@ -111,9 +137,8 @@ void GameObject::SetWorldTransform(const Transform &worldTransform)
 
 Location GameObject::GetWorldLocation() const
 {
-    return _worldTransform.GetLocation();
+    return GetWorldTransform().GetLocation();
 }
-
 
 void GameObject::SetWorldLocation(const Location &worldLocation)
 {

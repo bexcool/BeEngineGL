@@ -25,7 +25,11 @@ class Material
 
 protected:
     ShaderInfo _shaderInfo = ShaderInfo();
-    MaterialParameter _diffuse = MaterialParameter(TEX_Default());
+
+    // Parameters
+    MaterialParameter _diffuse;
+    MaterialParameter _shininess;
+    MaterialParameter _emission;
 
     void CreateShaderProgram();
 

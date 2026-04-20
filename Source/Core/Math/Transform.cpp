@@ -119,3 +119,12 @@ Transform Transform::operator+(const Transform &transform) const
         GetScale()
     };
 }
+
+Transform Transform::operator-(const Transform &transform) const
+{
+    return {
+        static_cast<Location>(GetLocation() - transform.GetLocation()),
+        GetRotation() - transform.GetRotation(),
+        GetScale()
+    };
+}

@@ -9,7 +9,8 @@
 
 class SolarSystemLevel : public Level
 {
-    GameObject *goEarth = nullptr, *goUFO = nullptr;
+    GameObject *goEarth = nullptr, *goMoon = nullptr, *goMars = nullptr, *goUFO = nullptr;
+    ModelComponent *gocEarth = nullptr, *gocMars = nullptr;;
     SplineComponent *spline = nullptr;
 
 public:

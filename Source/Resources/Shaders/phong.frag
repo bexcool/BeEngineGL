@@ -14,10 +14,21 @@ uniform light lights[MAX_LIGHTS];
 uniform int lightCount;
 uniform float skyLightIntensity;
 
-uniform bool useTexture;
-uniform sampler2D texture2D;
+// Diffuse
+uniform bool diffuse_useTexture;
+uniform sampler2D diffuse_texture2D;
+uniform vec4 diffuse_value;
 
-uniform vec4 color;
+// Shininess
+uniform bool shininess_useTexture;
+uniform sampler2D shininess_texture2D;
+uniform vec3 shininess_value;
+
+// Emission
+uniform bool emission_useTexture;
+uniform sampler2D emission_texture2D;
+uniform vec3 emission_value;
+
 uniform vec4 ambient;
 
 in vec3 vert_normal;
@@ -35,8 +46,7 @@ float map(float value, float min1, float max1, float min2, float max2)
 
 void main(void)
 {
-    // Material
-    vec4 modelColor = color * (useTexture ? texture(texture2D, vert_uv) : vec4(1));
+    vec4 modelColor = diffuse_value * (diffuse_useTexture ? texture(diffuse_texture2D, vert_uv) : vec4(1));
 
     vec4 finalSpecular = vec4(0, 0, 0, 1);
     vec4 finalDiffuse = vec4(0, 0, 0, 1);
@@ -71,8 +81,11 @@ void main(void)
         }
 
         finalSpecular += specular * lights[i].color * attenuation * finalSpot;
-        finalDiffuse += diffuse * clamp(attenuation * finalSpot, 0.08, 1);
+        finalDiffuse += diffuse * clamp(attenuation * finalSpot, 0, 1);
     }
 
-    fragColor = clamp(modelColor * ambient * skyLightIntensity + finalSpecular + finalDiffuse, 0, 1);
+    // Final specular * 0 - nedávat power, ale vynásobit výsledný
+    finalSpecular *= vec4(shininess_value, 1);
+
+    fragColor = modelColor * ambient * skyLightIntensity * vec4(emission_value + 1, 1) + finalSpecular + finalDiffuse;
 }

@@ -12,6 +12,8 @@
 void Material::ApplyMaterialData(const MaterialData &materialData)
 {
     _diffuse = materialData.diffuse;
+    _shininess = materialData.shininess;
+    _emission = materialData.emission;
 }
 
 void Material::CreateShaderProgram()
@@ -72,6 +74,8 @@ MaterialParameter *Material::GetParameter(MatParameterType type)
     switch (type)
     {
         case MatParameterType::Diffuse: return &_diffuse;
+        case MatParameterType::Shininess: return &_shininess;
+        case MatParameterType::Emission: return &_emission;
     }
     return nullptr;
 }

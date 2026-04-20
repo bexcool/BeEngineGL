@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.30)
-project(ZPG)
+project(BeEngineGL)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(ZPG
+add_executable(BeEngineGL
         Source/main.cpp
         Source/Core/Application.cpp
         Source/Core/Application.h
@@ -108,24 +108,27 @@ add_executable(ZPG
         Source/Core/Graphics/Material/MaterialData.h
         Source/Core/ObjectComponents/SplineComponent.cpp
         Source/Core/ObjectComponents/SplineComponent.h
+        Source/Core/Math/CurvePoint.h
+        Source/Game/WhackMoleLevel.cpp
+        Source/Game/WhackMoleLevel.h
 )
 
 add_custom_target(copyResources
         COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_LIST_DIR}/copyResources.cmake
 )
-add_dependencies(ZPG copyResources)
+add_dependencies(BeEngineGL copyResources)
 
 find_package(glm CONFIG REQUIRED)
 find_package(GLEW REQUIRED)
-target_include_directories(ZPG PRIVATE
+target_include_directories(BeEngineGL PRIVATE
         /opt/homebrew/include
         ${CMAKE_SOURCE_DIR}/vendor
         ${CMAKE_SOURCE_DIR}/Source
 )
 if (APPLE)
-    target_link_directories(ZPG PRIVATE /opt/homebrew/lib)
-    target_compile_definitions(ZPG PRIVATE GL_SILENCE_DEPRECATION)
-    target_link_libraries(ZPG
+    target_link_directories(BeEngineGL PRIVATE /opt/homebrew/lib)
+    target_compile_definitions(BeEngineGL PRIVATE GL_SILENCE_DEPRECATION)
+    target_link_libraries(BeEngineGL
             glfw
             "-framework OpenGL"
             "-framework Cocoa"

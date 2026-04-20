@@ -4,6 +4,8 @@
 
 #include "MaterialParameter.h"
 
+MaterialParameter::MaterialParameter(float scalar) : MaterialParameter(glm::vec3(scalar)) {}
+
 MaterialParameter::MaterialParameter(const glm::vec3 value)
 {
     _value = value;
