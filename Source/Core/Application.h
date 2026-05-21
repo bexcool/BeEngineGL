@@ -4,39 +4,40 @@
 
 #pragma once
 
+#include "BeEngineGLExport.h"
 #include "GameLoop.h"
-#include "Level.h"
 #include "Graphics/Renderer.h"
 #include "Graphics/Window.h"
+#include "Level.h"
 
-class Application : public ICoreEvents, IKeyEvents
+class BE_API Application : public ICoreEvents, IKeyEvents
 {
-	static Application *_currentApp;
+    static Application *_currentApp;
 
-	int _width, _height;
-	Window *_window;
-	std::string _title;
+    int _width, _height;
+    Window *_window;
+    std::string _title;
 
-	Renderer *_renderer;
-	GameLoop *_gameLoop;
+    Renderer *_renderer;
+    GameLoop *_gameLoop;
 
-	Level *_currentLevel;
-	Level *_requestedLevel;
+    Level *_currentLevel;
+    Level *_requestedLevel;
 
 public:
-	Application(int width, int height, std::string title);
-	static Application *GetInstance() { return _currentApp; }
+    Application(int width, int height, std::string title);
+    static Application *GetInstance() { return _currentApp; }
 
-	void Run();
+    void Run(Level *initialLevel);
 
-	void LoadLevel(Level *level);
-	Level *GetLevel() { return _currentLevel; }
-	Window *GetWindow() { return _window; }
+    void LoadLevel(Level *level);
+    Level *GetLevel() { return _currentLevel; }
+    Window *GetWindow() { return _window; }
 
-	float GetDeltaTime();
+    float GetDeltaTime();
 
-	void OnKeyboardKeyEvent(KeyboardKeyEventArgs e) override;
-	void OnMouseKeyEvent(MouseKeyEventArgs e) override;
-	void OnRender() override;
-	void OnTick() override;
+    void OnKeyboardKeyEvent(KeyboardKeyEventArgs e) override;
+    void OnMouseKeyEvent(MouseKeyEventArgs e) override;
+    void OnRender() override;
+    void OnTick() override;
 };

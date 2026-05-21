@@ -3,7 +3,7 @@ project(BeEngineGL)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_library(BeEngineGL STATIC
+add_library(BeEngineGL SHARED
         #Source/main.cpp
         Source/Core/Application.cpp
         Source/Core/Application.h
@@ -45,8 +45,6 @@ add_library(BeEngineGL STATIC
         Source/Core/ObjectComponents/CameraComponent.h
         Source/Core/Objects/GameObject.cpp
         Source/Core/Objects/GameObject.h
-        Source/App.cpp
-        Source/App.h
         Source/Core/Events/MouseKeyEventArgs.cpp
         Source/Core/Events/MouseKeyEventArgs.h
         Source/Core/ObjectComponents/GameObjectComponent.cpp
@@ -117,6 +115,8 @@ add_custom_target(copyResources
         COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_LIST_DIR}/copyResources.cmake
 )
 add_dependencies(BeEngineGL copyResources)
+
+target_compile_definitions(BeEngineGL PRIVATE BE_BUILD_DLL)
 
 find_package(glm CONFIG REQUIRED)
 find_package(GLEW REQUIRED)
