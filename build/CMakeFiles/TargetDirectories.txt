@@ -1,4 +1,0 @@
-/Volumes/Santuv M.2 Drive/Programming/C++/BeEngineGL/build/CMakeFiles/BeEngineGL.dir
-/Volumes/Santuv M.2 Drive/Programming/C++/BeEngineGL/build/CMakeFiles/copyResources.dir
-/Volumes/Santuv M.2 Drive/Programming/C++/BeEngineGL/build/CMakeFiles/edit_cache.dir
-/Volumes/Santuv M.2 Drive/Programming/C++/BeEngineGL/build/CMakeFiles/rebuild_cache.dir
