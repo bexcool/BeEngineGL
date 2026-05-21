@@ -3,8 +3,8 @@ project(BeEngineGL)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(BeEngineGL
-        Source/main.cpp
+add_library(BeEngineGL STATIC
+        #Source/main.cpp
         Source/Core/Application.cpp
         Source/Core/Application.h
         Source/Core/Graphics/Renderer.cpp
@@ -120,15 +120,15 @@ add_dependencies(BeEngineGL copyResources)
 
 find_package(glm CONFIG REQUIRED)
 find_package(GLEW REQUIRED)
-target_include_directories(BeEngineGL PRIVATE
+target_include_directories(BeEngineGL PUBLIC
         /opt/homebrew/include
         ${CMAKE_SOURCE_DIR}/vendor
         ${CMAKE_SOURCE_DIR}/Source
 )
 if (APPLE)
-    target_link_directories(BeEngineGL PRIVATE /opt/homebrew/lib)
-    target_compile_definitions(BeEngineGL PRIVATE GL_SILENCE_DEPRECATION)
-    target_link_libraries(BeEngineGL
+    target_link_directories(BeEngineGL PUBLIC /opt/homebrew/lib)
+    target_compile_definitions(BeEngineGL PUBLIC GL_SILENCE_DEPRECATION)
+    target_link_libraries(BeEngineGL PUBLIC
             glfw
             "-framework OpenGL"
             "-framework Cocoa"

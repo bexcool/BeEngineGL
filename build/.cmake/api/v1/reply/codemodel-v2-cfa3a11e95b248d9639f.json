@@ -1,0 +1,69 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.30"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "BeEngineGL",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "BeEngineGL::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-BeEngineGL-Debug-14f5a8a52b1ff5513604.json",
+					"name" : "BeEngineGL",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "copyResources::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-copyResources-Debug-910ea8ee77d84310e31d.json",
+					"name" : "copyResources",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/Volumes/Santuv M.2 Drive/Programming/C++/BeEngineGL/build",
+		"source" : "/Volumes/Santuv M.2 Drive/Programming/C++/BeEngineGL"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 8
+	}
+}
