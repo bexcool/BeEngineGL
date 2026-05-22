@@ -15,6 +15,8 @@ add_library(BeEngineGL SHARED
         Source/Core/Graphics/Shader.h
         Source/Core/ObjectComponents/ModelComponent.cpp
         Source/Core/ObjectComponents/ModelComponent.h
+        Source/Core/ObjectComponents/ColliderComponent.cpp
+        Source/Core/ObjectComponents/ColliderComponent.h
         Source/Core/Math/Transform.cpp
         Source/Core/Math/Transform.h
         Source/Core/Math/Location.cpp
@@ -109,6 +111,8 @@ add_library(BeEngineGL SHARED
         Source/Core/Math/CurvePoint.h
         Source/Game/WhackMoleLevel.cpp
         Source/Game/WhackMoleLevel.h
+        Source/Core/ObjectComponents/CollisionBoxComponent.cpp
+        Source/Core/ObjectComponents/CollisionBoxComponent.h
 )
 
 add_custom_target(copyResources

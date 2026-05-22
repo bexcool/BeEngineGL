@@ -12,6 +12,8 @@
 #define TINYOBJLOADER_IMPLEMENTATION
 #include "Libs/tiny_obj_loader.h"
 
+std::unordered_map<std::string, Model::GeometryCache> Model::RegisteredModels;
+
 Model::~Model()
 {
     return;
@@ -32,14 +34,30 @@ std::shared_ptr<Material> Model::GetMaterial()
     return _material;
 }
 
-void Model::SetModel(std::string modelPath)
+void Model::SetModel(const std::string &modelPath)
 {
     _modelPath = modelPath;
     SetModelCustomSP(modelPath);
 }
 
-void Model::SetModelCustomSP(std::string modelPath)
+void Model::SetModelCustomSP(const std::string &modelPath)
 {
+    // Do not create new model, if the old one exists
+    auto foundModel = RegisteredModels.find(modelPath);
+    if (foundModel != RegisteredModels.end())
+    {
+        const auto &existingModel = foundModel->second;
+
+        _modelPath = existingModel.modelPath;
+        _VBO = existingModel.VBO;
+        _VAO = existingModel.VAO;
+        _amountOfVertices = existingModel.amountOfVertices;
+
+        LOG("Model already exists. Referencing data... Path: %s, VBO: %d, VAO: %d", modelPath.c_str(), _VBO, _VAO);
+
+        return;
+    }
+
     _modelPath = modelPath;
     std::filesystem::path filePath = modelPath;
 
@@ -55,7 +73,15 @@ void Model::SetModelCustomSP(std::string modelPath)
         LOG_E(err.c_str());
     if (!ret) throw std::runtime_error("Failed to load OBJ file!");
 
+    size_t totalIndices = 0;
+    for (const auto &shape: shapes)
+    {
+        totalIndices += shape.mesh.indices.size();
+    }
+
     std::vector<float> vertices;
+
+    vertices.reserve(totalIndices * 8);
 
     for (const auto &shape: shapes)
     {
@@ -109,6 +135,17 @@ void Model::SetModelCustomSP(std::string modelPath)
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *) (3 * sizeof(float)));
     glEnableVertexAttribArray(2); //enable vertex attributes
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *) (6 * sizeof(float)));
+
+    LOG("Adding new model geometry to global cache: %s", modelPath.c_str());
+
+    GeometryCache newCache{
+        .VAO = _VAO,
+        .VBO = _VBO,
+        .amountOfVertices = _amountOfVertices,
+        .modelPath = _modelPath
+    };
+
+    RegisteredModels[modelPath] = newCache;
 }
 
 void Model::SetModel(const std::string &modelPath, std::shared_ptr<Material> material)

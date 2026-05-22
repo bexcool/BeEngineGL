@@ -4,69 +4,82 @@
 
 #include "CameraComponent.h"
 
+#include <cmath>
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_transform.hpp>
+#include <glm/geometric.hpp>
 
 #include "Core/Application.h"
-#include "Core/logger.h"
 #include "Core/Events/InputManager.h"
+#include "Core/logger.h"
 
+glm::vec3 ComputeCameraForwardVector(float pitchDegrees, float yawDegrees) {
+    glm::vec3 forward;
+    forward.x = cos(glm::radians(pitchDegrees)) * cos(glm::radians(yawDegrees));
+    forward.y = sin(glm::radians(pitchDegrees));
+    forward.z = cos(glm::radians(pitchDegrees)) * sin(glm::radians(yawDegrees));
 
-glm::mat4 CameraComponent::GetCameraViewMatrix()
-{
-    return glm::lookAt(GetWorldTransform().GetLocation().AsVec3(),
-                       GetWorldTransform().GetLocation().AsVec3() + _lookTargetLocation.AsVec3(),
-                       glm::vec3(0.0f, 1.0f, 0.0f));
+    float lengthSquared = glm::dot(forward, forward);
+    if (lengthSquared < 1e-6f) {
+        return glm::vec3(1.0f, 0.0f, 0.0f);
+    }
+
+    return glm::normalize(forward);
 }
 
-glm::mat4 CameraComponent::GetCameraProjectionMatrix()
-{
+glm::mat4 CameraComponent::GetCameraViewMatrix() {
+    glm::vec3 eye = GetWorldTransform().GetLocation().AsVec3();
+    glm::vec3 forward = _lookTargetLocation.AsVec3();
+
+    glm::vec3 up(0.0f, 1.0f, 0.0f);
+    if (std::abs(glm::dot(forward, up)) > 0.99f) {
+        up = glm::vec3(0.0f, 0.0f, 1.0f);
+    }
+
+    return glm::lookAt(eye, eye + forward, up);
+}
+
+glm::mat4 CameraComponent::GetCameraProjectionMatrix() {
     float aspectRatio = Application::GetInstance()->GetWindow()->GetAspectRatio();
 
     return glm::perspective(glm::radians(GetFOV()), aspectRatio, 0.1f, 100.0f);
 }
 
-void CameraComponent::SetSensitivity(float sensitivity)
-{
+void CameraComponent::SetSensitivity(float sensitivity) {
     _sensitivity = sensitivity;
 }
 
-float CameraComponent::GetSensitivity()
-{
+float CameraComponent::GetSensitivity() {
     return _sensitivity;
 }
 
-float CameraComponent::GetFOV()
-{
+float CameraComponent::GetFOV() {
     return _fov;
 }
 
-void CameraComponent::SetFOV(float fov)
-{
+void CameraComponent::SetFOV(float fov) {
     _fov = fov;
 }
 
-void CameraComponent::SetLookTargetLocation(const Location &target)
-{
-    _lookTargetLocation = target;
+void CameraComponent::SetLookTargetLocation(const Location& target) {
+    glm::vec3 forward = target.AsVec3();
+    if (glm::dot(forward, forward) < 1e-6f) {
+        forward = glm::vec3(1.0f, 0.0f, 0.0f);
+    } else {
+        forward = glm::normalize(forward);
+    }
+
+    _lookTargetLocation = Location(forward);
 }
 
-Location CameraComponent::GetLookTargetLocation()
-{
+Location CameraComponent::GetLookTargetLocation() {
     return _lookTargetLocation;
 }
 
-void CameraComponent::OnTick()
-{
+void CameraComponent::OnTick() {
     GameObjectComponent::OnTick();
 
-    auto camerRot = GetParent()->GetWorldRotation();
-
-    float yaw = camerRot.GetYaw(),
-            pitch = camerRot.GetPitch();
-
-    if (InputManager::IsMouseKeyPressed(GLFW_MOUSE_BUTTON_RIGHT))
-    {
+    if (InputManager::IsMouseKeyPressed(GLFW_MOUSE_BUTTON_RIGHT)) {
         auto controller = GetParent()->GetController();
 
         float xOffset = controller->GetMousePosition().x - controller->GetLastMousePosition().x;
@@ -75,25 +88,14 @@ void CameraComponent::OnTick()
         xOffset *= _sensitivity;
         yOffset *= _sensitivity;
 
-        yaw += xOffset;
-        pitch += yOffset;
+        _yaw += xOffset;
+        _pitch += yOffset;
 
-        if (pitch > 89.0f) pitch = 89.0f;
-        if (pitch < -89.0f) pitch = -89.0f;
-
-        glm::vec3 front = GetLookTargetLocation().AsVec3();
-        front.x = cos(glm::radians(pitch)) * cos(glm::radians(yaw));
-        front.y = sin(glm::radians(pitch));
-        front.z = cos(glm::radians(pitch)) * sin(glm::radians(yaw));
-
-        SetLookTargetLocation(Location(
-            front.x,
-            front.y,
-            front.z
-        ));
-
-        // TODO: Apply the yaw to the player character
-        //SetLocalRotation(Rotation(0, pitch, yaw));
-        GetParent()->SetWorldRotation(Rotation(0, pitch, yaw));
+        if (_pitch > 89.0f) _pitch = 89.0f;
+        if (_pitch < -89.0f) _pitch = -89.0f;
     }
+
+    GetParent()->SetWorldRotation(Rotation(0.0f, 0.0f, _yaw));
+    SetLocalRotation(Rotation(_pitch, 0.0f, 0.0f));
+    _lookTargetLocation = Location(ComputeCameraForwardVector(_pitch, _yaw));
 }

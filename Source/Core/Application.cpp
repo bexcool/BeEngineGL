@@ -50,6 +50,11 @@ float Application::GetDeltaTime()
     return _gameLoop->GetDeltaTime();
 }
 
+float Application::GetTime()
+{
+    return glfwGetTime();
+}
+
 void Application::OnKeyboardKeyEvent(KeyboardKeyEventArgs e)
 {
     if (e.Action == GLFW_PRESS)

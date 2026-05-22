@@ -35,6 +35,7 @@ public:
     Window *GetWindow() { return _window; }
 
     float GetDeltaTime();
+    float GetTime();
 
     void OnKeyboardKeyEvent(KeyboardKeyEventArgs e) override;
     void OnMouseKeyEvent(MouseKeyEventArgs e) override;

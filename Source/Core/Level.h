@@ -10,9 +10,10 @@
 #include "Graphics/SkyBox/SkyBoxModel.h"
 #include "ObjectComponents/LightComponent.h"
 #include "Objects/Character/PlayerCharacter.h"
+#include "Core/BeEngineGLExport.h"
 
 
-class Level
+class BE_API Level
 {
     PlayerController *_playerController;
     CameraComponent *_activeCamera;

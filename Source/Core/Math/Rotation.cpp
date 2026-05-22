@@ -4,27 +4,37 @@
 
 #include "Rotation.h"
 
-glm::vec3 Rotation::GetForwardVector() const
-{
-    glm::vec3 forward;
-    forward.x = cos(glm::radians(GetPitch())) * cos(glm::radians(GetYaw()));
-    forward.y = sin(glm::radians(GetPitch()));
-    forward.z = cos(glm::radians(GetPitch())) * sin(glm::radians(GetYaw()));
+#include <glm/ext/matrix_transform.hpp>
+#include <glm/gtc/quaternion.hpp>
 
-    return glm::normalize(forward);
+glm::vec3 Rotation::GetForwardVector() const {
+    glm::mat4 rotation(1.0f);
+    rotation = glm::rotate(rotation, glm::radians(GetRoll()), glm::vec3(1.0f, 0.0f, 0.0f));
+    rotation = glm::rotate(rotation, glm::radians(GetPitch()), glm::vec3(0.0f, 0.0f, 1.0f));
+    rotation = glm::rotate(rotation, glm::radians(GetYaw()), glm::vec3(0.0f, 1.0f, 0.0f));
+
+    glm::vec3 forward = glm::vec3(rotation * glm::vec4(1.0f, 0.0f, 0.0f, 0.0f));
+    float length = glm::length(forward);
+    if (length < 1e-6f) {
+        return glm::vec3(1.0f, 0.0f, 0.0f);
+    }
+
+    return forward / length;
 }
 
-glm::quat Rotation::AsQuat() const
-{
-    return glm::quat(glm::vec3(GetRoll(), GetPitch(), GetYaw()));
+glm::quat Rotation::AsQuat() const {
+    glm::mat4 rotation(1.0f);
+    rotation = glm::rotate(rotation, glm::radians(GetRoll()), glm::vec3(1.0f, 0.0f, 0.0f));
+    rotation = glm::rotate(rotation, glm::radians(GetPitch()), glm::vec3(0.0f, 0.0f, 1.0f));
+    rotation = glm::rotate(rotation, glm::radians(GetYaw()), glm::vec3(0.0f, 1.0f, 0.0f));
+
+    return glm::quat_cast(rotation);
 }
 
-Rotation Rotation::operator+(const Rotation &rotation) const
-{
+Rotation Rotation::operator+(const Rotation& rotation) const {
     return {GetRoll() + rotation.GetRoll(), GetPitch() + rotation.GetPitch(), GetYaw() + rotation.GetYaw()};
 }
 
-Rotation Rotation::operator-(const Rotation &rotation) const
-{
+Rotation Rotation::operator-(const Rotation& rotation) const {
     return {GetRoll() - rotation.GetRoll(), GetPitch() - rotation.GetPitch(), GetYaw() - rotation.GetYaw()};
 }

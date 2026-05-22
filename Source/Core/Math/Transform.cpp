@@ -4,64 +4,57 @@
 
 #include "Transform.h"
 
+#include <glm/ext/matrix_transform.hpp>
+#include <glm/ext/quaternion_float.hpp>
+#include <string>
+
 #include "Location.h"
 #include "Rotation.h"
 #include "Scale.h"
 
-#include <string>
-#include <glm/ext/matrix_transform.hpp>
-#include <glm/ext/quaternion_float.hpp>
-
-void Transform::RecreateTransformMatrix()
-{
+void Transform::RecreateTransformMatrix() {
     _transformMatrix = glm::mat4(1.0f);
     _transformMatrix = glm::translate<float>(_transformMatrix,
                                              glm::vec3(_location.GetX(), _location.GetY(), _location.GetZ()));
     _transformMatrix = glm::rotate<float>(_transformMatrix, glm::radians(_rotation.GetRoll()), glm::vec3(1, 0, 0));
-    _transformMatrix = glm::rotate<float>(_transformMatrix, glm::radians(_rotation.GetPitch()), glm::vec3(0, 1, 0));
-    _transformMatrix = glm::rotate<float>(_transformMatrix, glm::radians(_rotation.GetYaw()), glm::vec3(0, 0, 1));
+    _transformMatrix = glm::rotate<float>(_transformMatrix, glm::radians(_rotation.GetPitch()), glm::vec3(0, 0, 1));
+    _transformMatrix = glm::rotate<float>(_transformMatrix, glm::radians(_rotation.GetYaw()), glm::vec3(0, 1, 0));
     _transformMatrix = glm::scale<float>(_transformMatrix, glm::vec3(_scale.GetX(), _scale.GetY(), _scale.GetZ()));
 }
 
-Transform::Transform(Location location)
-{
+Transform::Transform(Location location) {
     _location = location;
 
     RecreateTransformMatrix();
 }
 
-Transform::Transform(Location location, Rotation rotation)
-{
+Transform::Transform(Location location, Rotation rotation) {
     _location = location;
     _rotation = rotation;
 
     RecreateTransformMatrix();
 }
 
-Transform::Transform(Location location, Scale scale)
-{
+Transform::Transform(Location location, Scale scale) {
     _location = location;
     _scale = scale;
 
     RecreateTransformMatrix();
 }
 
-Transform::Transform(Rotation rotation)
-{
+Transform::Transform(Rotation rotation) {
     _rotation = rotation;
 
     RecreateTransformMatrix();
 }
 
-Transform::Transform(Scale scale)
-{
+Transform::Transform(Scale scale) {
     _scale = scale;
 
     RecreateTransformMatrix();
 }
 
-Transform::Transform(Location location, Rotation rotation, Scale scale)
-{
+Transform::Transform(Location location, Rotation rotation, Scale scale) {
     _location = location;
     _rotation = rotation;
     _scale = scale;
@@ -69,62 +62,49 @@ Transform::Transform(Location location, Rotation rotation, Scale scale)
     RecreateTransformMatrix();
 }
 
-Transform::Transform(glm::mat4 *transformMatrix)
-{
+Transform::Transform(glm::mat4* transformMatrix) {
     this->_transformMatrix = (*transformMatrix);
 }
 
-glm::mat4 Transform::AsMatrix()
-{
+glm::mat4 Transform::AsMatrix() {
     RecreateTransformMatrix();
     return _transformMatrix;
 }
 
-Location Transform::GetLocation() const
-{
+Location Transform::GetLocation() const {
     return _location;
 }
 
-void Transform::SetLocation(Location location)
-{
+void Transform::SetLocation(Location location) {
     _location = location;
 }
 
-
-Rotation Transform::GetRotation() const
-{
+Rotation Transform::GetRotation() const {
     return _rotation;
 }
 
-void Transform::SetRotation(Rotation rotation)
-{
+void Transform::SetRotation(Rotation rotation) {
     _rotation = rotation;
 }
 
-Scale Transform::GetScale() const
-{
+Scale Transform::GetScale() const {
     return _scale;
 }
 
-void Transform::SetScale(Scale scale)
-{
+void Transform::SetScale(Scale scale) {
     _scale = scale;
 }
 
-Transform Transform::operator+(const Transform &transform) const
-{
+Transform Transform::operator+(const Transform& transform) const {
     return {
         static_cast<Location>(GetLocation() + transform.GetLocation()),
         GetRotation() + transform.GetRotation(),
-        GetScale()
-    };
+        GetScale()};
 }
 
-Transform Transform::operator-(const Transform &transform) const
-{
+Transform Transform::operator-(const Transform& transform) const {
     return {
         static_cast<Location>(GetLocation() - transform.GetLocation()),
         GetRotation() - transform.GetRotation(),
-        GetScale()
-    };
+        GetScale()};
 }

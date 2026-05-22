@@ -7,6 +7,8 @@
 #include "ShaderInfo.h"
 #include "ShaderProgram.h"
 #include "Material/Material.h"
+#include <vector>
+#include <map>
 
 #define LEGACY_GEN_MODEL_HEADER_SI(className, modelData, shaderInfoData) \
 class className : public Model\
@@ -53,6 +55,14 @@ SetModel(modelPath, __material);\
 class Model
 {
 protected:
+    struct GeometryCache
+    {
+        GLuint VAO = 0;
+        GLuint VBO = 0;
+        unsigned int amountOfVertices = 0;
+        std::string modelPath;
+    };
+
     std::string _modelPath;
     std::shared_ptr<Shader> _fragmentShader = nullptr, _vertexShader = nullptr;
     std::shared_ptr<Material> _material;
@@ -62,6 +72,8 @@ protected:
 
     std::shared_ptr<Transform> _transform = std::make_shared<Transform>();
 
+    static std::unordered_map<std::string, GeometryCache> RegisteredModels;
+
 public:
     Model() = default;
     ~Model();
@@ -69,8 +81,8 @@ public:
     std::string GetModelPath();
     std::shared_ptr<Material> GetMaterial();
 
-    void SetModel(std::string modelPath);
-    void SetModelCustomSP(std::string modelPath);
+    void SetModel(const std::string &modelPath);
+    void SetModelCustomSP(const std::string &modelPath);
     void SetModel(const std::string &modelPath, std::shared_ptr<Material> material);
     void SetModelCustomSP(const std::string &modelPath, const Material &material);
 
