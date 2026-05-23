@@ -55,7 +55,7 @@ SetModel(modelPath, __material);\
 class Model
 {
 protected:
-    struct GeometryCache
+    struct ModelCache
     {
         GLuint VAO = 0;
         GLuint VBO = 0;
@@ -72,7 +72,7 @@ protected:
 
     std::shared_ptr<Transform> _transform = std::make_shared<Transform>();
 
-    static std::unordered_map<std::string, GeometryCache> RegisteredModels;
+    static std::unordered_map<std::string, ModelCache> ModelInstances;
 
 public:
     Model() = default;

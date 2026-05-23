@@ -12,7 +12,7 @@
 #define TINYOBJLOADER_IMPLEMENTATION
 #include "Libs/tiny_obj_loader.h"
 
-std::unordered_map<std::string, Model::GeometryCache> Model::RegisteredModels;
+std::unordered_map<std::string, Model::ModelCache> Model::ModelInstances;
 
 Model::~Model()
 {
@@ -43,8 +43,8 @@ void Model::SetModel(const std::string &modelPath)
 void Model::SetModelCustomSP(const std::string &modelPath)
 {
     // Do not create new model, if the old one exists
-    auto foundModel = RegisteredModels.find(modelPath);
-    if (foundModel != RegisteredModels.end())
+    auto foundModel = ModelInstances.find(modelPath);
+    if (foundModel != ModelInstances.end())
     {
         const auto &existingModel = foundModel->second;
 
@@ -138,14 +138,14 @@ void Model::SetModelCustomSP(const std::string &modelPath)
 
     LOG("Adding new model geometry to global cache: %s", modelPath.c_str());
 
-    GeometryCache newCache{
+    ModelCache newCache{
         .VAO = _VAO,
         .VBO = _VBO,
         .amountOfVertices = _amountOfVertices,
         .modelPath = _modelPath
     };
 
-    RegisteredModels[modelPath] = newCache;
+    ModelInstances[modelPath] = newCache;
 }
 
 void Model::SetModel(const std::string &modelPath, std::shared_ptr<Material> material)
@@ -170,7 +170,7 @@ void Model::Render(const Transform &transform)
 {
     *_transform = transform;
 
-    _material->GetShaderProgram()->Use();
+    _material->GetShaderProgram()->Use(_material.get());
     glBindVertexArray(_VAO);
     glDrawArrays(GL_TRIANGLES, 0, _amountOfVertices);
 }

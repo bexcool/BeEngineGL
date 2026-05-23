@@ -15,7 +15,7 @@ SkyBoxModel::SkyBoxModel(CubeMap cubeMap)
 {
     this->_cubeMap = std::move(cubeMap);
 
-    SetModelCustomSP("./Resources/Assets/Models/cube.obj", Material(ShaderInfo{.vertexShaderPath = "./Resources/Shaders/skybox.vert.glsl", .fragmentShaderPath = "./Resources/Shaders/skybox.frag.glsl", .useTexture = true}));
+    SetModelCustomSP("./Resources/Assets/Models/cube.obj", Material("SkyBox", ShaderInfo{.vertexShaderPath = "./Resources/Shaders/skybox.vert.glsl", .fragmentShaderPath = "./Resources/Shaders/skybox.frag.glsl", .useTexture = true}));
 
     LinkShaderProgram();
 }

@@ -25,7 +25,7 @@ void BallsLevel::OnLoaded()
 
     // Default
     auto ballDefaultModel = new ModelComponent();
-    ballDefaultModel->SetModel(MOD_Sphere(std::make_shared<Material>(((ShaderInfo{.fragmentShaderPath = "Resources/Shaders/default.frag"})))));
+    ballDefaultModel->SetModel(MOD_Sphere(std::make_shared<Material>("MAT_BallCustom", ((ShaderInfo{.fragmentShaderPath = "Resources/Shaders/default.frag"})))));
 
     auto ballDefault = new GameObject();
     ballDefault->AddComponent(ballDefaultModel);
