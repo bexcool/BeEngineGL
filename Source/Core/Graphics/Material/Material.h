@@ -6,35 +6,32 @@
 
 #include <GL/glew.h>
 
-#include "MaterialParameter.h"
+#include <string_view>
+#include <unordered_map>
 
 #include "Core/Graphics/ShaderInfo.h"
+#include "MaterialParameter.h"
 #include "Resources/Assets/Textures/TEX_Default.h"
-#include <unordered_map>
-#include <string_view>
 
-#define BE_MATERIAL(className, materialData) \
-class className : public Material\
-{\
-    public:\
-    className() : Material(#className, materialData) {}\
-    virtual ~className() = default;\
-};
+#define BE_MATERIAL(className, materialData)                \
+    class className : public Material {                     \
+       public:                                              \
+        className() : Material(#className, materialData) {} \
+        virtual ~className() = default;                     \
+    };
 
 struct MaterialData;
 class ShaderProgram;
 
-class Material
-{
+class Material {
     std::string _materialName;
 
     std::shared_ptr<ShaderProgram> _shaderProgram = nullptr;
 
-    void ApplyMaterialData(const MaterialData &materialData);
+    void ApplyMaterialData(const MaterialData& materialData);
 
-protected:
-    struct MaterialCache
-    {
+   protected:
+    struct MaterialCache {
         std::shared_ptr<ShaderProgram> shaderProgram;
     };
 
@@ -49,24 +46,24 @@ protected:
 
     void CreateShaderProgram();
 
-public:
+   public:
     Material();
     virtual ~Material() = default;
 
     // Copy constructor
-    Material(const Material &other);
+    Material(const Material& other);
 
     // Initialization constructors
-    Material(const std::string &materialName, const MaterialData &materialData);
-    Material(const std::string &materialName, const MaterialData &materialData, const ShaderInfo &shaderInfo);
-    Material(const std::string &materialName, const ShaderInfo &shaderInfo);
+    Material(const std::string& materialName, const MaterialData& materialData);
+    Material(const std::string& materialName, const MaterialData& materialData, const ShaderInfo& shaderInfo);
+    Material(const std::string& materialName, const ShaderInfo& shaderInfo);
 
-    MaterialParameter *GetParameter(MatParameterType type);
+    const MaterialParameter* GetParameter(MatParameterType type) const;
 
     ShaderInfo GetShaderInfo();
     std::shared_ptr<ShaderProgram> GetShaderProgram();
 
-    [[nodiscard]] const std::string &GetMaterialName() const;
+    [[nodiscard]] const std::string& GetMaterialName() const;
 };
 
 static const Material BE_DEFAULT_MATERIAL();

@@ -13,20 +13,17 @@
 
 std::unordered_map<std::string, Material::MaterialCache> Material::MaterialInstances;
 
-void Material::ApplyMaterialData(const MaterialData &materialData)
-{
+void Material::ApplyMaterialData(const MaterialData& materialData) {
     _diffuse = materialData.diffuse;
     _shininess = materialData.shininess;
     _emission = materialData.emission;
 }
 
-void Material::CreateShaderProgram()
-{
+void Material::CreateShaderProgram() {
     // Do not create new model, if the old one exists
     auto foundMaterial = MaterialInstances.find(GetMaterialName());
-    if (foundMaterial != MaterialInstances.end())
-    {
-        const auto &existingMaterial = foundMaterial->second;
+    if (foundMaterial != MaterialInstances.end()) {
+        const auto& existingMaterial = foundMaterial->second;
 
         _shaderProgram = existingMaterial.shaderProgram;
         _shaderProgram->SetMaterial(this);
@@ -36,8 +33,7 @@ void Material::CreateShaderProgram()
         return;
     }
 
-    if (_shaderProgram != nullptr)
-    {
+    if (_shaderProgram != nullptr) {
         LOG_W("Material: CreateShaderProgram: Attempted to create a new ShaderProgram when it already exists!");
     }
 
@@ -59,34 +55,30 @@ void Material::CreateShaderProgram()
     MaterialInstances[GetMaterialName()] = newCache;
 }
 
-Material::Material()
-{
+Material::Material() {
     _materialName = "Material";
 
     CreateShaderProgram();
 }
 
-Material::Material(const Material &other) : _shaderInfo(other._shaderInfo),
+Material::Material(const Material& other) : _shaderInfo(other._shaderInfo),
                                             _diffuse(other._diffuse),
                                             _shininess(other._shininess),
                                             _emission(other._emission),
-                                            _materialName(other._materialName)
-{
+                                            _materialName(other._materialName) {
     _shaderProgram = nullptr;
 
     CreateShaderProgram();
 }
 
-Material::Material(const std::string &materialName, const MaterialData &materialData)
-{
+Material::Material(const std::string& materialName, const MaterialData& materialData) {
     _materialName = materialName;
 
     ApplyMaterialData(materialData);
     CreateShaderProgram();
 }
 
-Material::Material(const std::string &materialName, const MaterialData &materialData, const ShaderInfo &shaderInfo)
-{
+Material::Material(const std::string& materialName, const MaterialData& materialData, const ShaderInfo& shaderInfo) {
     _materialName = materialName;
     _shaderInfo = shaderInfo;
 
@@ -94,18 +86,15 @@ Material::Material(const std::string &materialName, const MaterialData &material
     CreateShaderProgram();
 }
 
-Material::Material(const std::string &materialName, const ShaderInfo &shaderInfo)
-{
+Material::Material(const std::string& materialName, const ShaderInfo& shaderInfo) {
     _materialName = materialName;
     _shaderInfo = shaderInfo;
 
     CreateShaderProgram();
 }
 
-MaterialParameter *Material::GetParameter(MatParameterType type)
-{
-    switch (type)
-    {
+const MaterialParameter* Material::GetParameter(MatParameterType type) const {
+    switch (type) {
         case MatParameterType::Diffuse:
             return &_diffuse;
         case MatParameterType::Shininess:
@@ -116,17 +105,14 @@ MaterialParameter *Material::GetParameter(MatParameterType type)
     return nullptr;
 }
 
-ShaderInfo Material::GetShaderInfo()
-{
+ShaderInfo Material::GetShaderInfo() {
     return _shaderInfo;
 }
 
-std::shared_ptr<ShaderProgram> Material::GetShaderProgram()
-{
+std::shared_ptr<ShaderProgram> Material::GetShaderProgram() {
     return _shaderProgram;
 }
 
-const std::string &Material::GetMaterialName() const
-{
+const std::string& Material::GetMaterialName() const {
     return _materialName;
 }

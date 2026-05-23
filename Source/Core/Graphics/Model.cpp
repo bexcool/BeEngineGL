@@ -14,8 +14,7 @@
 
 std::unordered_map<std::string, Model::ModelCache> Model::ModelInstances;
 
-Model::~Model()
-{
+Model::~Model() {
     return;
 
     if (_VBO)
@@ -24,29 +23,24 @@ Model::~Model()
         glDeleteVertexArrays(1, &_VAO);
 }
 
-std::string Model::GetModelPath()
-{
+std::string Model::GetModelPath() {
     return _modelPath;
 }
 
-std::shared_ptr<Material> Model::GetMaterial()
-{
+std::shared_ptr<Material> Model::GetMaterial() {
     return _material;
 }
 
-void Model::SetModel(const std::string &modelPath)
-{
+void Model::SetModel(const std::string& modelPath) {
     _modelPath = modelPath;
     SetModelCustomSP(modelPath);
 }
 
-void Model::SetModelCustomSP(const std::string &modelPath)
-{
+void Model::SetModelCustomSP(const std::string& modelPath) {
     // Do not create new model, if the old one exists
     auto foundModel = ModelInstances.find(modelPath);
-    if (foundModel != ModelInstances.end())
-    {
-        const auto &existingModel = foundModel->second;
+    if (foundModel != ModelInstances.end()) {
+        const auto& existingModel = foundModel->second;
 
         _modelPath = existingModel.modelPath;
         _VBO = existingModel.VBO;
@@ -74,8 +68,7 @@ void Model::SetModelCustomSP(const std::string &modelPath)
     if (!ret) throw std::runtime_error("Failed to load OBJ file!");
 
     size_t totalIndices = 0;
-    for (const auto &shape: shapes)
-    {
+    for (const auto& shape : shapes) {
         totalIndices += shape.mesh.indices.size();
     }
 
@@ -83,35 +76,29 @@ void Model::SetModelCustomSP(const std::string &modelPath)
 
     vertices.reserve(totalIndices * 8);
 
-    for (const auto &shape: shapes)
-    {
-        for (const auto &index: shape.mesh.indices)
-        {
+    for (const auto& shape : shapes) {
+        for (const auto& index : shape.mesh.indices) {
             // Position
             vertices.push_back(attrib.vertices[3 * index.vertex_index + 0]);
             vertices.push_back(attrib.vertices[3 * index.vertex_index + 1]);
             vertices.push_back(attrib.vertices[3 * index.vertex_index + 2]);
 
             // Normals (if exist)
-            if (index.normal_index >= 0)
-            {
+            if (index.normal_index >= 0) {
                 vertices.push_back(attrib.normals[3 * index.normal_index + 0]);
                 vertices.push_back(attrib.normals[3 * index.normal_index + 1]);
                 vertices.push_back(attrib.normals[3 * index.normal_index + 2]);
-            } else
-            {
+            } else {
                 vertices.push_back(0.0f);
                 vertices.push_back(0.0f);
                 vertices.push_back(0.0f);
             }
 
             //  UV coordinates (if exist)
-            if (index.texcoord_index >= 0)
-            {
+            if (index.texcoord_index >= 0) {
                 vertices.push_back(attrib.texcoords[2 * index.texcoord_index + 0]);
                 vertices.push_back(attrib.texcoords[2 * index.texcoord_index + 1]);
-            } else
-            {
+            } else {
                 vertices.push_back(0.0f);
                 vertices.push_back(0.0f);
             }
@@ -126,15 +113,15 @@ void Model::SetModelCustomSP(const std::string &modelPath)
     _amountOfVertices = vertices.size() / 8;
 
     _VAO = 0;
-    glGenVertexArrays(1, &_VAO); //generate the VAO
-    glBindVertexArray(_VAO); //bind the VAO
-    glEnableVertexAttribArray(0); //enable vertex attributes
+    glGenVertexArrays(1, &_VAO);   // generate the VAO
+    glBindVertexArray(_VAO);       // bind the VAO
+    glEnableVertexAttribArray(0);  // enable vertex attributes
     glBindBuffer(GL_ARRAY_BUFFER, _VBO);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *) 0);
-    glEnableVertexAttribArray(1); //enable vertex attributes
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *) (3 * sizeof(float)));
-    glEnableVertexAttribArray(2); //enable vertex attributes
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *) (6 * sizeof(float)));
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(1);  // enable vertex attributes
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(2);  // enable vertex attributes
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
 
     LOG("Adding new model geometry to global cache: %s", modelPath.c_str());
 
@@ -142,35 +129,30 @@ void Model::SetModelCustomSP(const std::string &modelPath)
         .VAO = _VAO,
         .VBO = _VBO,
         .amountOfVertices = _amountOfVertices,
-        .modelPath = _modelPath
-    };
+        .modelPath = _modelPath};
 
     ModelInstances[modelPath] = newCache;
 }
 
-void Model::SetModel(const std::string &modelPath, std::shared_ptr<Material> material)
-{
+void Model::SetModel(const std::string& modelPath, std::shared_ptr<Material> material) {
     _modelPath = modelPath;
     _material = material;
     _shaderProgram = _material->GetShaderProgram();
-    _shaderProgram->SetTransformReference(_transform);
 
     SetModel(modelPath);
 }
 
-void Model::SetModelCustomSP(const std::string &modelPath, const Material &material)
-{
+void Model::SetModelCustomSP(const std::string& modelPath, const Material& material) {
     _modelPath = modelPath;
     _material = std::make_shared<Material>(material);
 
     SetModelCustomSP(modelPath);
 }
 
-void Model::Render(const Transform &transform)
-{
+void Model::Render(const Transform& transform) {
     *_transform = transform;
 
-    _material->GetShaderProgram()->Use(_material.get());
+    _material->GetShaderProgram()->Use(_material.get(), _transform);
     glBindVertexArray(_VAO);
     glDrawArrays(GL_TRIANGLES, 0, _amountOfVertices);
 }

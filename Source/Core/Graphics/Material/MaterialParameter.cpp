@@ -6,34 +6,28 @@
 
 MaterialParameter::MaterialParameter(float scalar) : MaterialParameter(glm::vec3(scalar)) {}
 
-MaterialParameter::MaterialParameter(const glm::vec3 value)
-{
+MaterialParameter::MaterialParameter(const glm::vec3 value) {
     _value = value;
     _texture = EMPTY_TEXTURE;
 }
 
-MaterialParameter::MaterialParameter(const Texture &texture)
-{
+MaterialParameter::MaterialParameter(const Texture& texture) {
     _texture = texture;
 }
 
-MaterialParameter::MaterialParameter(const glm::vec3 value, const Texture &texture)
-{
+MaterialParameter::MaterialParameter(const glm::vec3 value, const Texture& texture) {
     _value = value;
     _texture = texture;
 }
 
-bool MaterialParameter::HasTexture()
-{
+bool MaterialParameter::HasTexture() const {
     return !_texture.GetPath().empty();
 }
 
-glm::vec3 MaterialParameter::GetValue() const
-{
+glm::vec3 MaterialParameter::GetValue() const {
     return _value;
 }
 
-Texture MaterialParameter::GetTexture() const
-{
+Texture MaterialParameter::GetTexture() const {
     return _texture;
 }

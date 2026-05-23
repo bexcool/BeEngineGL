@@ -9,7 +9,7 @@ Texture::Texture(std::string path)
     this->_path = std::move(path);
 }
 
-std::string Texture::GetPath()
+const std::string Texture::GetPath() const
 {
     return _path;
 }

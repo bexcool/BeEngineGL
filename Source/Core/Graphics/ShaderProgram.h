@@ -21,10 +21,10 @@ class ShaderProgram {
     GLuint _projectionTransformId = GL_NONE;
     GLuint _viewTransformId = GL_NONE;
     GLuint _cameraLocationId = GL_NONE;
-    std::shared_ptr<Transform> _modelTransform = nullptr;
 
     Material* _material = nullptr;
     GLuint _textureId = GL_NONE;
+    std::shared_ptr<Transform> _modelTransform = nullptr;
 
    public:
     ShaderProgram(const std::shared_ptr<Shader>& vertexShader, const std::shared_ptr<Shader>& fragmentShader);
@@ -39,7 +39,7 @@ class ShaderProgram {
     void LinkShaders();
     virtual void CreateTextures();
     virtual void Use();
-    virtual void Use(const Material* material);
+    virtual void Use(const Material* material, const std::shared_ptr<Transform>& modelTransform);
 
     GLuint GetShaderProgramId() const {
         return _shaderProgramId;

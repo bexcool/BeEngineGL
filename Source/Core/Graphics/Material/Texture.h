@@ -23,7 +23,7 @@ public:
     ~Texture() = default;
     explicit Texture(std::string path);
 
-    std::string GetPath();
+    const std::string GetPath() const;
 };
 
 static const Texture DEFAULT_TEXTURE("./Resources/Assets/Textures/DefaultTexture.png");

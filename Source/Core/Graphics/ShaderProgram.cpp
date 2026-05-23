@@ -109,14 +109,15 @@ void ShaderProgram::CreateTextures() {
 }
 
 void ShaderProgram::Use() {
-    Use(_material);
+    Use(_material, _modelTransform);
 }
 
-void ShaderProgram::Use(const Material* material) {
+void ShaderProgram::Use(const Material* material, const std::shared_ptr<Transform>& modelTransform) {
     auto level = Application::GetInstance()->GetLevel();
     auto camera = level->GetActiveCamera();
 
-    if (camera == nullptr) return;
+    if (camera == nullptr || material == nullptr || modelTransform == nullptr)
+        return;
 
     int lightsWithNonZeroIntensity = 0;
     auto lights = level->GetLightComponents();
@@ -178,7 +179,7 @@ void ShaderProgram::Use(const Material* material) {
     auto emission_value = material->GetParameter(MatParameterType::Emission)->GetValue();
     SendVec3("emission_value", emission_value);
 
-    glUniformMatrix4fv(_modelTransformId, 1, GL_FALSE, &_modelTransform->AsMatrix()[0][0]);
+    glUniformMatrix4fv(_modelTransformId, 1, GL_FALSE, &modelTransform->AsMatrix()[0][0]);
     glUniformMatrix4fv(_viewTransformId, 1, GL_FALSE, &camera->GetCameraViewMatrix()[0][0]);
     glUniformMatrix4fv(_projectionTransformId, 1, GL_FALSE, &(camera->GetCameraProjectionMatrix())[0][0]);
 
