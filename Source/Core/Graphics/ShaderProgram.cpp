@@ -13,42 +13,35 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "Libs/stb_image.h"
 
-ShaderProgram::ShaderProgram(const std::shared_ptr<Shader>& vertexShader, const std::shared_ptr<Shader>& fragmentShader) {
+ShaderProgram::ShaderProgram(const std::shared_ptr<Shader> &vertexShader, const std::shared_ptr<Shader> &fragmentShader)
+{
     this->_vertexShader = vertexShader;
     this->_fragmentShader = fragmentShader;
 }
 
-ShaderProgram::ShaderProgram(const std::shared_ptr<Shader>& vertexShader, const std::shared_ptr<Shader>& fragmentShader, std::shared_ptr<Transform> modelTransform) {
-    this->_vertexShader = vertexShader;
-    this->_fragmentShader = fragmentShader;
-    this->_modelTransform = std::move(modelTransform);
-}
-
-ShaderProgram::ShaderProgram(const std::shared_ptr<Shader>& vertexShader, const std::shared_ptr<Shader>& fragmentShader, Material* material) {
+ShaderProgram::ShaderProgram(const std::shared_ptr<Shader> &vertexShader, const std::shared_ptr<Shader> &fragmentShader, Material *material)
+{
     this->_vertexShader = vertexShader;
     this->_fragmentShader = fragmentShader;
     this->_material = material;
 }
 
-ShaderProgram::ShaderProgram(const std::shared_ptr<Shader>& vertexShader, const std::shared_ptr<Shader>& fragmentShader, Material* material, std::shared_ptr<Transform> modelTransform) {
-    this->_vertexShader = vertexShader;
-    this->_fragmentShader = fragmentShader;
-    this->_material = material;
-    this->_modelTransform = std::move(modelTransform);
-}
-
-ShaderProgram::~ShaderProgram() {
-    if (_shaderProgramId) {
+ShaderProgram::~ShaderProgram()
+{
+    if (_shaderProgramId)
+    {
         glDeleteProgram(_shaderProgramId);
         _shaderProgramId = 0;
     }
 }
 
-void ShaderProgram::SetMaterial(Material* material) {
+void ShaderProgram::SetMaterial(Material *material)
+{
     this->_material = material;
 }
 
-void ShaderProgram::LinkShaders() {
+void ShaderProgram::LinkShaders()
+{
     _shaderProgramId = glCreateProgram();
     glAttachShader(_shaderProgramId, _vertexShader->GetShaderID());
     glAttachShader(_shaderProgramId, _fragmentShader->GetShaderID());
@@ -61,10 +54,11 @@ void ShaderProgram::LinkShaders() {
 
     GLint status;
     glGetProgramiv(_shaderProgramId, GL_LINK_STATUS, &status);
-    if (status == GL_FALSE) {
+    if (status == GL_FALSE)
+    {
         GLint infoLogLength;
         glGetProgramiv(_shaderProgramId, GL_INFO_LOG_LENGTH, &infoLogLength);
-        auto* strInfoLog = new GLchar[infoLogLength + 1];
+        auto *strInfoLog = new GLchar[infoLogLength + 1];
         glGetProgramInfoLog(_shaderProgramId, infoLogLength, NULL, strInfoLog);
         fprintf(stderr, "Linker failure: %s\n", strInfoLog);
         delete[] strInfoLog;
@@ -77,18 +71,21 @@ void ShaderProgram::LinkShaders() {
     }
 }
 
-void ShaderProgram::CreateTextures() {
+void ShaderProgram::CreateTextures()
+{
     // Load texture
     int text_width, text_height, channels;
 
     stbi_set_flip_vertically_on_load(true);
 
     auto texDiffuseParam = _material->GetParameter(MatParameterType::Diffuse);
-    if (texDiffuseParam->HasTexture()) {
+    if (texDiffuseParam->HasTexture())
+    {
         auto path = texDiffuseParam->GetTexture().GetPath();
 
-        unsigned char* data = stbi_load(path.c_str(), &text_width, &text_height, &channels, 4);
-        if (!data) {
+        unsigned char *data = stbi_load(path.c_str(), &text_width, &text_height, &channels, 4);
+        if (!data)
+        {
             LOG_E("Error loading texture: %", path.c_str());
         }
 
@@ -108,11 +105,13 @@ void ShaderProgram::CreateTextures() {
     }
 }
 
-void ShaderProgram::Use() {
-    Use(_material, _modelTransform);
+void ShaderProgram::Use()
+{
+    Use(_material, nullptr);
 }
 
-void ShaderProgram::Use(const Material* material, const std::shared_ptr<Transform>& modelTransform) {
+void ShaderProgram::Use(const Material *material, const std::shared_ptr<Transform> &modelTransform)
+{
     auto level = Application::GetInstance()->GetLevel();
     auto camera = level->GetActiveCamera();
 
@@ -124,7 +123,8 @@ void ShaderProgram::Use(const Material* material, const std::shared_ptr<Transfor
 
     glUseProgram(_shaderProgramId);
 
-    for (int i = 0; i < lights.size(); i++) {
+    for (int i = 0; i < lights.size(); i++)
+    {
         float worldIntensity = lights[i]->GetWorldIntensity();
 
         lightsWithNonZeroIntensity++;
@@ -144,7 +144,8 @@ void ShaderProgram::Use(const Material* material, const std::shared_ptr<Transfor
         color.append("].color");
         SendVec4(color, glm::vec4(worldIntensity, worldIntensity, worldIntensity, 1));
 
-        if (!lights[i]->GetLight().isPointLight) {
+        if (!lights[i]->GetLight().isPointLight)
+        {
             std::string spotDirection = "lights[";
             spotDirection.append(std::to_string(i));
             spotDirection.append("].spotDirection");
@@ -165,7 +166,8 @@ void ShaderProgram::Use(const Material* material, const std::shared_ptr<Transfor
     auto texDiffuseParam = material->GetParameter(MatParameterType::Diffuse);
     SendInt("diffuse_useTexture", texDiffuseParam->HasTexture());
 
-    if (texDiffuseParam->HasTexture()) {
+    if (texDiffuseParam->HasTexture())
+    {
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, _textureId);
         SendInt("diffuse_texture2D", 0);
@@ -186,72 +188,87 @@ void ShaderProgram::Use(const Material* material, const std::shared_ptr<Transfor
     float cameraPos[3] = {
         camera->GetWorldLocation().GetX(),
         camera->GetWorldLocation().GetY(),
-        camera->GetWorldLocation().GetZ()};
+        camera->GetWorldLocation().GetZ()
+    };
     glUniform3fv(_cameraLocationId, 1, cameraPos);
 }
 
-void ShaderProgram::SetTransformReference(const std::shared_ptr<Transform>& transform) {
-    this->_modelTransform = transform;
-}
-
-void ShaderProgram::SendVec4(const std::string& destination, const glm::vec4& value) const {
+void ShaderProgram::SendVec4(const std::string &destination, const glm::vec4 &value) const
+{
     GLint variableDestination = glGetUniformLocation(this->_shaderProgramId, destination.c_str());
-    if (variableDestination < 0) {
+    if (variableDestination < 0)
+    {
         // LOG_W("The variable %s does not exist.", destination.c_str());
-    } else {
+    } else
+    {
         glUseProgram(this->_shaderProgramId);
         glUniform4f(variableDestination, value.x, value.y, value.z, value.w);
     }
 }
 
-void ShaderProgram::SendVec3(const std::string& destination, const glm::vec3& value) const {
+void ShaderProgram::SendVec3(const std::string &destination, const glm::vec3 &value) const
+{
     GLint variableDestination = glGetUniformLocation(this->_shaderProgramId, destination.c_str());
-    if (variableDestination < 0) {
+    if (variableDestination < 0)
+    {
         // LOG_W("The variable %s does not exist.", destination.c_str());
-    } else {
+    } else
+    {
         glUseProgram(this->_shaderProgramId);
         glUniform3f(variableDestination, value.x, value.y, value.z);
     }
 }
 
-void ShaderProgram::SendUint(const std::string& destination, const unsigned int value) const {
+void ShaderProgram::SendUint(const std::string &destination, const unsigned int value) const
+{
     GLint variableDestination = glGetUniformLocation(this->_shaderProgramId, destination.c_str());
-    if (variableDestination < 0) {
+    if (variableDestination < 0)
+    {
         // LOG_W("The variable %s does not exist.", destination.c_str());
-    } else {
+    } else
+    {
         glUseProgram(this->_shaderProgramId);
         glUniform1ui(variableDestination, value);
         // glUseProgram(0);
     }
 }
 
-void ShaderProgram::SendInt(const std::string& destination, const int value) const {
+void ShaderProgram::SendInt(const std::string &destination, const int value) const
+{
     GLint variableDestination = glGetUniformLocation(this->_shaderProgramId, destination.c_str());
-    if (variableDestination < 0) {
+    if (variableDestination < 0)
+    {
         // LOG_W("The variable %s does not exist.", destination.c_str());
-    } else {
+    } else
+    {
         glUseProgram(this->_shaderProgramId);
         glUniform1i(variableDestination, value);
         // glUseProgram(0);
     }
 }
 
-void ShaderProgram::SendFloat(const std::string& destination, const float value) const {
+void ShaderProgram::SendFloat(const std::string &destination, const float value) const
+{
     GLint variableDestination = glGetUniformLocation(this->_shaderProgramId, destination.c_str());
-    if (variableDestination < 0) {
+    if (variableDestination < 0)
+    {
         // LOG_W("The variable %s does not exist.", destination.c_str());
-    } else {
+    } else
+    {
         glUseProgram(this->_shaderProgramId);
         glUniform1f(variableDestination, value);
         // glUseProgram(0);
     }
 }
 
-void ShaderProgram::SendBool(const std::string& destination, const bool value) const {
+void ShaderProgram::SendBool(const std::string &destination, const bool value) const
+{
     GLint variableDestination = glGetUniformLocation(this->_shaderProgramId, destination.c_str());
-    if (variableDestination < 0) {
+    if (variableDestination < 0)
+    {
         // LOG_W("The variable %s does not exist.", destination.c_str());
-    } else {
+    } else
+    {
         glUseProgram(this->_shaderProgramId);
         glUniform1i(variableDestination, value);
         // glUseProgram(0);

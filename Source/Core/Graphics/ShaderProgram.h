@@ -24,13 +24,10 @@ class ShaderProgram {
 
     Material* _material = nullptr;
     GLuint _textureId = GL_NONE;
-    std::shared_ptr<Transform> _modelTransform = nullptr;
 
    public:
     ShaderProgram(const std::shared_ptr<Shader>& vertexShader, const std::shared_ptr<Shader>& fragmentShader);
-    ShaderProgram(const std::shared_ptr<Shader>& vertexShader, const std::shared_ptr<Shader>& fragmentShader, std::shared_ptr<Transform> modelTransform);
     ShaderProgram(const std::shared_ptr<Shader>& vertexShader, const std::shared_ptr<Shader>& fragmentShader, Material* material);
-    ShaderProgram(const std::shared_ptr<Shader>& vertexShader, const std::shared_ptr<Shader>& fragmentShader, Material* material, std::shared_ptr<Transform> modelTransform);
 
     virtual ~ShaderProgram();
 
@@ -44,8 +41,6 @@ class ShaderProgram {
     GLuint GetShaderProgramId() const {
         return _shaderProgramId;
     }
-
-    void SetTransformReference(const std::shared_ptr<Transform>& transform);
 
     void SendVec4(const std::string& destination, const glm::vec4& value) const;
     void SendVec3(const std::string& destination, const glm::vec3& value) const;
