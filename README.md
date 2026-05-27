@@ -1,3 +1,3 @@
 # BeEngineGL
 
-- This project is for my university course.
+This project is for my university subject.
