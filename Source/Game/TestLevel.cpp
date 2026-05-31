@@ -4,32 +4,30 @@
 
 #include "TestLevel.h"
 
-#include "Core/Application.h"
-#include "Core/Events/InputManager.h"
-#include "Core/ObjectComponents/ModelComponent.h"
-#include "Core/Objects/Character/PlayerCharacter.h"
+#include "BECore/Application.h"
+#include "BECore/Events/InputManager.h"
+#include "BECore/ObjectComponents/ColliderComponent.h"
+#include "BECore/ObjectComponents/ModelComponent.h"
+#include "BECore/Objects/Character/PlayerCharacter.h"
 #include "Resources/Assets/Materials/MAT_Grass.h"
 #include "Resources/Assets/Materials/MAT_Sun.h"
 #include "Resources/Assets/Models/MOD_F1.h"
-#include "Resources/Assets/Models/MOD_login_pav0531.h"
 #include "Resources/Assets/Models/MOD_LowPolyTree_leaves.h"
 #include "Resources/Assets/Models/MOD_LowPolyTree_log.h"
 #include "Resources/Assets/Models/MOD_Plane.h"
+#include "Resources/Assets/Models/MOD_login_pav0531.h"
 #include "Resources/Assets/Models/Shrek/MOD_Fiona.h"
 #include "Resources/Assets/Models/Shrek/MOD_Shrek.h"
 #include "Resources/Assets/Models/Shrek/MOD_Toilet.h"
 
-std::vector<GameObject *> fireflies;
-LightComponent *GOC_Flashlight = new LightComponent(Light{.intensity = 1, .radius = 20, .isPointLight = false});
+std::vector<GameObject*> fireflies;
+LightComponent* GOC_Flashlight = new LightComponent(Light{.intensity = 1, .radius = 20, .isPointLight = false});
 
-void TestLevel::OnKeyboardKeyEvent(KeyboardKeyEventArgs e)
-{
+void TestLevel::OnKeyboardKeyEvent(KeyboardKeyEventArgs e) {
     Level::OnKeyboardKeyEvent(e);
 
-    if (e.Action == GLFW_PRESS)
-    {
-        if (e.Key == GLFW_KEY_F)
-        {
+    if (e.Action == GLFW_PRESS) {
+        if (e.Key == GLFW_KEY_F) {
             auto light = GOC_Flashlight->GetLight();
 
             light.intensity = light.intensity ? 0 : 1;
@@ -39,21 +37,18 @@ void TestLevel::OnKeyboardKeyEvent(KeyboardKeyEventArgs e)
     }
 }
 
-void TestLevel::OnMouseKeyEvent(MouseKeyEventArgs e)
-{
+void TestLevel::OnMouseKeyEvent(MouseKeyEventArgs e) {
     Level::OnMouseKeyEvent(e);
 }
 
-void TestLevel::OnLoaded()
-{
+void TestLevel::OnLoaded() {
     Level::OnLoaded();
 
     SetSkyBox(new SkyBoxModel(DEFAULT_CUBEMAP));
     SetSkyLightIntensity(5);
 
     auto f1Trans = Transform(
-        Location(10, 10, 0)
-    );
+        Location(10, 10, 0));
     auto GO_f1 = new GameObject();
     GO_f1->AddComponent(new ModelComponent(MOD_F1()));
     GO_f1->AddComponent(new LightComponent(Light{.radius = 20}), Transform(Location(12, 5, 0)));
@@ -70,6 +65,7 @@ void TestLevel::OnLoaded()
     // Shrek
     auto shrekGO = new GameObject();
     shrekGO->AddComponent(new ModelComponent(MOD_Shrek()));
+    shrekGO->AddComponent(new ColliderComponent(glm::vec3(1.0f, 2.0f, 1.0f), false, true));
     this->SpawnGameObject(shrekGO, Transform(Location(-5, 0, -5)));
 
     // Fiona
@@ -93,16 +89,15 @@ void TestLevel::OnLoaded()
     this->SpawnGameObject(defSphereGO, trans);
 */
 
-    auto *player = new PlayerCharacter();
-    auto *camera = new CameraComponent();
+    auto* player = new PlayerCharacter();
+    auto* camera = new CameraComponent();
     player->AddComponent(camera);
 
     player->AddComponent(GOC_Flashlight, Transform(Rotation(0, 0, 0)));
 
-    this->SpawnGameObject(player);
+    this->SpawnGameObject(player, Transform(Location(0, 5, 0)));
 
     this->SetActiveCamera(camera);
-
 
     auto goLight1 = new GameObject();
     goLight1->AddComponent(new LightComponent(Light{.intensity = 0.2, .radius = 3}));
@@ -127,24 +122,23 @@ void TestLevel::OnLoaded()
         fireflies.push_back(goLight3);*/
 
     auto planeGO = new GameObject();
-    planeGO->AddComponent(new ModelComponent(MOD_Plane(std::make_shared<MAT_Grass>())));;
-    this->SpawnGameObject(planeGO, Transform(Location(), Rotation(), Scale(100)));
+    planeGO->AddComponent(new ModelComponent(MOD_Plane(std::make_shared<MAT_Grass>())));
+    planeGO->AddComponent(new ColliderComponent(glm::vec3(50.0f, 1.0f, 50.0f), false, true));
+    this->SpawnGameObject(planeGO, Transform(Location(0, -1, 0), Rotation(), Scale(100)));
 
-    for (int i = 0; i < 3; i++)
-    {
-        for (int j = 0; j < 3; j++)
-        {
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
             auto treeGO = new GameObject();
             treeGO->SetName("treeGO");
 
             treeGO->AddComponent(new ModelComponent(MOD_LowPolyTree_log()));
             treeGO->AddComponent(new ModelComponent(MOD_LowPolyTree_leaves()));
+            treeGO->AddComponent(new ColliderComponent(glm::vec3(1.0f, 5.0f, 1.0f), false, true));
 
             this->SpawnGameObject(treeGO, Transform(
-                                      Location(static_cast<float>(i) * 15 + 15, 0, static_cast<float>(j) * 15 + 15),
-                                      Rotation(),
-                                      Scale()
-                                  ));
+                                              Location(static_cast<float>(i) * 15 + 15, 0, static_cast<float>(j) * 15 + 15),
+                                              Rotation(),
+                                              Scale()));
         }
     }
     /*
@@ -168,27 +162,22 @@ void TestLevel::OnLoaded()
         */
 }
 
-
-void TestLevel::OnUnloaded()
-{
+void TestLevel::OnUnloaded() {
     Level::OnUnloaded();
 }
 
-void TestLevel::OnRendered()
-{
+void TestLevel::OnRendered() {
     Level::OnRendered();
 }
 
-void TestLevel::OnTick()
-{
+void TestLevel::OnTick() {
     Level::OnTick();
 
     float moveAmountX = sin(glfwGetTime() + 1452) / 30;
     float moveAmountY = sin(glfwGetTime() + 5353) / 50;
     float moveAmountZ = sin(glfwGetTime()) / 30;
-    //LOG_W("Move amount: %f", moveAmount);
-    for (int i = 0; i < fireflies.size(); i++)
-    {
+    // LOG_W("Move amount: %f", moveAmount);
+    for (int i = 0; i < fireflies.size(); i++) {
         bool invertZ = i % 2 == 0;
 
         fireflies[i]->AddWorldLocation(Location(moveAmountX, moveAmountY, moveAmountZ * (invertZ ? -1 : 1)));

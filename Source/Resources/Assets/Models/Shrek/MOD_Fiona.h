@@ -4,6 +4,6 @@
 
 #pragma once
 #include "MAT_Fiona.h"
-#include "Core/Graphics/Model.h"
+#include "BECore/Graphics/Model.h"
 
 BE_MODEL(MOD_Fiona, "Resources/Assets/Models/Shrek/fiona.obj", std::make_shared<MAT_Fiona>())

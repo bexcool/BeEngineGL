@@ -5,80 +5,82 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_library(BeEngineGL SHARED
         #Source/main.cpp
-        Source/Core/Application.cpp
-        Source/Core/Application.h
-        Source/Core/Graphics/Renderer.cpp
-        Source/Core/Graphics/Renderer.h
-        Source/Core/Graphics/ShaderProgram.cpp
-        Source/Core/Graphics/ShaderProgram.h
-        Source/Core/Graphics/Shader.cpp
-        Source/Core/Graphics/Shader.h
-        Source/Core/ObjectComponents/ModelComponent.cpp
-        Source/Core/ObjectComponents/ModelComponent.h
-        Source/Core/ObjectComponents/ColliderComponent.cpp
-        Source/Core/ObjectComponents/ColliderComponent.h
-        Source/Core/Math/Transform.cpp
-        Source/Core/Math/Transform.h
-        Source/Core/Math/Location.cpp
-        Source/Core/Math/Location.h
-        Source/Core/Math/Rotation.cpp
-        Source/Core/Math/Rotation.h
-        Source/Core/Math/Scale.cpp
-        Source/Core/Math/Scale.h
-        Source/Core/Level.cpp
-        Source/Core/Level.h
-        Source/Core/Graphics/Window.cpp
-        Source/Core/Graphics/Window.h
-        Source/Core/Controllers/Controller.cpp
-        Source/Core/Controllers/Controller.h
-        Source/Core/Events/InputManager.cpp
-        Source/Core/Events/InputManager.h
-        Source/Core/Events/EventArgs.cpp
-        Source/Core/Events/EventArgs.h
-        Source/Core/Events/KeyboardKeyEventArgs.cpp
-        Source/Core/Events/KeyboardKeyEventArgs.h
+        Source/BECore/Application.cpp
+        Source/BECore/Application.h
+        Source/BECore/Physics/PhysicsEngine.cpp
+        Source/BECore/Physics/PhysicsEngine.h
+        Source/BECore/Graphics/Renderer.cpp
+        Source/BECore/Graphics/Renderer.h
+        Source/BECore/Graphics/ShaderProgram.cpp
+        Source/BECore/Graphics/ShaderProgram.h
+        Source/BECore/Graphics/Shader.cpp
+        Source/BECore/Graphics/Shader.h
+        Source/BECore/ObjectComponents/ModelComponent.cpp
+        Source/BECore/ObjectComponents/ModelComponent.h
+        Source/BECore/ObjectComponents/ColliderComponent.cpp
+        Source/BECore/ObjectComponents/ColliderComponent.h
+        Source/BECore/Math/Transform.cpp
+        Source/BECore/Math/Transform.h
+        Source/BECore/Math/Location.cpp
+        Source/BECore/Math/Location.h
+        Source/BECore/Math/Rotation.cpp
+        Source/BECore/Math/Rotation.h
+        Source/BECore/Math/Scale.cpp
+        Source/BECore/Math/Scale.h
+        Source/BECore/Level.cpp
+        Source/BECore/Level.h
+        Source/BECore/Graphics/Window.cpp
+        Source/BECore/Graphics/Window.h
+        Source/BECore/Controllers/Controller.cpp
+        Source/BECore/Controllers/Controller.h
+        Source/BECore/Events/InputManager.cpp
+        Source/BECore/Events/InputManager.h
+        Source/BECore/Events/EventArgs.cpp
+        Source/BECore/Events/EventArgs.h
+        Source/BECore/Events/KeyboardKeyEventArgs.cpp
+        Source/BECore/Events/KeyboardKeyEventArgs.h
         Source/Game/TestLevel.cpp
         Source/Game/TestLevel.h
-        Source/Core/GameLoop.cpp
-        Source/Core/GameLoop.h
-        Source/Core/logger.c
-        Source/Core/logger.h
-        Source/Core/ObjectComponents/CameraComponent.cpp
-        Source/Core/ObjectComponents/CameraComponent.h
-        Source/Core/Objects/GameObject.cpp
-        Source/Core/Objects/GameObject.h
-        Source/Core/Events/MouseKeyEventArgs.cpp
-        Source/Core/Events/MouseKeyEventArgs.h
-        Source/Core/ObjectComponents/GameObjectComponent.cpp
-        Source/Core/ObjectComponents/GameObjectComponent.h
-        Source/Core/Controllers/PlayerController.cpp
-        Source/Core/Controllers/PlayerController.h
-        Source/Core/Events/EventDispatcher.cpp
-        Source/Core/Events/EventDispatcher.h
-        Source/Core/Objects/Character/Character.cpp
-        Source/Core/Objects/Character/Character.h
-        Source/Core/Objects/Character/PlayerCharacter.cpp
-        Source/Core/Objects/Character/PlayerCharacter.h
-        Source/Core/Interfaces/ICoreEvents.cpp
-        Source/Core/Interfaces/ICoreEvents.h
-        Source/Core/Interfaces/IKeyEvents.cpp
-        Source/Core/Interfaces/IKeyEvents.h
-        Source/Core/MovementMode.h
-        Source/Core/Interfaces/IDisposable.cpp
-        Source/Core/Interfaces/IDisposable.h
+        Source/BECore/GameLoop.cpp
+        Source/BECore/GameLoop.h
+        Source/BECore/logger.c
+        Source/BECore/logger.h
+        Source/BECore/ObjectComponents/CameraComponent.cpp
+        Source/BECore/ObjectComponents/CameraComponent.h
+        Source/BECore/Objects/GameObject.cpp
+        Source/BECore/Objects/GameObject.h
+        Source/BECore/Events/MouseKeyEventArgs.cpp
+        Source/BECore/Events/MouseKeyEventArgs.h
+        Source/BECore/ObjectComponents/GameObjectComponent.cpp
+        Source/BECore/ObjectComponents/GameObjectComponent.h
+        Source/BECore/Controllers/PlayerController.cpp
+        Source/BECore/Controllers/PlayerController.h
+        Source/BECore/Events/EventDispatcher.cpp
+        Source/BECore/Events/EventDispatcher.h
+        Source/BECore/Objects/Character/Character.cpp
+        Source/BECore/Objects/Character/Character.h
+        Source/BECore/Objects/Character/PlayerCharacter.cpp
+        Source/BECore/Objects/Character/PlayerCharacter.h
+        Source/BECore/Interfaces/ICoreEvents.cpp
+        Source/BECore/Interfaces/ICoreEvents.h
+        Source/BECore/Interfaces/IKeyEvents.cpp
+        Source/BECore/Interfaces/IKeyEvents.h
+        Source/BECore/MovementMode.h
+        Source/BECore/Interfaces/IDisposable.cpp
+        Source/BECore/Interfaces/IDisposable.h
         Source/Game/MonkeyLevel.cpp
         Source/Game/MonkeyLevel.h
         Source/Game/BallsLevel.cpp
         Source/Game/BallsLevel.h
-        Source/Core/Graphics/ShaderInfo.cpp
-        Source/Core/Graphics/ShaderInfo.h
-        Source/Core/ObjectComponents/LightComponent.cpp
-        Source/Core/ObjectComponents/LightComponent.h
-        Source/Core/Graphics/Model.cpp
-        Source/Core/Graphics/Model.h
-        Source/Core/Math/Vector3.cpp
-        Source/Core/Math/Vector3.h
-        Source/Core/Graphics/Light.h
+        Source/BECore/Graphics/ShaderInfo.cpp
+        Source/BECore/Graphics/ShaderInfo.h
+        Source/BECore/ObjectComponents/LightComponent.cpp
+        Source/BECore/ObjectComponents/LightComponent.h
+        Source/BECore/Graphics/Model.cpp
+        Source/BECore/Graphics/Model.h
+        Source/BECore/Math/Vector3.cpp
+        Source/BECore/Math/Vector3.h
+        Source/BECore/Graphics/Light.h
         Source/Libs/tiny_obj_loader.h
         Source/Resources/Assets/Models/MOD_F1.h
         Source/Libs/stb_image.h
@@ -86,33 +88,33 @@ add_library(BeEngineGL SHARED
         Source/Resources/Assets/Models/Shrek/MOD_Shrek.h
         Source/Resources/Assets/Models/Shrek/MOD_Fiona.h
         Source/Resources/Assets/Models/Shrek/MOD_Toilet.h
-        Source/Core/Graphics/SkyBox/SkyBoxModel.cpp
-        Source/Core/Graphics/SkyBox/SkyBoxModel.h
+        Source/BECore/Graphics/SkyBox/SkyBoxModel.cpp
+        Source/BECore/Graphics/SkyBox/SkyBoxModel.h
         Source/Resources/Assets/Models/MOD_SkyBox.h
-        Source/Core/Graphics/SkyBox/SkyBoxShaderProgram.cpp
-        Source/Core/Graphics/SkyBox/SkyBoxShaderProgram.h
+        Source/BECore/Graphics/SkyBox/SkyBoxShaderProgram.cpp
+        Source/BECore/Graphics/SkyBox/SkyBoxShaderProgram.h
         Source/Game/SolarSystemLevel.cpp
         Source/Game/SolarSystemLevel.h
         Source/Resources/Assets/Models/MOD_login_pav0531.h
-        Source/Core/Graphics/CubeMap.h
+        Source/BECore/Graphics/CubeMap.h
         Source/Resources/Assets/Models/MOD_Sphere.h
-        Source/Core/Graphics/Material/Material.cpp
-        Source/Core/Graphics/Material/Material.h
-        Source/Core/Graphics/Material/MaterialParameter.cpp
-        Source/Core/Graphics/Material/MaterialParameter.h
-        Source/Core/Graphics/Material/Texture.cpp
-        Source/Core/Graphics/Material/Texture.h
+        Source/BECore/Graphics/Material/Material.cpp
+        Source/BECore/Graphics/Material/Material.h
+        Source/BECore/Graphics/Material/MaterialParameter.cpp
+        Source/BECore/Graphics/Material/MaterialParameter.h
+        Source/BECore/Graphics/Material/Texture.cpp
+        Source/BECore/Graphics/Material/Texture.h
         Source/Resources/Assets/Models/Shrek/MAT_Shrek.h
         Source/Resources/Assets/Models/Shrek/TEX_Shrek.h
         Source/Resources/Assets/Textures/TEX_Default.h
-        Source/Core/Graphics/Material/MaterialData.h
-        Source/Core/ObjectComponents/SplineComponent.cpp
-        Source/Core/ObjectComponents/SplineComponent.h
-        Source/Core/Math/CurvePoint.h
+        Source/BECore/Graphics/Material/MaterialData.h
+        Source/BECore/ObjectComponents/SplineComponent.cpp
+        Source/BECore/ObjectComponents/SplineComponent.h
+        Source/BECore/Math/CurvePoint.h
         Source/Game/WhackMoleLevel.cpp
         Source/Game/WhackMoleLevel.h
-        Source/Core/ObjectComponents/CollisionBoxComponent.cpp
-        Source/Core/ObjectComponents/CollisionBoxComponent.h
+        Source/BECore/ObjectComponents/CollisionBoxComponent.cpp
+        Source/BECore/ObjectComponents/CollisionBoxComponent.h
 )
 
 add_custom_target(copyResources
@@ -128,6 +130,7 @@ target_include_directories(BeEngineGL PUBLIC
         /opt/homebrew/include
         ${CMAKE_SOURCE_DIR}/vendor
         ${CMAKE_SOURCE_DIR}/Source
+        ${CMAKE_SOURCE_DIR}/ThirdParty/JoltPhysics
 )
 if (APPLE)
     target_link_directories(BeEngineGL PUBLIC /opt/homebrew/lib)
@@ -139,8 +142,9 @@ if (APPLE)
             "-framework IOKit"
             "-framework CoreVideo"
             "-lGLEW"
+            "${CMAKE_SOURCE_DIR}/ThirdParty/JoltPhysics/libJolt.dylib"
     )
-    set_source_files_properties(Source/Core/UI/imgui_impl_metal.cpp PROPERTIES
+    set_source_files_properties(Source/BECore/UI/imgui_impl_metal.cpp PROPERTIES
             LANGUAGE CXX
     )
 endif ()

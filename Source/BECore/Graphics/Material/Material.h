@@ -9,7 +9,7 @@
 #include <string_view>
 #include <unordered_map>
 
-#include "Core/Graphics/ShaderInfo.h"
+#include "BECore/Graphics/ShaderInfo.h"
 #include "MaterialParameter.h"
 #include "Resources/Assets/Textures/TEX_Default.h"
 

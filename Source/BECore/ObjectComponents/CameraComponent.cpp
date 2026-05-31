@@ -9,9 +9,9 @@
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/geometric.hpp>
 
-#include "Core/Application.h"
-#include "Core/Events/InputManager.h"
-#include "Core/logger.h"
+#include "BECore/Application.h"
+#include "BECore/Events/InputManager.h"
+#include "BECore/logger.h"
 
 glm::vec3 ComputeCameraForwardVector(float pitchDegrees, float yawDegrees) {
     glm::vec3 forward;

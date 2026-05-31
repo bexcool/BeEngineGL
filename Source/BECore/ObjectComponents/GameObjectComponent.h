@@ -5,7 +5,7 @@
 #pragma once
 #include "../Objects/GameObject.h"
 #include "../Math/Transform.h"
-#include "Core/Interfaces/ICoreEvents.h"
+#include "BECore/Interfaces/ICoreEvents.h"
 
 class GameObject;
 

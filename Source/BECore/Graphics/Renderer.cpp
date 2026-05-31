@@ -10,7 +10,7 @@
 #include "../ObjectComponents/ModelComponent.h"
 #include "ShaderProgram.h"
 #include "../Application.h"
-#include "Core/logger.h"
+#include "BECore/logger.h"
 
 using namespace std;
 

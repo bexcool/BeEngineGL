@@ -4,7 +4,7 @@
 
 #pragma once
 #include "GameObjectComponent.h"
-#include "Core/Math/CurvePoint.h"
+#include "BECore/Math/CurvePoint.h"
 
 class SplineComponent : public GameObjectComponent
 {

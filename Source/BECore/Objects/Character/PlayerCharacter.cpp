@@ -4,11 +4,12 @@
 
 #include "PlayerCharacter.h"
 
-#include "Core/Controllers/PlayerController.h"
-#include "Core/Events/InputManager.h"
-#include "Core/ObjectComponents/ColliderComponent.h"
+#include "BECore/Controllers/PlayerController.h"
+#include "BECore/Events/InputManager.h"
+#include "BECore/ObjectComponents/ColliderComponent.h"
 
-PlayerCharacter::PlayerCharacter() {
+PlayerCharacter::PlayerCharacter()
+{
     // Set default controller for PlayerCharacter
     SetController(std::make_unique<PlayerController>());
     // add a collider so player participates in character-style collisions

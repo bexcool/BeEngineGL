@@ -7,13 +7,13 @@
 #include <algorithm>
 #include <typeinfo>
 
-#include "Core/Application.h"
-#include "Core/Events/InputManager.h"
-#include "Core/ObjectComponents/ColliderComponent.h"
-#include "Core/ObjectComponents/ModelComponent.h"
-#include "Core/Objects/Character/Character.h"
-#include "Core/Physics/PhysicsEngine.h"
-#include "Core/logger.h"
+#include "BECore/Application.h"
+#include "BECore/Events/InputManager.h"
+#include "BECore/ObjectComponents/ColliderComponent.h"
+#include "BECore/ObjectComponents/ModelComponent.h"
+#include "BECore/Objects/Character/Character.h"
+#include "BECore/Physics/PhysicsEngine.h"
+#include "BECore/logger.h"
 #include "Resources/Assets/Materials/MAT_Red.h"
 #include "Resources/Assets/Models/Shrek/MOD_Fiona.h"
 

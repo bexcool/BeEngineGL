@@ -7,7 +7,7 @@
 #include <vector>
 
 #include "GameObjectComponent.h"
-#include "Core/Graphics/Model.h"
+#include "BECore/Graphics/Model.h"
 #include "Resources/Assets/Models/MOD_Sphere.h"
 
 using namespace std;

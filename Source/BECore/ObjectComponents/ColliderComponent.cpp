@@ -3,8 +3,8 @@
 #include <algorithm>
 #include <cmath>
 
-#include "Core/Physics/PhysicsEngine.h"
-#include "Core/logger.h"
+#include "BECore/Physics/PhysicsEngine.h"
+#include "BECore/logger.h"
 
 std::vector<ColliderComponent *> ColliderComponent::Colliders = {};
 

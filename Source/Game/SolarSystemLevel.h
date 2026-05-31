@@ -3,8 +3,8 @@
 //
 
 #pragma once
-#include "Core/Level.h"
-#include "Core/ObjectComponents/SplineComponent.h"
+#include "BECore/Level.h"
+#include "BECore/ObjectComponents/SplineComponent.h"
 
 
 class SolarSystemLevel : public Level

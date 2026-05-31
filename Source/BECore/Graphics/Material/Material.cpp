@@ -6,9 +6,9 @@
 
 #include <typeinfo>
 
-#include "Core/Graphics/Shader.h"
-#include "Core/Graphics/ShaderProgram.h"
-#include "Core/logger.h"
+#include "BECore/Graphics/Shader.h"
+#include "BECore/Graphics/ShaderProgram.h"
+#include "BECore/logger.h"
 #include "MaterialData.h"
 
 std::unordered_map<std::string, Material::MaterialCache> Material::MaterialInstances;

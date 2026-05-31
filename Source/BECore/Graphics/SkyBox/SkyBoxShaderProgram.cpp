@@ -4,7 +4,7 @@
 
 #include "SkyBoxShaderProgram.h"
 
-#include "Core/Application.h"
+#include "BECore/Application.h"
 #include "Libs/stb_image.h"
 
 void SkyBoxShaderProgram::Use()

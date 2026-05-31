@@ -7,8 +7,8 @@
 #include <utility>
 
 #include "../Application.h"
-#include "Core/ObjectComponents/ModelComponent.h"
-#include "Core/logger.h"
+#include "BECore/ObjectComponents/ModelComponent.h"
+#include "BECore/logger.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "Libs/stb_image.h"

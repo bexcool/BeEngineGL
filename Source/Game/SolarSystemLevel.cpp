@@ -4,10 +4,10 @@
 
 #include "SolarSystemLevel.h"
 
-#include "Core/Application.h"
-#include "Core/logger.h"
-#include "Core/ObjectComponents/ModelComponent.h"
-#include "Core/ObjectComponents/SplineComponent.h"
+#include "BECore/Application.h"
+#include "BECore/logger.h"
+#include "BECore/ObjectComponents/ModelComponent.h"
+#include "BECore/ObjectComponents/SplineComponent.h"
 #include "Resources/Assets/Materials/MAT_Earth.h"
 #include "Resources/Assets/Materials/MAT_Mars.h"
 #include "Resources/Assets/Materials/MAT_Moon.h"

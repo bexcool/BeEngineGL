@@ -6,8 +6,8 @@
 
 #include <GL/glew.h>
 
-#include "Core/Application.h"
-#include "Core/logger.h"
+#include "BECore/Application.h"
+#include "BECore/logger.h"
 
 void error_callback(int error, const char *description) { fputs(description, stderr); }
 

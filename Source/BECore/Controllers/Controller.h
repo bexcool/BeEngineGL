@@ -3,9 +3,9 @@
 //
 
 #pragma once
-#include "Core/Interfaces/ICoreEvents.h"
-#include "Core/Interfaces/IKeyEvents.h"
-#include "Core/Objects/GameObject.h"
+#include "BECore/Interfaces/ICoreEvents.h"
+#include "BECore/Interfaces/IKeyEvents.h"
+#include "BECore/Objects/GameObject.h"
 
 class GameObject;
 

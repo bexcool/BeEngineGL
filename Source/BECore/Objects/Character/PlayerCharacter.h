@@ -3,7 +3,7 @@
 //
 
 #pragma once
-#include "Core/Objects/Character/Character.h"
+#include "BECore/Objects/Character/Character.h"
 
 class PlayerCharacter : public Character
 {

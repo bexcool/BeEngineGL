@@ -4,7 +4,7 @@
 
 #pragma once
 #include "../Model.h"
-#include "Core/Graphics/CubeMap.h"
+#include "BECore/Graphics/CubeMap.h"
 
 
 class SkyBoxModel : public Model

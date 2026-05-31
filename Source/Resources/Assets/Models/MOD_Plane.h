@@ -3,6 +3,6 @@
 //
 
 #pragma once
-#include "Core/Graphics/Model.h"
+#include "BECore/Graphics/Model.h"
 
 BE_MODEL(MOD_Plane, "Resources/Assets/Models/plane.obj", std::make_shared<Material>())

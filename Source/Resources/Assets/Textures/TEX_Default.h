@@ -3,7 +3,7 @@
 //
 
 #pragma once
-#include "Core/Graphics/Material/Texture.h"
+#include "BECore/Graphics/Material/Texture.h"
 
 class TEX_Default : public Texture
 {

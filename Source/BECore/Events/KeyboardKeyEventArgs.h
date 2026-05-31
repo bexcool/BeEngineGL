@@ -3,7 +3,7 @@
 //
 
 #pragma once
-#include "Core/Events/EventArgs.h"
+#include "BECore/Events/EventArgs.h"
 
 
 class KeyboardKeyEventArgs : public EventArgs

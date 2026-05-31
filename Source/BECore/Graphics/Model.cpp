@@ -8,7 +8,7 @@
 #include <memory>
 #include <utility>
 
-#include "Core/logger.h"
+#include "BECore/logger.h"
 
 #define TINYOBJLOADER_IMPLEMENTATION
 #include "Libs/tiny_obj_loader.h"

@@ -4,9 +4,9 @@
 
 #pragma once
 #include "Controller.h"
-#include "Core/Graphics/Material/Material.h"
-#include "Core/Graphics/ShaderInfo.h"
-#include "Core/Math/Vector3.h"
+#include "BECore/Graphics/Material/Material.h"
+#include "BECore/Graphics/ShaderInfo.h"
+#include "BECore/Math/Vector3.h"
 
 class PlayerController : public Controller {
     bool _isRunnig = false;

@@ -6,7 +6,7 @@
 #include <glm/vec3.hpp>
 #include <vector>
 
-#include "Core/Math/Location.h"
+#include "BECore/Math/Location.h"
 #include "GameObjectComponent.h"
 
 class ColliderComponent : public GameObjectComponent

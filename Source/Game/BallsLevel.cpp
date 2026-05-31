@@ -4,9 +4,9 @@
 
 #include "BallsLevel.h"
 
-#include "Core/Application.h"
-#include "Core/logger.h"
-#include "Core/ObjectComponents/ModelComponent.h"
+#include "BECore/Application.h"
+#include "BECore/logger.h"
+#include "BECore/ObjectComponents/ModelComponent.h"
 
 GameObject *ballPhong = new GameObject();
 

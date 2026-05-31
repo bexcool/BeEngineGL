@@ -6,7 +6,7 @@
 
 #include <utility>
 
-#include "Core/logger.h"
+#include "BECore/logger.h"
 
 ModelComponent::ModelComponent(const Model &model) : GameObjectComponent("ModelComponent")
 {

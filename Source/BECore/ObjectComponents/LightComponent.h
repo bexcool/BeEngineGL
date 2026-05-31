@@ -4,7 +4,7 @@
 
 #pragma once
 #include "GameObjectComponent.h"
-#include "Core/Graphics/Light.h"
+#include "BECore/Graphics/Light.h"
 
 
 class LightComponent : public GameObjectComponent

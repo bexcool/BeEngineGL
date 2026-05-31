@@ -10,7 +10,7 @@
 #include "Graphics/SkyBox/SkyBoxModel.h"
 #include "ObjectComponents/LightComponent.h"
 #include "Objects/Character/PlayerCharacter.h"
-#include "Core/BeEngineGLExport.h"
+#include "BECore/BeEngineGLExport.h"
 
 
 class BE_API Level

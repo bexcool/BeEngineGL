@@ -7,7 +7,7 @@
 #include "./SkyBoxModel.h"
 
 #include "SkyBoxShaderProgram.h"
-#include "Core/Application.h"
+#include "BECore/Application.h"
 #include "Libs/stb_image.h"
 #include "Resources/Assets/Models/MOD_SkyBox.h"
 

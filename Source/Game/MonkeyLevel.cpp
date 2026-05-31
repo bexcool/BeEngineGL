@@ -4,8 +4,8 @@
 
 #include "MonkeyLevel.h"
 
-#include "Core/ObjectComponents/ModelComponent.h"
-#include "Core/Objects/Character/PlayerCharacter.h"
+#include "BECore/ObjectComponents/ModelComponent.h"
+#include "BECore/Objects/Character/PlayerCharacter.h"
 
 void MonkeyLevel::OnLoaded()
 {
