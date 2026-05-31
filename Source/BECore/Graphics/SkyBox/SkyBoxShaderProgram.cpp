@@ -42,7 +42,7 @@ void SkyBoxShaderProgram::CreateTextures()
     int text_width, text_height, channels;
     unsigned char *data;
 
-    // "./Resources/Assets/Textures/CubeMap/posx.jpg"
+    // "./EngineResources/Assets/Textures/CubeMap/posx.jpg"
     data = stbi_load(this->CubeMap.posx.c_str(), &text_width, &text_height, &channels, 4);
     glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X, 0, GL_RGBA, text_width, text_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
     stbi_image_free(data);

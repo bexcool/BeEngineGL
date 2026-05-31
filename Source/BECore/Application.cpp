@@ -4,14 +4,10 @@
 
 #include "Application.h"
 
-#include "../Game/TestLevel.h"
 #include "Events/InputManager.h"
 #include "Game/BallsLevel.h"
-#include "Game/SolarSystemLevel.h"
 #include "Graphics/Renderer.h"
-#include "ObjectComponents/ColliderComponent.h"
 #include "ObjectComponents/ModelComponent.h"
-#include "Physics/PhysicsEngine.h"
 #include "logger.h"
 
 Application *Application::_currentApp = nullptr;
@@ -34,15 +30,55 @@ void Application::Run(Level *initialLevel)
 
     _window = new Window(this->_width, this->_height, this->_title);
 
+    // Sets cursor state to locked
+    SetCursorState(false, true);
+
     _renderer = new Renderer(this->GetWindow()->AsGLFWWindow());
 
-    _gameLoop = new GameLoop(_renderer, _physicsEngine);
+    _gameLoop = new GameLoop(_renderer);
 
     InputManager::Initialize();
 
     LoadLevel(initialLevel);
 
     _gameLoop->Start();
+}
+
+void Application::SetCursorState(bool isVisible, bool isLocked)
+{
+    _isCursorVisible = isVisible;
+    _isCursorLocked = isLocked;
+
+    glfwSetInputMode(_window->AsGLFWWindow(), GLFW_CURSOR, _isCursorLocked ? GLFW_CURSOR_DISABLED : (_isCursorVisible ? GLFW_CURSOR_NORMAL : GLFW_CURSOR_HIDDEN));
+}
+
+void Application::SetCursorState(const CursorState &state)
+{
+    SetCursorState(state.visible, state.locked);
+}
+
+CursorState Application::GetCursorState()
+{
+    int value = glfwGetInputMode(_window->AsGLFWWindow(), GLFW_CURSOR);
+
+    switch (value)
+    {
+        case GLFW_CURSOR_NORMAL:
+            _isCursorVisible = true;
+            _isCursorLocked = false;
+            break;
+        case GLFW_CURSOR_HIDDEN:
+            _isCursorVisible = false;
+            _isCursorLocked = false;
+            break;
+        case GLFW_CURSOR_DISABLED:
+            _isCursorVisible = false;
+            _isCursorLocked = true;
+            break;
+        default: break;
+    }
+
+    return {_isCursorVisible, _isCursorLocked};
 }
 
 void Application::LoadLevel(Level *level)
@@ -62,15 +98,18 @@ float Application::GetTime()
 
 void Application::OnKeyboardKeyEvent(KeyboardKeyEventArgs e)
 {
-    if (e.Action == GLFW_PRESS)
+    if (e.Action == GLFW_RELEASE)
     {
         switch (e.Key)
         {
-            case GLFW_KEY_Y:
+            case GLFW_KEY_ESCAPE:
             {
-                auto *level = new SolarSystemLevel();
-
-                LoadLevel(level);
+                if (GetCursorState().locked)
+                    SetCursorState(true, false);
+                else
+                {
+                    SetCursorState(false, true);
+                }
 
                 break;
             }

@@ -5,13 +5,12 @@
 #include "PlayerCharacter.h"
 
 #include "BECore/Controllers/PlayerController.h"
-#include "BECore/Events/InputManager.h"
-#include "BECore/ObjectComponents/ColliderComponent.h"
+#include "BECore/ObjectComponents/CharacterCollisionComponent.h"
 
 PlayerCharacter::PlayerCharacter()
 {
-    // Set default controller for PlayerCharacter
     SetController(std::make_unique<PlayerController>());
-    // add a collider so player participates in character-style collisions
-    AddComponent(new ColliderComponent(glm::vec3(0.5f, 1.0f, 0.5f), false, false, 1.0f, true));
+
+    _characterCollision = new CharacterCollisionComponent(0.9f, 0.3f);
+    AddComponent(_characterCollision);
 }

@@ -8,7 +8,7 @@
 
 #include "GameObjectComponent.h"
 #include "BECore/Graphics/Model.h"
-#include "Resources/Assets/Models/MOD_Sphere.h"
+#include "EngineResources/Assets/Models/MOD_Sphere.h"
 
 using namespace std;
 

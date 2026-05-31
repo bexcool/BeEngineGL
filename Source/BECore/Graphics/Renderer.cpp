@@ -16,54 +16,60 @@ using namespace std;
 
 Renderer::Renderer(GLFWwindow *window)
 {
-	this->_window = window;
+    this->_window = window;
 
-	glewExperimental = GL_TRUE;
-	glewInit();
+    glewExperimental = GL_TRUE;
+    glewInit();
 
-	// get version info
-	printf("OpenGL Version: %s\n", glGetString(GL_VERSION));
-	printf("Using GLEW %s\n", glewGetString(GLEW_VERSION));
-	printf("Vendor %s\n", glGetString(GL_VENDOR));
-	printf("Renderer %s\n", glGetString(GL_RENDERER));
-	printf("GLSL %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
-	int major, minor, revision;
-	glfwGetVersion(&major, &minor, &revision);
-	printf("Using GLFW %i.%i.%i\n", major, minor, revision);
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
+    glFrontFace(GL_CCW);
+
+    // get version info
+    printf("OpenGL Version: %s\n", glGetString(GL_VERSION));
+    printf("Using GLEW %s\n", glewGetString(GLEW_VERSION));
+    printf("Vendor %s\n", glGetString(GL_VENDOR));
+    printf("Renderer %s\n", glGetString(GL_RENDERER));
+    printf("GLSL %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
+    int major, minor, revision;
+    glfwGetVersion(&major, &minor, &revision);
+    printf("Using GLFW %i.%i.%i\n", major, minor, revision);
 }
 
 void Renderer::Render() const
 {
-	auto app = Application::GetInstance();
+    auto app = Application::GetInstance();
 
-	// clear color and depth buffer
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+    // clear color and depth buffer
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
-	// Draw SkyBox
-	auto skyBox = app->GetLevel()->GetSkyBox();
-	if (skyBox)
-	{
-		skyBox->Render();
-		glClear(GL_DEPTH_BUFFER_BIT);
-	}
+    // Draw SkyBox
+    glCullFace(GL_FRONT);
+    auto skyBox = app->GetLevel()->GetSkyBox();
+    if (skyBox)
+    {
+        skyBox->Render();
+        glClear(GL_DEPTH_BUFFER_BIT);
+    }
+    glCullFace(GL_BACK);
 
-	glEnable(GL_STENCIL_TEST);
-	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+    glEnable(GL_STENCIL_TEST);
+    glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 
-	// Draw game objects
-	if (app->GetLevel() != nullptr)
-	{
-		int index = 0;
-		for (auto object: (*app->GetLevel()->GetGameObjects()))
-		{
-			glStencilFunc(GL_ALWAYS, index, 0xFF);
-			object->StencilIndex = index;
-			object->OnRender();
-			index++;
-		}
-	}
-	// put the stuff we’ve been drawing onto the display
-	glfwSwapBuffers(this->_window);
+    // Draw game objects
+    if (app->GetLevel() != nullptr)
+    {
+        int index = 0;
+        for (auto object: (*app->GetLevel()->GetGameObjects()))
+        {
+            glStencilFunc(GL_ALWAYS, index, 0xFF);
+            object->StencilIndex = index;
+            object->OnRender();
+            index++;
+        }
+    }
+    // put the stuff we’ve been drawing onto the display
+    glfwSwapBuffers(this->_window);
 
-	app->GetLevel()->OnRendered();
+    app->GetLevel()->OnRendered();
 }

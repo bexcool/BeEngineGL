@@ -9,14 +9,15 @@
 #include "../Math/Transform.h"
 #include "../Objects/GameObject.h"
 
-class CameraComponent : public GameObjectComponent {
+class CameraComponent : public GameObjectComponent
+{
     Location _lookTargetLocation = Location(1, 0, 0);
     float _yaw = 0.0f;
     float _pitch = 0.0f;
     float _sensitivity = 0.1f;
     float _fov = 70.0f;
 
-   public:
+public:
     CameraComponent() : GameObjectComponent("CameraComponent") {}
 
     glm::mat4 GetCameraViewMatrix();
@@ -28,7 +29,7 @@ class CameraComponent : public GameObjectComponent {
     float GetFOV();
     void SetFOV(float fov);
 
-    void SetLookTargetLocation(const Location& target);
+    void SetLookTargetLocation(const Location &target);
     Location GetLookTargetLocation();
 
     void OnTick() override;

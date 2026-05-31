@@ -13,73 +13,89 @@
 #include "BECore/Events/InputManager.h"
 #include "BECore/logger.h"
 
-glm::vec3 ComputeCameraForwardVector(float pitchDegrees, float yawDegrees) {
+glm::vec3 ComputeCameraForwardVector(float pitchDegrees, float yawDegrees)
+{
     glm::vec3 forward;
     forward.x = cos(glm::radians(pitchDegrees)) * cos(glm::radians(yawDegrees));
     forward.y = sin(glm::radians(pitchDegrees));
     forward.z = cos(glm::radians(pitchDegrees)) * sin(glm::radians(yawDegrees));
 
     float lengthSquared = glm::dot(forward, forward);
-    if (lengthSquared < 1e-6f) {
+    if (lengthSquared < 1e-6f)
+    {
         return glm::vec3(1.0f, 0.0f, 0.0f);
     }
 
     return glm::normalize(forward);
 }
 
-glm::mat4 CameraComponent::GetCameraViewMatrix() {
+glm::mat4 CameraComponent::GetCameraViewMatrix()
+{
     glm::vec3 eye = GetWorldTransform().GetLocation().AsVec3();
     glm::vec3 forward = _lookTargetLocation.AsVec3();
 
-    glm::vec3 up(0.0f, 1.0f, 0.0f);
-    if (std::abs(glm::dot(forward, up)) > 0.99f) {
-        up = glm::vec3(0.0f, 0.0f, 1.0f);
-    }
+    glm::vec3 worldUp(0.0f, 1.0f, 0.0f);
+    glm::vec3 right = glm::normalize(glm::cross(forward, worldUp));
+    if (glm::dot(right, right) < 1e-6f)
+        right = glm::vec3(1.0f, 0.0f, 0.0f);
+    glm::vec3 up = glm::normalize(glm::cross(right, forward));
 
     return glm::lookAt(eye, eye + forward, up);
 }
 
-glm::mat4 CameraComponent::GetCameraProjectionMatrix() {
+glm::mat4 CameraComponent::GetCameraProjectionMatrix()
+{
     float aspectRatio = Application::GetInstance()->GetWindow()->GetAspectRatio();
 
     return glm::perspective(glm::radians(GetFOV()), aspectRatio, 0.1f, 100.0f);
 }
 
-void CameraComponent::SetSensitivity(float sensitivity) {
+void CameraComponent::SetSensitivity(float sensitivity)
+{
     _sensitivity = sensitivity;
 }
 
-float CameraComponent::GetSensitivity() {
+float CameraComponent::GetSensitivity()
+{
     return _sensitivity;
 }
 
-float CameraComponent::GetFOV() {
+float CameraComponent::GetFOV()
+{
     return _fov;
 }
 
-void CameraComponent::SetFOV(float fov) {
+void CameraComponent::SetFOV(float fov)
+{
     _fov = fov;
 }
 
-void CameraComponent::SetLookTargetLocation(const Location& target) {
+void CameraComponent::SetLookTargetLocation(const Location &target)
+{
     glm::vec3 forward = target.AsVec3();
-    if (glm::dot(forward, forward) < 1e-6f) {
+    if (glm::dot(forward, forward) < 1e-6f)
+    {
         forward = glm::vec3(1.0f, 0.0f, 0.0f);
-    } else {
+    } else
+    {
         forward = glm::normalize(forward);
     }
 
     _lookTargetLocation = Location(forward);
 }
 
-Location CameraComponent::GetLookTargetLocation() {
+Location CameraComponent::GetLookTargetLocation()
+{
     return _lookTargetLocation;
 }
 
-void CameraComponent::OnTick() {
+void CameraComponent::OnTick()
+{
     GameObjectComponent::OnTick();
 
-    if (InputManager::IsMouseKeyPressed(GLFW_MOUSE_BUTTON_RIGHT)) {
+    if (((InputManager::IsMouseKeyPressed(GLFW_MOUSE_BUTTON_RIGHT) || InputManager::IsMouseKeyPressed(GLFW_MOUSE_BUTTON_LEFT)) && !Application::GetInstance()->GetCursorState().locked)
+        || Application::GetInstance()->GetCursorState().locked)
+    {
         auto controller = GetParent()->GetController();
 
         float xOffset = controller->GetMousePosition().x - controller->GetLastMousePosition().x;

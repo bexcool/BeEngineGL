@@ -9,13 +9,13 @@
 #include "SkyBoxShaderProgram.h"
 #include "BECore/Application.h"
 #include "Libs/stb_image.h"
-#include "Resources/Assets/Models/MOD_SkyBox.h"
+#include "EngineResources/Assets/Models/MOD_SkyBox.h"
 
 SkyBoxModel::SkyBoxModel(CubeMap cubeMap)
 {
     this->_cubeMap = std::move(cubeMap);
 
-    SetModelCustomSP("./Resources/Assets/Models/cube.obj", Material("SkyBox", ShaderInfo{.vertexShaderPath = "./Resources/Shaders/skybox.vert.glsl", .fragmentShaderPath = "./Resources/Shaders/skybox.frag.glsl", .useTexture = true}));
+    SetModelCustomSP("./EngineResources/Assets/Models/cube.obj", Material("SkyBox", ShaderInfo{.vertexShaderPath = "./EngineResources/Shaders/skybox.vert.glsl", .fragmentShaderPath = "./EngineResources/Shaders/skybox.frag.glsl", .useTexture = true}));
 
     LinkShaderProgram();
 }

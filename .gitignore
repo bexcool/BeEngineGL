@@ -1,5 +1,4 @@
 /cmake-build-debug
 /build
 /.idea
-/ThirdParty/JoltPhysics/Jolt
 /ThirdParty/JoltPhysics/*.dylib

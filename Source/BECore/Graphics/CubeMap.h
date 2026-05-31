@@ -16,10 +16,10 @@ struct CubeMap
 };
 
 static const CubeMap DEFAULT_CUBEMAP{
-    "./Resources/Assets/Textures/CubeMap/posx.jpg",
-    "./Resources/Assets/Textures/CubeMap/negx.jpg",
-    "./Resources/Assets/Textures/CubeMap/posy.jpg",
-    "./Resources/Assets/Textures/CubeMap/negy.jpg",
-    "./Resources/Assets/Textures/CubeMap/posz.jpg",
-    "./Resources/Assets/Textures/CubeMap/negz.jpg"
+    "./EngineResources/Assets/Textures/CubeMap/posx.jpg",
+    "./EngineResources/Assets/Textures/CubeMap/negx.jpg",
+    "./EngineResources/Assets/Textures/CubeMap/posy.jpg",
+    "./EngineResources/Assets/Textures/CubeMap/negy.jpg",
+    "./EngineResources/Assets/Textures/CubeMap/posz.jpg",
+    "./EngineResources/Assets/Textures/CubeMap/negz.jpg"
 };

@@ -10,9 +10,9 @@
 
 struct ShaderInfo
 {
-    std::string vertexShaderPath = "./Resources/Shaders/default.vert";
-    std::string fragmentShaderPath = "./Resources/Shaders/phong.frag";
+    std::string vertexShaderPath = "./EngineResources/Shaders/default.vert";
+    std::string fragmentShaderPath = "./EngineResources/Shaders/phong.frag";
     bool useTexture = false;
-    std::string texturePath = "./Resources/Assets/Textures/DefaultTexture.png";
+    std::string texturePath = "./EngineResources/Assets/Textures/DefaultTexture.png";
     glm::vec4 color = glm::vec4(1.0, 1.0, 1.0, 1.0);
 };

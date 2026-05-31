@@ -7,15 +7,17 @@
 #include <GL/glew.h>
 
 #include "Application.h"
-#include "ObjectComponents/ColliderComponent.h"
+#include "Physics/PhysicsEngine.h"
+#include "ObjectComponents/CollisionComponent.h"
 #include "logger.h"
 
-GameLoop::GameLoop(Renderer* renderer, PhysicsEngine* physicsEngine) {
+GameLoop::GameLoop(Renderer *renderer)
+{
     _renderer = renderer;
-    _physicsEngine = physicsEngine;
 }
 
-void GameLoop::Start() {
+void GameLoop::Start()
+{
     LOG("Starting game loop...");
 
     auto win = Application::GetInstance()->GetWindow()->AsGLFWWindow();
@@ -23,7 +25,8 @@ void GameLoop::Start() {
 
     _lastFrameTime = glfwGetTime();
 
-    while (!glfwWindowShouldClose(win)) {
+    while (!glfwWindowShouldClose(win))
+    {
         double currentFrame = glfwGetTime();
         _deltaTime = currentFrame - _lastFrameTime;
         _lastFrameTime = currentFrame;
@@ -31,12 +34,14 @@ void GameLoop::Start() {
         // Poll GLFW events
         glfwPollEvents();
 
-        // Sync physics
-        _physicsEngine->Step(GetDeltaTime());
-        ColliderComponent::SyncPhysics();
-
-        // Call tick on level
+        // Game logic (player input, AI, etc.)
         Application::GetInstance()->OnTick();
+
+        // Physics: sync kinematic bodies, update characters, step simulation, sync dynamic bodies.
+        if (auto *pe = PhysicsEngine::GetInstance()) {
+            CollisionComponent::SyncKinematic((float)_deltaTime);
+            pe->Step((float)_deltaTime);
+        }
 
         // Render level
         _renderer->Render();
@@ -48,6 +53,7 @@ void GameLoop::Start() {
     exit(EXIT_SUCCESS);
 }
 
-float GameLoop::GetDeltaTime() {
+float GameLoop::GetDeltaTime()
+{
     return _deltaTime;
 }

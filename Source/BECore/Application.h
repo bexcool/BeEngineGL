@@ -11,6 +11,12 @@
 #include "Level.h"
 #include "Physics/PhysicsEngine.h"
 
+struct CursorState
+{
+    bool visible;
+    bool locked;
+};
+
 class BE_API Application : public ICoreEvents, IKeyEvents
 {
     static Application *_currentApp;
@@ -26,11 +32,18 @@ class BE_API Application : public ICoreEvents, IKeyEvents
     Level *_currentLevel;
     Level *_requestedLevel;
 
+    bool _isCursorVisible = true;
+    bool _isCursorLocked = false;
+
 public:
     Application(int width, int height, std::string title);
     static Application *GetInstance() { return _currentApp; }
 
     void Run(Level *initialLevel);
+
+    void SetCursorState(bool isVisible, bool isLocked);
+    void SetCursorState(const CursorState &state);
+    CursorState GetCursorState();
 
     void LoadLevel(Level *level);
     Level *GetLevel() { return _currentLevel; }

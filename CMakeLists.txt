@@ -1,14 +1,19 @@
 cmake_minimum_required(VERSION 3.30)
 project(BeEngineGL)
 
+# Building Jolt from source (this should prevent version mismatch)
+set(PHYSICS_REPO_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/ThirdParty/JoltPhysics")
+include("${PHYSICS_REPO_ROOT}/Jolt/Jolt.cmake")   # creates Jolt target, sets CMAKE_CXX_STANDARD 17
+
+# Prevent JPH_ENABLE_ASSERTS from being auto-enabled in non-Release builds
+target_compile_definitions(Jolt PUBLIC JPH_NO_DEBUG)
+
 set(CMAKE_CXX_STANDARD 20)
 
 add_library(BeEngineGL SHARED
         #Source/main.cpp
         Source/BECore/Application.cpp
         Source/BECore/Application.h
-        Source/BECore/Physics/PhysicsEngine.cpp
-        Source/BECore/Physics/PhysicsEngine.h
         Source/BECore/Graphics/Renderer.cpp
         Source/BECore/Graphics/Renderer.h
         Source/BECore/Graphics/ShaderProgram.cpp
@@ -17,8 +22,6 @@ add_library(BeEngineGL SHARED
         Source/BECore/Graphics/Shader.h
         Source/BECore/ObjectComponents/ModelComponent.cpp
         Source/BECore/ObjectComponents/ModelComponent.h
-        Source/BECore/ObjectComponents/ColliderComponent.cpp
-        Source/BECore/ObjectComponents/ColliderComponent.h
         Source/BECore/Math/Transform.cpp
         Source/BECore/Math/Transform.h
         Source/BECore/Math/Location.cpp
@@ -39,8 +42,6 @@ add_library(BeEngineGL SHARED
         Source/BECore/Events/EventArgs.h
         Source/BECore/Events/KeyboardKeyEventArgs.cpp
         Source/BECore/Events/KeyboardKeyEventArgs.h
-        Source/Game/TestLevel.cpp
-        Source/Game/TestLevel.h
         Source/BECore/GameLoop.cpp
         Source/BECore/GameLoop.h
         Source/BECore/logger.c
@@ -68,8 +69,6 @@ add_library(BeEngineGL SHARED
         Source/BECore/MovementMode.h
         Source/BECore/Interfaces/IDisposable.cpp
         Source/BECore/Interfaces/IDisposable.h
-        Source/Game/MonkeyLevel.cpp
-        Source/Game/MonkeyLevel.h
         Source/Game/BallsLevel.cpp
         Source/Game/BallsLevel.h
         Source/BECore/Graphics/ShaderInfo.cpp
@@ -82,56 +81,69 @@ add_library(BeEngineGL SHARED
         Source/BECore/Math/Vector3.h
         Source/BECore/Graphics/Light.h
         Source/Libs/tiny_obj_loader.h
-        Source/Resources/Assets/Models/MOD_F1.h
+        Source/EngineResources/Assets/Models/MOD_F1.h
         Source/Libs/stb_image.h
-        Source/Resources/Assets/Models/MOD_Plane.h
-        Source/Resources/Assets/Models/Shrek/MOD_Shrek.h
-        Source/Resources/Assets/Models/Shrek/MOD_Fiona.h
-        Source/Resources/Assets/Models/Shrek/MOD_Toilet.h
+        Source/EngineResources/Assets/Models/MOD_Plane.h
+        Source/EngineResources/Assets/Models/Shrek/MOD_Shrek.h
+        Source/EngineResources/Assets/Models/Shrek/MOD_Fiona.h
+        Source/EngineResources/Assets/Models/Shrek/MOD_Toilet.h
         Source/BECore/Graphics/SkyBox/SkyBoxModel.cpp
         Source/BECore/Graphics/SkyBox/SkyBoxModel.h
-        Source/Resources/Assets/Models/MOD_SkyBox.h
+        Source/EngineResources/Assets/Models/MOD_SkyBox.h
         Source/BECore/Graphics/SkyBox/SkyBoxShaderProgram.cpp
         Source/BECore/Graphics/SkyBox/SkyBoxShaderProgram.h
-        Source/Game/SolarSystemLevel.cpp
-        Source/Game/SolarSystemLevel.h
-        Source/Resources/Assets/Models/MOD_login_pav0531.h
+        Source/EngineResources/Assets/Models/MOD_login_pav0531.h
         Source/BECore/Graphics/CubeMap.h
-        Source/Resources/Assets/Models/MOD_Sphere.h
+        Source/EngineResources/Assets/Models/MOD_Sphere.h
         Source/BECore/Graphics/Material/Material.cpp
         Source/BECore/Graphics/Material/Material.h
         Source/BECore/Graphics/Material/MaterialParameter.cpp
         Source/BECore/Graphics/Material/MaterialParameter.h
         Source/BECore/Graphics/Material/Texture.cpp
         Source/BECore/Graphics/Material/Texture.h
-        Source/Resources/Assets/Models/Shrek/MAT_Shrek.h
-        Source/Resources/Assets/Models/Shrek/TEX_Shrek.h
-        Source/Resources/Assets/Textures/TEX_Default.h
+        Source/EngineResources/Assets/Models/Shrek/MAT_Shrek.h
+        Source/EngineResources/Assets/Models/Shrek/TEX_Shrek.h
+        Source/EngineResources/Assets/Textures/TEX_Default.h
         Source/BECore/Graphics/Material/MaterialData.h
         Source/BECore/ObjectComponents/SplineComponent.cpp
         Source/BECore/ObjectComponents/SplineComponent.h
         Source/BECore/Math/CurvePoint.h
-        Source/Game/WhackMoleLevel.cpp
-        Source/Game/WhackMoleLevel.h
-        Source/BECore/ObjectComponents/CollisionBoxComponent.cpp
-        Source/BECore/ObjectComponents/CollisionBoxComponent.h
+        Source/BECore/Physics/PhysicsEngine.cpp
+        Source/BECore/Physics/PhysicsEngine.h
+        Source/BECore/ObjectComponents/CollisionComponent.cpp
+        Source/BECore/ObjectComponents/CollisionComponent.h
+        Source/BECore/ObjectComponents/BoxCollisionComponent.cpp
+        Source/BECore/ObjectComponents/BoxCollisionComponent.h
+        Source/BECore/ObjectComponents/SphereCollisionComponent.cpp
+        Source/BECore/ObjectComponents/SphereCollisionComponent.h
+        Source/BECore/ObjectComponents/CapsuleCollisionComponent.cpp
+        Source/BECore/ObjectComponents/CapsuleCollisionComponent.h
+        Source/BECore/ObjectComponents/CharacterCollisionComponent.cpp
+        Source/BECore/ObjectComponents/CharacterCollisionComponent.h
+        Source/BECore/Graphics/Material/BoolMaterialParameter.cpp
+        Source/BECore/Graphics/Material/BoolMaterialParameter.h
 )
 
-add_custom_target(copyResources
+# Copy resources dependency
+add_dependencies(BeEngineGL copyResources)
+
+# Include resources with each build
+add_custom_target(copyResources ALL
         COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_LIST_DIR}/copyResources.cmake
 )
-add_dependencies(BeEngineGL copyResources)
 
 target_compile_definitions(BeEngineGL PRIVATE BE_BUILD_DLL)
 
+# Add packages
 find_package(glm CONFIG REQUIRED)
 find_package(GLEW REQUIRED)
 target_include_directories(BeEngineGL PUBLIC
         /opt/homebrew/include
         ${CMAKE_SOURCE_DIR}/vendor
         ${CMAKE_SOURCE_DIR}/Source
-        ${CMAKE_SOURCE_DIR}/ThirdParty/JoltPhysics
 )
+
+# OSX support (out of the box support is only for Mac - sorry :D)
 if (APPLE)
     target_link_directories(BeEngineGL PUBLIC /opt/homebrew/lib)
     target_compile_definitions(BeEngineGL PUBLIC GL_SILENCE_DEPRECATION)
@@ -142,7 +154,7 @@ if (APPLE)
             "-framework IOKit"
             "-framework CoreVideo"
             "-lGLEW"
-            "${CMAKE_SOURCE_DIR}/ThirdParty/JoltPhysics/libJolt.dylib"
+            Jolt
     )
     set_source_files_properties(Source/BECore/UI/imgui_impl_metal.cpp PROPERTIES
             LANGUAGE CXX

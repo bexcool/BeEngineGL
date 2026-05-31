@@ -168,10 +168,13 @@ void Model::SetModelCustomSP(const std::string &modelPath, const Material &mater
 
 void Model::Render(const Transform &transform)
 {
-    LOG("Model: Render");
-
     *_transform = transform;
     _material->GetShaderProgram()->Use(_material.get(), _transform);
+
+    if (static_cast<const BoolMaterialParameter *>(_material->GetParameter(MatParameterType::RendererDisableFaceCulling))->GetValue()) glDisable(GL_CULL_FACE);
+
     glBindVertexArray(_VAO);
     glDrawArrays(GL_TRIANGLES, 0, _amountOfVertices);
+
+    if (static_cast<const BoolMaterialParameter *>(_material->GetParameter(MatParameterType::RendererDisableFaceCulling))->GetValue()) glEnable(GL_CULL_FACE);
 }

@@ -43,8 +43,6 @@ void ModelComponent::OnRender()
 {
     GameObjectComponent::OnRender();
 
-    LOG("ModelComponent: OnRender");
-
     _model.Render(GetWorldTransform());
 }
 

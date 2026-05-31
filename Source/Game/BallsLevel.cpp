@@ -15,12 +15,12 @@ void BallsLevel::OnLoaded()
     Level::OnLoaded();
 
     SetSkyBox(new SkyBoxModel({
-        "./Resources/Assets/Textures/MilkyWay/stars_rt.png",
-        "./Resources/Assets/Textures/MilkyWay/stars_lf.png",
-        "./Resources/Assets/Textures/MilkyWay/stars_up.png",
-        "./Resources/Assets/Textures/MilkyWay/stars_dn.png",
-        "./Resources/Assets/Textures/MilkyWay/stars_ft.png",
-        "./Resources/Assets/Textures/MilkyWay/stars_bk.png"
+        "./EngineResources/Assets/Textures/MilkyWay/stars_rt.png",
+        "./EngineResources/Assets/Textures/MilkyWay/stars_lf.png",
+        "./EngineResources/Assets/Textures/MilkyWay/stars_up.png",
+        "./EngineResources/Assets/Textures/MilkyWay/stars_dn.png",
+        "./EngineResources/Assets/Textures/MilkyWay/stars_ft.png",
+        "./EngineResources/Assets/Textures/MilkyWay/stars_bk.png"
     }));
 
     // Default
@@ -46,7 +46,7 @@ void BallsLevel::OnLoaded()
 
     // Phong
     auto ballPhongModel = new ModelComponent();
-    //ballPhongModel->SetModel(MOD_Sphere(Material(ShaderInfo{.fragmentShaderPath = "./Resources/Shaders/phong.frag"})));
+    //ballPhongModel->SetModel(MOD_Sphere(Material(ShaderInfo{.fragmentShaderPath = "./EngineResources/Shaders/phong.frag"})));
 
     ballPhong->AddComponent(ballPhongModel);
     SpawnGameObject(ballPhong, Transform(Location(0, 0, 2), Rotation(), Scale()));
@@ -54,7 +54,7 @@ void BallsLevel::OnLoaded()
     auto ball2Model = new ModelComponent();
     /*
     ball2Model->SetModel(MOD_Sphere(Material(ShaderInfo{
-        .fragmentShaderPath = "./Resources/Shaders/lambert.frag"
+        .fragmentShaderPath = "./EngineResources/Shaders/lambert.frag"
     })));
     */
 

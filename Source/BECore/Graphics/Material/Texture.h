@@ -26,5 +26,5 @@ public:
     const std::string GetPath() const;
 };
 
-static const Texture DEFAULT_TEXTURE("./Resources/Assets/Textures/DefaultTexture.png");
+static const Texture DEFAULT_TEXTURE("./EngineResources/Assets/Textures/DefaultTexture.png");
 static const Texture EMPTY_TEXTURE("");
