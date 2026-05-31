@@ -6,7 +6,6 @@
 #include "GameObjectComponent.h"
 #include "Core/Math/CurvePoint.h"
 
-
 class SplineComponent : public GameObjectComponent
 {
     glm::mat4x3 A;

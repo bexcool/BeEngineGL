@@ -4,13 +4,15 @@
 
 #include "Application.h"
 
-#include "Graphics/Renderer.h"
 #include "../Game/TestLevel.h"
-#include "logger.h"
 #include "Events/InputManager.h"
 #include "Game/BallsLevel.h"
 #include "Game/SolarSystemLevel.h"
+#include "Graphics/Renderer.h"
+#include "ObjectComponents/ColliderComponent.h"
 #include "ObjectComponents/ModelComponent.h"
+#include "Physics/PhysicsEngine.h"
+#include "logger.h"
 
 Application *Application::_currentApp = nullptr;
 
@@ -27,11 +29,14 @@ void Application::Run(Level *initialLevel)
     logger_init("app.log");
     LOG("Starting application...");
 
+    _physicsEngine = new PhysicsEngine();
+    _physicsEngine->Initialize();
+
     _window = new Window(this->_width, this->_height, this->_title);
 
     _renderer = new Renderer(this->GetWindow()->AsGLFWWindow());
 
-    _gameLoop = new GameLoop(_renderer);
+    _gameLoop = new GameLoop(_renderer, _physicsEngine);
 
     InputManager::Initialize();
 

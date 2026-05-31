@@ -9,6 +9,7 @@
 #include "Graphics/Renderer.h"
 #include "Graphics/Window.h"
 #include "Level.h"
+#include "Physics/PhysicsEngine.h"
 
 class BE_API Application : public ICoreEvents, IKeyEvents
 {
@@ -20,6 +21,7 @@ class BE_API Application : public ICoreEvents, IKeyEvents
 
     Renderer *_renderer;
     GameLoop *_gameLoop;
+    PhysicsEngine *_physicsEngine;
 
     Level *_currentLevel;
     Level *_requestedLevel;

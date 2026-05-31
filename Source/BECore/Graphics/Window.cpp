@@ -7,11 +7,14 @@
 #include <GL/glew.h>
 
 #include "Core/Application.h"
+#include "Core/logger.h"
 
 void error_callback(int error, const char *description) { fputs(description, stderr); }
 
 Window::Window(int width, int height, std::string title)
 {
+    LOG("Initializing a new window...");
+
     _width = width;
     _height = height;
 
@@ -43,6 +46,8 @@ Window::Window(int width, int height, std::string title)
         auto w = Application::GetInstance()->GetWindow();
         w->OnResize(width, height);
     });
+
+    LOG("Window created.");
 }
 
 GLFWwindow *Window::AsGLFWWindow()

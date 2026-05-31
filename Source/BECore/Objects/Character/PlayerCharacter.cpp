@@ -11,6 +11,6 @@
 PlayerCharacter::PlayerCharacter() {
     // Set default controller for PlayerCharacter
     SetController(std::make_unique<PlayerController>());
-    // add a collider so player participates in collisions (movable)
-    AddComponent(new ColliderComponent(glm::vec3(0.5f, 1.0f, 0.5f), false, false, 1.0f));
+    // add a collider so player participates in character-style collisions
+    AddComponent(new ColliderComponent(glm::vec3(0.5f, 1.0f, 0.5f), false, false, 1.0f, true));
 }

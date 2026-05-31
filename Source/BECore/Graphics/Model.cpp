@@ -168,8 +168,9 @@ void Model::SetModelCustomSP(const std::string &modelPath, const Material &mater
 
 void Model::Render(const Transform &transform)
 {
+    LOG("Model: Render");
+
     *_transform = transform;
-    LOG("TEST");
     _material->GetShaderProgram()->Use(_material.get(), _transform);
     glBindVertexArray(_VAO);
     glDrawArrays(GL_TRIANGLES, 0, _amountOfVertices);

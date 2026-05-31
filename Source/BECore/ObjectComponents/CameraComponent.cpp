@@ -95,7 +95,7 @@ void CameraComponent::OnTick() {
         if (_pitch < -89.0f) _pitch = -89.0f;
     }
 
-    GetParent()->SetWorldRotation(Rotation(0.0f, 0.0f, _yaw));
+    GetParent()->SetWorldRotation(Rotation(0.0f, 0.0f, -_yaw));
     SetLocalRotation(Rotation(_pitch, 0.0f, 0.0f));
     _lookTargetLocation = Location(ComputeCameraForwardVector(_pitch, _yaw));
 }
