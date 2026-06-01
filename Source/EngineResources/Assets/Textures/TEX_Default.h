@@ -11,5 +11,6 @@ public:
     TEX_Default()
     {
         this->_path = "./EngineResources/Assets/Textures/DefaultTexture.png";
+        this->_textureOptions = TextureOptions();
     }
 };

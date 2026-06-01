@@ -10,6 +10,7 @@
 #include <unordered_map>
 
 #include "BoolMaterialParameter.h"
+#include "MaterialData.h"
 #include "BECore/Graphics/ShaderInfo.h"
 #include "MaterialParameter.h"
 #include "EngineResources/Assets/Textures/TEX_Default.h"
@@ -41,10 +42,7 @@ protected:
     ShaderInfo _shaderInfo = ShaderInfo();
 
     // Parameters
-    MaterialParameter _diffuse;
-    MaterialParameter _shininess;
-    MaterialParameter _emission;
-    BoolMaterialParameter _rendererDisableFaceCulling;
+    MaterialData _materialData = MaterialData();
 
     static std::unordered_map<std::string, MaterialCache> MaterialInstances;
 

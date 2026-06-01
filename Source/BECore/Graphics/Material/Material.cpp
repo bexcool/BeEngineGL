@@ -15,10 +15,7 @@ std::unordered_map<std::string, Material::MaterialCache> Material::MaterialInsta
 
 void Material::ApplyMaterialData(const MaterialData &materialData)
 {
-    _diffuse = materialData.diffuse;
-    _shininess = materialData.shininess;
-    _emission = materialData.emission;
-    _rendererDisableFaceCulling = materialData.rendererDisableFaceCulling;
+    _materialData = materialData;
 }
 
 void Material::CreateShaderProgram()
@@ -68,9 +65,7 @@ Material::Material()
 }
 
 Material::Material(const Material &other) : _shaderInfo(other._shaderInfo),
-                                            _diffuse(other._diffuse),
-                                            _shininess(other._shininess),
-                                            _emission(other._emission),
+                                            _materialData(other._materialData),
                                             _materialName(other._materialName)
 {
     _shaderProgram = nullptr;
@@ -108,13 +103,13 @@ const MaterialParameter *Material::GetParameter(MatParameterType type) const
     switch (type)
     {
         case MatParameterType::Diffuse:
-            return &_diffuse;
+            return &_materialData.diffuse;
         case MatParameterType::Shininess:
-            return &_shininess;
+            return &_materialData.shininess;
         case MatParameterType::Emission:
-            return &_emission;
+            return &_materialData.emission;
         case MatParameterType::RendererDisableFaceCulling:
-            return &_rendererDisableFaceCulling;
+            return &_materialData.rendererDisableFaceCulling;
     }
     return nullptr;
 }

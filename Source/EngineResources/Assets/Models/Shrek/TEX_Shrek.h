@@ -5,4 +5,4 @@
 #pragma once
 #include "BECore/Graphics/Material/Texture.h"
 
-BE_TEXTURE(TEX_Shrek, "./EngineResources/Assets/Models/Shrek/shrek.png")
+BE_TEXTURE(TEX_Shrek, "./EngineResources/Assets/Models/Shrek/shrek.png", TextureOptions())

@@ -122,6 +122,7 @@ add_library(BeEngineGL SHARED
         Source/BECore/ObjectComponents/CharacterCollisionComponent.h
         Source/BECore/Graphics/Material/BoolMaterialParameter.cpp
         Source/BECore/Graphics/Material/BoolMaterialParameter.h
+        Source/BECore/Graphics/Material/TextureOptions.h
 )
 
 # Copy resources dependency
