@@ -20,7 +20,8 @@
 struct BE_API HitResult
 {
     bool blockingHit = false;
-    Vector3 location = Vector3();
+    Location location = Location();
+    Vector3 normal = Vector3();
     float fraction = 0.0f;
     JPH::BodyID bodyID;
     GameObject *hitObject = nullptr;

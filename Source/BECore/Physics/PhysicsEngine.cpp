@@ -181,14 +181,13 @@ HitResult PhysicsEngine::TraceLine(Location start, Vector3 direction, float dist
 
         JPH::Vec3 hitPosition = ray.GetPointOnRay(result.mFraction);
 
-        // If hit is too far away, return
-        if (glm::distance(start.AsVec3(), glm::vec3(hitPosition.GetX(), hitPosition.GetY(), hitPosition.GetZ())) > distance)
-        {
-            hitResult.blockingHit = false;
-            return hitResult;
-        }
-
+        // Get location
         hitResult.location = Location(hitPosition.GetX(), hitPosition.GetY(), hitPosition.GetZ());
+
+        // Get normal
+        JPH::TransformedShape shape = GetPhysicsSystem()->GetBodyInterface().GetTransformedShape(result.mBodyID);
+        JPH::Vec3 normal = shape.GetWorldSpaceSurfaceNormal(result.mSubShapeID2, hitPosition);
+        hitResult.normal = Vector3(normal.GetX(), normal.GetY(), normal.GetZ());;
 
         auto gos = *Application::GetInstance()->GetLevel()->GetGameObjects();
         for (auto currentGO: gos)
