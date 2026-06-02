@@ -11,9 +11,10 @@
 #include "ObjectComponents/CollisionComponent.h"
 #include "logger.h"
 
-GameLoop::GameLoop(Renderer *renderer)
+GameLoop::GameLoop(Renderer *renderer, PhysicsEngine *physicsEngine)
 {
     _renderer = renderer;
+    _physicsEngine = physicsEngine;
 }
 
 void GameLoop::Start()
@@ -38,10 +39,8 @@ void GameLoop::Start()
         Application::GetInstance()->OnTick();
 
         // Physics: sync kinematic bodies, update characters, step simulation, sync dynamic bodies.
-        if (auto *pe = PhysicsEngine::GetInstance()) {
-            CollisionComponent::SyncKinematic((float)_deltaTime);
-            pe->Step((float)_deltaTime);
-        }
+        CollisionComponent::SyncKinematic((float) _deltaTime);
+        _physicsEngine->Step((float) _deltaTime);
 
         // Render level
         _renderer->Render();

@@ -6,7 +6,8 @@ set(PHYSICS_REPO_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/ThirdParty/JoltPhysics")
 include("${PHYSICS_REPO_ROOT}/Jolt/Jolt.cmake")   # creates Jolt target, sets CMAKE_CXX_STANDARD 17
 
 # Prevent JPH_ENABLE_ASSERTS from being auto-enabled in non-Release builds
-target_compile_definitions(Jolt PUBLIC JPH_NO_DEBUG)
+#target_compile_definitions(Jolt PUBLIC JPH_NO_DEBUG)
+target_compile_definitions(Jolt PUBLIC)
 
 set(CMAKE_CXX_STANDARD 20)
 

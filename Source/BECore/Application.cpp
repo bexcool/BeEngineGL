@@ -35,7 +35,7 @@ void Application::Run(Level *initialLevel)
 
     _renderer = new Renderer(this->GetWindow()->AsGLFWWindow());
 
-    _gameLoop = new GameLoop(_renderer);
+    _gameLoop = new GameLoop(_renderer, _physicsEngine);
 
     InputManager::Initialize();
 

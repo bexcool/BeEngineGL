@@ -34,7 +34,7 @@ class CharacterCollisionComponent : public GameObjectComponent
 public:
     static std::vector<CharacterCollisionComponent *> AllCharacterCollisionComponents;
 
-    explicit CharacterCollisionComponent(float halfHeight = 0.9f, float radius = 0.3f);
+    explicit CharacterCollisionComponent(float halfHeight = 0.8f, float radius = 0.3f);
 
     ~CharacterCollisionComponent() override;
 

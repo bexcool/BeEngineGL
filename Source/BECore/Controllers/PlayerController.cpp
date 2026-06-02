@@ -70,11 +70,13 @@ void PlayerController::MovePlayer()
             if (charComp)
             {
                 charComp->SetLinearVelocity(velocity);
-            } else
+            }
+            else
             {
                 GetOwner()->AddWorldLocation(Location(velocity * deltaTime));
             }
-        } else
+        }
+        else
         {
             if (charComp)
             {
@@ -94,7 +96,8 @@ void PlayerController::MovePlayer()
                 }
 
                 charComp->SetLinearVelocity(velocity);
-            } else
+            }
+            else
             {
                 // Fallback movement without physics.
                 auto ownerLocation = GetOwner()->GetWorldLocation();

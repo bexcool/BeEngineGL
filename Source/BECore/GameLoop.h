@@ -4,18 +4,19 @@
 
 #pragma once
 #include "Graphics/Renderer.h"
+#include "Physics/PhysicsEngine.h"
 
 
 class GameLoop
 {
-private:
     Renderer *_renderer;
+    PhysicsEngine *_physicsEngine;
 
     double _deltaTime = 0.0f;
     double _lastFrameTime = 0.0f;
 
 public:
-    GameLoop(Renderer *renderer);
+    GameLoop(Renderer *renderer, PhysicsEngine *physicsEngine);
 
     void Start();
 

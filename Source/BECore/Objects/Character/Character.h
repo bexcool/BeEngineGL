@@ -9,8 +9,8 @@ class CharacterCollisionComponent;
 
 class Character : public GameObject
 {
-    double _walkSpeed = 1.0;
-    double _runSpeed = 6.0;
+    double _walkSpeed = 3.0;
+    double _runSpeed = 9.0;
 
 protected:
     CharacterCollisionComponent *_characterCollision = nullptr;

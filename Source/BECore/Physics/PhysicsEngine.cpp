@@ -4,17 +4,22 @@
 
 #include "PhysicsEngine.h"
 
+#include <Jolt/Jolt.h>
 #include <Jolt/RegisterTypes.h>
 #include <Jolt/Core/Factory.h>
 #include <Jolt/Physics/Collision/ObjectLayer.h>
 #include <Jolt/Physics/Collision/BroadPhase/BroadPhaseLayer.h>
+#include <Jolt/Physics/Collision/RayCast.h>
+#include <Jolt/Physics/Collision/CastResult.h>
 
 #include "BECore/ObjectComponents/CollisionComponent.h"
 #include "BECore/ObjectComponents/CharacterCollisionComponent.h"
 
+#include "BECore/logger.h"
+
 #include <thread>
 
-#include "BECore/logger.h"
+#include "BECore/Application.h"
 
 class BPLayerInterfaceImpl final : public JPH::BroadPhaseLayerInterface
 {
@@ -150,4 +155,60 @@ void PhysicsEngine::Step(float deltaTime)
 JPH::BodyInterface &PhysicsEngine::GetBodyInterface()
 {
     return _physicsSystem->GetBodyInterface();
+}
+
+HitResult PhysicsEngine::TraceLine(Location start, Vector3 direction, float distance)
+{
+    const JPH::NarrowPhaseQuery &query = PhysicsEngine::GetInstance()
+            ->GetPhysicsSystem()->GetNarrowPhaseQueryNoLock();
+
+    JPH::RRayCast ray{
+        JPH::Vec3(start.GetX(), start.GetY(), start.GetZ()),
+        JPH::Vec3(direction.GetX(), direction.GetY(), direction.GetZ()) * distance
+    };
+
+    JPH::RayCastResult result;
+    HitResult hitResult;
+
+    bool traceHit = query.CastRay(ray, result);
+    hitResult.blockingHit = traceHit;
+
+    if (traceHit)
+    {
+        JPH::BodyID hitBody = result.mBodyID;
+        hitResult.bodyID = hitBody;
+        hitResult.fraction = result.mFraction;
+
+        JPH::Vec3 hitPosition = ray.GetPointOnRay(result.mFraction);
+
+        // If hit is too far away, return
+        if (glm::distance(start.AsVec3(), glm::vec3(hitPosition.GetX(), hitPosition.GetY(), hitPosition.GetZ())) > distance)
+        {
+            hitResult.blockingHit = false;
+            return hitResult;
+        }
+
+        hitResult.location = Location(hitPosition.GetX(), hitPosition.GetY(), hitPosition.GetZ());
+
+        auto gos = *Application::GetInstance()->GetLevel()->GetGameObjects();
+        for (auto currentGO: gos)
+        {
+            auto components = currentGO->GetComponents();
+            for (auto currentGOC: components)
+            {
+                if (auto *collisionComponent = dynamic_cast<CollisionComponent *>(currentGOC))
+                {
+                    if (collisionComponent->GetBodyID() == hitBody)
+                    {
+                        hitResult.hitObject = currentGO;
+                        hitResult.hitComponent = currentGOC;
+
+                        return hitResult;
+                    }
+                }
+            }
+        }
+    }
+
+    return hitResult;
 }

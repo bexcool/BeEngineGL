@@ -46,6 +46,7 @@ public:
     void SetLocalRotation(Rotation rotation);
     [[nodiscard]] Scale GetLocalScale() const;
     void SetLocalScale(Scale scale);
+    [[nodiscard]] Vector3 GetForwardVector() const;
 
     // Engine events
     void OnTick() override {}

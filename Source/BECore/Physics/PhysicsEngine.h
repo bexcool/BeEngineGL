@@ -14,6 +14,19 @@
 #include <Jolt/Physics/Collision/ObjectLayer.h>
 #include <Jolt/Physics/Collision/BroadPhase/BroadPhaseLayer.h>
 
+#include "BECore/Math/Vector3.h"
+#include "BECore/Objects/GameObject.h"
+
+struct BE_API HitResult
+{
+    bool blockingHit = false;
+    Vector3 location = Vector3();
+    float fraction = 0.0f;
+    JPH::BodyID bodyID;
+    GameObject *hitObject = nullptr;
+    GameObjectComponent *hitComponent = nullptr;
+};
+
 namespace PhysicsLayers
 {
     static constexpr JPH::ObjectLayer NON_MOVING = 0;
@@ -50,4 +63,6 @@ public:
     JPH::PhysicsSystem *GetPhysicsSystem() { return _physicsSystem; }
     JPH::TempAllocatorImpl *GetTempAllocator() { return _tempAllocator; }
     JPH::BodyInterface &GetBodyInterface();
+
+    HitResult TraceLine(Location start, Vector3 direction, float distance);
 };

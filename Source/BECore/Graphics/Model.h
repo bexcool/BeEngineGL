@@ -87,4 +87,5 @@ public:
     void SetModelCustomSP(const std::string &modelPath, const Material &material);
 
     void Render(const Transform &transform);
+    bool IsMeshValid();
 };
