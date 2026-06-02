@@ -32,6 +32,8 @@ public:
     void SetLookTargetLocation(const Location &target);
     Location GetLookTargetLocation();
 
+    Vector3 GetForwardVector() const override;
+
     void OnTick() override;
 
     virtual void OnActivated() {};

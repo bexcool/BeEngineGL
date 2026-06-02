@@ -70,6 +70,11 @@ void CameraComponent::SetFOV(float fov)
     _fov = fov;
 }
 
+Vector3 CameraComponent::GetForwardVector() const
+{
+    return _lookTargetLocation;
+}
+
 void CameraComponent::SetLookTargetLocation(const Location &target)
 {
     glm::vec3 forward = target.AsVec3();
@@ -112,6 +117,5 @@ void CameraComponent::OnTick()
     }
 
     GetParent()->SetWorldRotation(Rotation(0.0f, 0.0f, -_yaw));
-    SetLocalRotation(Rotation(_pitch, 0.0f, 0.0f));
     _lookTargetLocation = Location(ComputeCameraForwardVector(_pitch, _yaw));
 }

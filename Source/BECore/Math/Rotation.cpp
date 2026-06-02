@@ -27,9 +27,9 @@ glm::vec3 Rotation::GetForwardVector() const
 glm::quat Rotation::AsQuat() const
 {
     glm::mat4 rotation(1.0f);
-    rotation = glm::rotate(rotation, glm::radians(GetYaw()), glm::vec3(0.0f, 1.0f, 0.0f)); // Y
-    rotation = glm::rotate(rotation, glm::radians(GetPitch()), glm::vec3(1.0f, 0.0f, 0.0f)); // X
-    rotation = glm::rotate(rotation, glm::radians(GetRoll()), glm::vec3(0.0f, 0.0f, 1.0f)); // Z
+    rotation = glm::rotate(rotation, glm::radians(GetRoll()), glm::vec3(1.0f, 0.0f, 0.0f));
+    rotation = glm::rotate(rotation, glm::radians(GetPitch()), glm::vec3(0.0f, 0.0f, 1.0f));
+    rotation = glm::rotate(rotation, glm::radians(GetYaw()), glm::vec3(0.0f, 1.0f, 0.0f));
 
     return glm::quat_cast(rotation);
 }
