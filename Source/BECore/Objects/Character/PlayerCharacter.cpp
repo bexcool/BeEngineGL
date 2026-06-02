@@ -11,6 +11,6 @@ PlayerCharacter::PlayerCharacter()
 {
     SetController(std::make_unique<PlayerController>());
 
-    _characterCollision = new CharacterCollisionComponent(0.9f, 0.3f);
+    _characterCollision = new CharacterCollisionComponent(0.6f, 0.2f);
     AddComponent(_characterCollision);
 }
